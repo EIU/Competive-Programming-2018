@@ -12,37 +12,22 @@ public class busnumber {
     public static void main(String[] args) {
         InputReader sc = new InputReader(System.in);
         int n = sc.nextInt();
-        int[] arr = new int[n];
+        int[] bus_number = new int[n];
         for (int i = 0; i < n; i++) {
-            arr[i] = sc.nextInt();
+            bus_number[i] = sc.nextInt();
         }
-        Arrays.sort(arr);
+        Arrays.sort(bus_number);
         int index = 0;
-        while (index < n) {
-            int startpoint = arr[index];
-            while (index + 1 < n && arr[index] == arr[index + 1] - 1) {
-               index++;
-            }
-            int endpoint = arr[index];
+        for (; index < n; index++) {
+            int startpoint = bus_number[index];
+            while (index + 1 < n && bus_number[index] == bus_number[index + 1] - 1)index++;
+            int endpoint = bus_number[index];
             if (startpoint == endpoint) {
-                System.out.printf("%d%s", startpoint, index == n - 1 ? "\n" : " ");
-            } else {
-                if (startpoint == endpoint - 1) {
-                    System.out.printf("%d %d%s", startpoint, endpoint, check(index,n));
-                } else {
-                    System.out.printf("%d-%d%s", startpoint, endpoint, check(index,n));
-                }
-            }
-            index++;
-        }
-
-    }
-
-    public static String check(int index, int n){
-        if(index==n-1){
-            return "\n";
-        }else {
-            return " ";
+                System.out.printf("%d%s", startpoint, index == n - 1 ? "\n":" ");
+            } else if (startpoint == endpoint - 1) {
+                System.out.printf("%d %d%s", startpoint, endpoint, index == n - 1 ? "\n":" ");
+            } else
+                System.out.printf("%d-%d%s", startpoint, endpoint, index == n - 1 ? "\n":" ");
         }
     }
     static class InputReader {
