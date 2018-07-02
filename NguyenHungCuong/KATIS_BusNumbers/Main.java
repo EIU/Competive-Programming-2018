@@ -23,41 +23,41 @@ class Main {
 
         int n = scan.nextInt();
         ArrayList<Integer> list = new ArrayList<>();
-        while (n-->0){
+        while (n-- > 0) {
             list.add(scan.nextInt());
         }
-        if (list.size() == 1 || list.size() == 2){
-            for (int i : list){
-                System.out.print(i +" ");
+        if (list.size() == 1 || list.size() == 2) {
+            for (int i : list) {
+                System.out.print(i + " ");
             }
             return;
         }
-        
-        list.sort((a,b)->a-b);
+
+        list.sort((a, b) -> a - b);
         StringBuilder res = new StringBuilder();
-        int x=0,y;
-        for (y=1;y<list.size();y++){
-            if (list.get(y)-list.get(y-1) != 1){
-                if (y-x == 2){
-                    res.append(list.get(x)).append(" ").append(list.get(y-1)).append(" ");
-                } else if (y-x == 1) {
-                    res.append(list.get(x)).append(" ");
-                } else {
-                    res.append(list.get(x)).append("-").append(list.get(y-1)).append(" ");
-                }
+        int x = 0, y;
+        for (y = 1; y < list.size(); y++) {
+            if (list.get(y) - list.get(y - 1) != 1) {
+                res.append(adding(y-1, x, list));
                 x = y;
+                if (y == list.size()-1){
+                    res.append(adding(y, x, list));
+                }
+            } else if (y == list.size()-1){
+                res.append(adding(y, x, list));
             }
-        }
-        if (list.get(list.size()-1) - list.get(list.size()-2) == 1){
-            if (list.size() - x == 2){
-                res.append(list.get(x)).append(" ").append(list.get(list.size()-1));
-            } else {
-                res.append(list.get(x)).append("-").append(list.get(list.size()-1));
-            }
-        } else {
-            res.append(list.get(list.size()-1));
         }
         System.out.println(res);
+    }
+
+    static String adding(int a, int b, ArrayList<Integer> list) {
+        if (a - b == 1) {
+            return list.get(b) + " " + list.get(a) + " ";
+        }
+        if (a - b == 0) {
+            return list.get(a) + " ";
+        }
+        return list.get(b) + "-" + list.get(a) + " ";
     }
 
     static class InputReader {
