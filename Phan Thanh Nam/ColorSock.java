@@ -3,33 +3,44 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
+import java.net.SocketImpl;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 
-public class busnumber {
+public class ColorSock {
+
     public static void main(String[] args) {
         InputReader sc = new InputReader(System.in);
-        int n = sc.nextInt();
-        int[] bus_number = new int[n];
-        for (int i = 0; i < n; i++) {
-            bus_number[i] = sc.nextInt();
+        int Socks = sc.nextInt();
+        int machine = sc.nextInt();
+        int color = sc.nextInt();
+        int[] SocksValue = new int[Socks];
+        for (int i = 0; i < SocksValue.length; i++) {
+            SocksValue[i] = sc.nextInt();
         }
-        Arrays.sort(bus_number);
-        int index = 0;
-        for (; index < n; index++) {
-            int startpoint = bus_number[index];
-            while (index + 1 < n && bus_number[index] == bus_number[index + 1] - 1)index++;
-            int endpoint = bus_number[index];
-            if (startpoint == endpoint) {
-                System.out.printf("%d%s", startpoint, index == n - 1 ? "\n":" ");
-            } else if (startpoint == endpoint - 1) {
-                System.out.printf("%d %d%s", startpoint, endpoint, index == n - 1 ? "\n":" ");
-            } else
-                System.out.printf("%d-%d%s", startpoint, endpoint, index == n - 1 ? "\n":" ");
+        Arrays.sort(SocksValue);
+        int machinesneed = 1;
+        int socksinmachine = 1;
+        int lowestinmachine = SocksValue[0];
+
+        for (int i = 1; i < Socks; i++) {
+            if (socksinmachine == machine) {
+                machinesneed++;
+                socksinmachine = 0;
+                lowestinmachine = SocksValue[i];
+            }
+            if (SocksValue[i] - lowestinmachine > color) {
+                machinesneed++;
+                socksinmachine = 0;
+                lowestinmachine = SocksValue[i];
+            }
+            socksinmachine++;
         }
+
+        System.out.println(machinesneed);
     }
+
     static class InputReader {
         StringTokenizer tokenizer;
         BufferedReader reader;

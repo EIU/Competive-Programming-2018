@@ -3,33 +3,45 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
+import java.net.SocketImpl;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 
-public class busnumber {
+public class pivot {
+
     public static void main(String[] args) {
         InputReader sc = new InputReader(System.in);
         int n = sc.nextInt();
-        int[] bus_number = new int[n];
+        int arr[] = new int[n];
         for (int i = 0; i < n; i++) {
-            bus_number[i] = sc.nextInt();
+            arr[i] = sc.nextInt();
         }
-        Arrays.sort(bus_number);
-        int index = 0;
-        for (; index < n; index++) {
-            int startpoint = bus_number[index];
-            while (index + 1 < n && bus_number[index] == bus_number[index + 1] - 1)index++;
-            int endpoint = bus_number[index];
-            if (startpoint == endpoint) {
-                System.out.printf("%d%s", startpoint, index == n - 1 ? "\n":" ");
-            } else if (startpoint == endpoint - 1) {
-                System.out.printf("%d %d%s", startpoint, endpoint, index == n - 1 ? "\n":" ");
-            } else
-                System.out.printf("%d-%d%s", startpoint, endpoint, index == n - 1 ? "\n":" ");
+        int p_max[] = new int[n];
+        int p_min[] = new int[n];
+        p_max[0] = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+            p_max[i] = Math.max(arr[i], p_max[i - 1]);
         }
+        p_min[n - 1] = arr[n - 1];
+        for (int i = n - 2; i >= 0; i--) {
+            p_min[i] = Math.min(arr[i], p_min[i + 1]);
+        }
+        int total = 0;
+        if (arr[0] < p_min[1]) {
+            total++;
+        }
+        if (arr[n - 1] > p_min[n - 2]) {
+            total++;
+        }
+        for (int i = 1; i < n - 1; i++) {
+            if (arr[i] < p_min[i + 1] && arr[i] > p_max[i - 1]) {
+                total++;
+            }
+        }
+        System.out.println(total);
     }
+
     static class InputReader {
         StringTokenizer tokenizer;
         BufferedReader reader;
