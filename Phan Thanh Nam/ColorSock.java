@@ -12,33 +12,33 @@ public class ColorSock {
 
     public static void main(String[] args) {
         InputReader sc = new InputReader(System.in);
-        int Socks = sc.nextInt();
-        int machine = sc.nextInt();
+        int NumSocks = sc.nextInt();
+        int Nummachine = sc.nextInt();
         int color = sc.nextInt();
-        int[] SocksValue = new int[Socks];
+        int[] SocksValue = new int[NumSocks];
         for (int i = 0; i < SocksValue.length; i++) {
             SocksValue[i] = sc.nextInt();
         }
         Arrays.sort(SocksValue);
-        int machinesneed = 1;
-        int socksinmachine = 1;
-        int lowestinmachine = SocksValue[0];
+        int need = 1;
+        int machine = 1;
+        int lowemachine = SocksValue[0];
 
-        for (int i = 1; i < Socks; i++) {
-            if (socksinmachine == machine) {
-                machinesneed++;
-                socksinmachine = 0;
-                lowestinmachine = SocksValue[i];
+        for (int i = 1; i < NumSocks; i++) {
+            if (machine == machine) {
+                need++;
+                machine = 0;
+                lowemachine = SocksValue[i];
             }
-            if (SocksValue[i] - lowestinmachine > color) {
-                machinesneed++;
-                socksinmachine = 0;
-                lowestinmachine = SocksValue[i];
+            if (SocksValue[i] - lowemachine > color) {
+                need++;
+                machine = 0;
+                lowemachine = SocksValue[i];
             }
-            socksinmachine++;
+            machine++;
         }
 
-        System.out.println(machinesneed);
+        System.out.println(need);
     }
 
     static class InputReader {
