@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Vector;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -22,42 +23,45 @@ class Main {
         InputReader scan = new InputReader();
 
         int n = scan.nextInt();
-        ArrayList<Integer> list = new ArrayList<>();
-        while (n-- > 0) {
-            list.add(scan.nextInt());
-        }
-        if (list.size() == 1 || list.size() == 2) {
-            for (int i : list) {
-                System.out.print(i + " ");
-            }
-            return;
+        int[] x = new int[n];
+        int[] y = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            x[i] = scan.nextInt();
+            y[i] = scan.nextInt();
         }
 
-        list.sort((a, b) -> a - b);
-        StringBuilder res = new StringBuilder();
-        int x = 0, y;
-        for (y = 1; y < list.size(); y++) {
-            if (list.get(y) - list.get(y - 1) != 1) {
-                res.append(adding(y-1, x, list));
-                x = y;
-                if (y == list.size()-1){
-                    res.append(adding(y, x, list));
-                }
-            } else if (y == list.size()-1){
-                res.append(adding(y, x, list));
-            }
+        Arrays.sort(x);
+        Arrays.sort(y);
+
+        int count = 0;
+
+        for (int i = 0; i < n; i++) {
+            count += (Math.abs(x[i] - 1 - i));
+            count += (Math.abs(y[i] - 1 - i));
         }
-        System.out.println(res);
+
+        System.out.println(count);
     }
 
-    static String adding(int a, int b, ArrayList<Integer> list) {
-        if (a - b == 1) {
-            return list.get(b) + " " + list.get(a) + " ";
+    static int processing(int[] arr) {
+        ArrayList<Integer> miss = new ArrayList<>();
+        ArrayList<Integer> taken = new ArrayList<>();
+
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] == 0) {
+                miss.add(i);
+            }
+
+            for (int j = arr[i]; j > 1; j--) {
+                taken.add(i);
+            }
         }
-        if (a - b == 0) {
-            return list.get(a) + " ";
+        int res = 0;
+        for (int i = 0; i < taken.size(); i++) {
+            res += Math.abs(taken.get(i) - miss.get(i));
         }
-        return list.get(b) + "-" + list.get(a) + " ";
+        return res;
     }
 
     static class InputReader {

@@ -22,42 +22,44 @@ class Main {
         InputReader scan = new InputReader();
 
         int n = scan.nextInt();
-        ArrayList<Integer> list = new ArrayList<>();
-        while (n-- > 0) {
-            list.add(scan.nextInt());
-        }
-        if (list.size() == 1 || list.size() == 2) {
-            for (int i : list) {
-                System.out.print(i + " ");
-            }
-            return;
+        ArrayList<Integer> arr = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            arr.add(scan.nextInt());
         }
 
-        list.sort((a, b) -> a - b);
-        StringBuilder res = new StringBuilder();
-        int x = 0, y;
-        for (y = 1; y < list.size(); y++) {
-            if (list.get(y) - list.get(y - 1) != 1) {
-                res.append(adding(y-1, x, list));
-                x = y;
-                if (y == list.size()-1){
-                    res.append(adding(y, x, list));
+        ArrayList<Integer> right = new ArrayList<>(arr);
+        right.remove(0);
+        right.sort((a, b) -> a - b);
+        int min = 0;
+
+        int max = Integer.MIN_VALUE;
+
+        int count = 0;
+
+        if (arr.get(0) < right.get(min)) {
+            count++;
+        }
+
+        for (int i = 1; i < n; i++) {
+            max = Math.max(max, arr.get(i - 1));
+
+            if (arr.get(i) == right.get(min)) {
+                min = Math.min(min + 1, right.size() - 1);
+
+                if (arr.get(i) > max && arr.get(i) < right.get(min)) {
+                    count++;
                 }
-            } else if (y == list.size()-1){
-                res.append(adding(y, x, list));
+            } else {
+                min = Math.min(min + 1, right.size() - 1);
             }
-        }
-        System.out.println(res);
-    }
 
-    static String adding(int a, int b, ArrayList<Integer> list) {
-        if (a - b == 1) {
-            return list.get(b) + " " + list.get(a) + " ";
         }
-        if (a - b == 0) {
-            return list.get(a) + " ";
+
+        if (arr.get(arr.size() - 1) > max) {
+            count++;
         }
-        return list.get(b) + "-" + list.get(a) + " ";
+
+        System.out.println(count);
     }
 
     static class InputReader {

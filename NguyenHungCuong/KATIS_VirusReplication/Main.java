@@ -21,43 +21,26 @@ class Main {
     public static void main(String[] args) throws IOException {
         InputReader scan = new InputReader();
 
-        int n = scan.nextInt();
-        ArrayList<Integer> list = new ArrayList<>();
-        while (n-- > 0) {
-            list.add(scan.nextInt());
-        }
-        if (list.size() == 1 || list.size() == 2) {
-            for (int i : list) {
-                System.out.print(i + " ");
-            }
-            return;
-        }
+        String a = scan.next();
+        String b = scan.next();
 
-        list.sort((a, b) -> a - b);
-        StringBuilder res = new StringBuilder();
-        int x = 0, y;
-        for (y = 1; y < list.size(); y++) {
-            if (list.get(y) - list.get(y - 1) != 1) {
-                res.append(adding(y-1, x, list));
-                x = y;
-                if (y == list.size()-1){
-                    res.append(adding(y, x, list));
-                }
-            } else if (y == list.size()-1){
-                res.append(adding(y, x, list));
+        int i = 0;
+        for (; i < a.length() && i < b.length(); i++) {
+            if (a.charAt(i) != b.charAt(i)) {
+                break;
             }
         }
-        System.out.println(res);
-    }
 
-    static String adding(int a, int b, ArrayList<Integer> list) {
-        if (a - b == 1) {
-            return list.get(b) + " " + list.get(a) + " ";
+        int x = a.length() - 1, y = b.length() - 1;
+        while (x > i && y > i) {
+            if (a.charAt(x) != b.charAt(y)) {
+                break;
+            }
+            x--;
+            y--;
         }
-        if (a - b == 0) {
-            return list.get(a) + " ";
-        }
-        return list.get(b) + "-" + list.get(a) + " ";
+
+        System.out.println(y - i + 1);
     }
 
     static class InputReader {

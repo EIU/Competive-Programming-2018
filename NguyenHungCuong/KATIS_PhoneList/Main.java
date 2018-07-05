@@ -13,7 +13,7 @@ import java.util.Arrays;
  *
  * @author LENOVO
  */
-class Main {
+public class Main {
 
     /**
      * @param args the command line arguments
@@ -21,43 +21,38 @@ class Main {
     public static void main(String[] args) throws IOException {
         InputReader scan = new InputReader();
 
-        int n = scan.nextInt();
-        ArrayList<Integer> list = new ArrayList<>();
-        while (n-- > 0) {
-            list.add(scan.nextInt());
-        }
-        if (list.size() == 1 || list.size() == 2) {
-            for (int i : list) {
-                System.out.print(i + " ");
+        int testcase = scan.nextInt();
+        while (testcase-- > 0) {
+            int n = scan.nextInt();
+            ArrayList<String> list = new ArrayList<>();
+            for (int i = 0; i < n; i++) {
+                list.add(scan.next());
             }
-            return;
-        }
 
-        list.sort((a, b) -> a - b);
-        StringBuilder res = new StringBuilder();
-        int x = 0, y;
-        for (y = 1; y < list.size(); y++) {
-            if (list.get(y) - list.get(y - 1) != 1) {
-                res.append(adding(y-1, x, list));
-                x = y;
-                if (y == list.size()-1){
-                    res.append(adding(y, x, list));
+            list.sort((a, b) -> {
+                return a.compareTo(b);
+            });
+            String a;
+            String b;
+            int length;
+            boolean result = true;
+            for (int i = 0; i < n - 1; i++) {
+                a = list.get(i);
+                b = list.get(i + 1);
+                length = Math.min(a.length(), b.length());
+//                String x = a.substring(0,length);
+//                String y = b.substring(0,length);
+                if (a.substring(0,length).compareTo(b.substring(0,length)) == 0){
+                    result = false;
+                    break;
                 }
-            } else if (y == list.size()-1){
-                res.append(adding(y, x, list));
+            }
+            if (result){
+                System.out.println("YES");
+            } else {
+                System.out.println("NO");
             }
         }
-        System.out.println(res);
-    }
-
-    static String adding(int a, int b, ArrayList<Integer> list) {
-        if (a - b == 1) {
-            return list.get(b) + " " + list.get(a) + " ";
-        }
-        if (a - b == 0) {
-            return list.get(a) + " ";
-        }
-        return list.get(b) + "-" + list.get(a) + " ";
     }
 
     static class InputReader {
@@ -96,7 +91,7 @@ class Main {
         public int skip() {
             int b;
             while ((b = readByte()) != -1 && isSpaceChar(b))
-                ;
+				;
             return b;
         }
 
@@ -148,7 +143,7 @@ class Main {
             int num = 0, b;
             boolean minus = false;
             while ((b = readByte()) != -1 && !((b >= '0' && b <= '9') || b == '-'))
-                ;
+				;
             if (b == '-') {
                 minus = true;
                 b = readByte();
@@ -169,7 +164,7 @@ class Main {
             int b;
             boolean minus = false;
             while ((b = readByte()) != -1 && !((b >= '0' && b <= '9') || b == '-'))
-                ;
+				;
             if (b == '-') {
                 minus = true;
                 b = readByte();
