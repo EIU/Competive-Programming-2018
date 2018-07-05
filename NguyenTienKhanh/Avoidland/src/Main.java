@@ -1,92 +1,147 @@
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.SocketImpl;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Hashtable;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
-public class ColorSock {
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author Windows 10 Version 2
+ */
+public class Main {
 
     public static void main(String[] args) {
-        InputReader sc = new InputReader(System.in);
-        int NumSocks = sc.nextInt();
-        int Nummachine = sc.nextInt();
-        int color = sc.nextInt();
-        int[] SocksValue = new int[NumSocks];
-        for (int i = 0; i < SocksValue.length; i++) {
-            SocksValue[i] = sc.nextInt();
+        InputReader input = new InputReader(System.in);
+         int N= input.nextInt(),count = 0;
+        ArrayList<Integer> listPawn1=new ArrayList<>();
+         ArrayList<Integer> listPawn2=new ArrayList<>();
+      
+        for(int i=0;i<N;i++){
+         listPawn1.add(input.nextInt());
+         listPawn2.add(input.nextInt());
+            
         }
-        Arrays.sort(SocksValue);
-        int need = 1;
-        int machine = 1;
-        int lowemachine = SocksValue[0];
-
-        for (int i = 1; i < NumSocks; i++) {
-            if (machine == machine) {
-                need++;
-                machine = 0;
-                lowemachine = SocksValue[i];
-            }
-            if (SocksValue[i] - lowemachine > color) {
-                need++;
-                machine = 0;
-                lowemachine = SocksValue[i];
-            }
-            machine++;
+        Collections.sort(listPawn1);
+        Collections.sort(listPawn2);
+        for(int i=0;i<N;i++){
+            if(listPawn1.get(i)-i-1<0)
+                count-=listPawn1.get(i)-i-1;
+            else
+                count+=listPawn1.get(i)-i-1;
+            if(listPawn2.get(i)-i-1<0)
+                count-=listPawn2.get(i)-i-1;
+            else
+                count+=listPawn2.get(i)-i-1;
         }
+        System.out.println(count);
+            }
+        
+     static class InputReader {
 
-        System.out.println(need);
-    }
-
-    static class InputReader {
         StringTokenizer tokenizer;
+
         BufferedReader reader;
+
         String token;
+
         String temp;
 
+
+
         public InputReader(InputStream stream) {
+
             tokenizer = null;
+
             reader = new BufferedReader(new InputStreamReader(stream));
+
         }
+
+
 
         public InputReader(FileInputStream stream) {
+
             tokenizer = null;
+
             reader = new BufferedReader(new InputStreamReader(stream));
+
         }
+
+
 
         public String nextLine() throws IOException {
+
             return reader.readLine();
+
         }
+
+
 
         public String next() {
+
             while (tokenizer == null || !tokenizer.hasMoreTokens()) {
+
                 try {
+
                     if (temp != null) {
+
                         tokenizer = new StringTokenizer(temp);
+
                         temp = null;
+
                     } else {
+
                         tokenizer = new StringTokenizer(reader.readLine());
+
                     }
 
+
+
                 } catch (IOException e) {
+
                 }
+
             }
+
             return tokenizer.nextToken();
+
         }
+
+
 
         public double nextDouble() {
+
             return Double.parseDouble(next());
+
         }
+
+
 
         public int nextInt() {
+
             return Integer.parseInt(next());
+
         }
 
+
+
         public long nextLong() {
+
             return Long.parseLong(next());
+
         }
+
     }
 }
