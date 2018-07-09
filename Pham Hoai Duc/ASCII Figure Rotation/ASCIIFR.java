@@ -20,10 +20,8 @@ public class ProblemBW2 {
                InputReader ip = new InputReader(System.in);
                StringBuilder result = new StringBuilder();
                int index = 0;
-               while (true) {
-                   int n = ip.nextInt();
-                   if (n == 0)
-                       break;
+               int n = ip.nextInt();
+               while (n != 0) {
                    if(index != 0)
                        result.append("\n");
                    String[] originalPicture = new String[n];
@@ -53,6 +51,7 @@ public class ProblemBW2 {
                    //trim end
                    result.append(trimEnd(picture90Degrees));
                    index++;
+                   n = ip.nextInt();
                }
                //show result
                System.out.print(result);
