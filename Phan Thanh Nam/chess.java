@@ -3,42 +3,39 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
-public class ColorSock {
-
+public class chess {
     public static void main(String[] args) {
         InputReader sc = new InputReader(System.in);
-        int NumSocks = sc.nextInt();
-        int Nummachine = sc.nextInt();
-        int color = sc.nextInt();
-        int[] SocksValue = new int[NumSocks];
-        for (int i = 0; i < SocksValue.length; i++) {
-            SocksValue[i] = sc.nextInt();
-        }
-        Arrays.sort(SocksValue);
-        int need = 1;
-        int machine = 1;
-        int lowemachine = SocksValue[0];
+        int n = sc.nextInt();
+        for (int i = 0; i < n; i++) {
+            char a = sc.next().charAt(0);
+            int row1 = sc.nextInt();
+            char b = sc.next().charAt(0);
+            int row2 = sc.nextInt();
+            int col1 = a - 'A' + 1;
+            int col2 = b - 'A' + 1;
 
-        for (int i = 1; i < NumSocks; i++) {
-            if (Nummachine == machine) {
-                need++;
-                machine = 0;
-                lowemachine = SocksValue[i];
-            }
-            if (SocksValue[i] - lowemachine > color) {
-                need++;
-                machine = 0;
-                lowemachine = SocksValue[i];
-            }
-            machine++;
+            if ((row1 + col1) % 2 != (row2 + col2) % 2) {
+                System.out.println("Impossible");
+            } else {
+                int row = (row1 + col1 - col2 + row2) / 2;
+                int col = (row1 + col1 + col2 - row2) / 2;
+                if(col>8||col<1||row>8||row<1){
+                    row = (row2 + col2 - col1 + row1) / 2;
+                    col = (row2 + col2 + col1 - row1) / 2;
+                }
+                if (col1 == col2 && row1 == row2) {
+                    System.out.println(0 + " " + (char)(col+'A'-1) + " " + row1);
+                } else if (col1 + row1 == col2 + row2 || col1 + row2 == col2 + row1) {
+                    System.out.println(1 + " " + a + " " + row1 + " " + b + " " + row2);
+                } else {
+                    System.out.println(2 + " " + a + " " + row1 + " " + (char)(col+'A'-1) + " " + row + " " + b + " " + row2);
+                }
+           }
         }
-
-        System.out.println(need);
     }
-
     static class InputReader {
         StringTokenizer tokenizer;
         BufferedReader reader;
