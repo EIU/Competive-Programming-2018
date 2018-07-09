@@ -42,11 +42,7 @@ public class ProblemBW2 {
                                continue;
                            }
                            char character = originalPicture[j].charAt(i);
-                           if (character == '-')
-                               character = '|';
-                           else if (character == '|')
-                               character = '-';
-                           picture90Degrees[i].append(character);
+                           picture90Degrees[i].append(character == '-' ? '|' : character == '|' ? '-' : character);
                        }
                    //trim end
                    result.append(trimEnd(picture90Degrees));
