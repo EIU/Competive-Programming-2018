@@ -1,92 +1,126 @@
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.SocketImpl;
-import java.util.Arrays;
-import java.util.Scanner;
-import java.util.StringTokenizer;
+import java.io.*;
 
-public class ColorSock {
+import java.util.*;
+
+class main {
 
     public static void main(String[] args) {
-        InputReader sc = new InputReader(System.in);
-        int NumSocks = sc.nextInt();
-        int Nummachine = sc.nextInt();
-        int color = sc.nextInt();
-        int[] SocksValue = new int[NumSocks];
-        for (int i = 0; i < SocksValue.length; i++) {
-            SocksValue[i] = sc.nextInt();
-        }
-        Arrays.sort(SocksValue);
-        int need = 1;
-        int machine = 1;
-        int lowemachine = SocksValue[0];
 
-        for (int i = 1; i < NumSocks; i++) {
-            if (machine == machine) {
-                need++;
-                machine = 0;
-                lowemachine = SocksValue[i];
+        InputReader reader = new InputReader(System.in);
+        int numberOfInteger = reader.nextInt();
+        int[] arrayOfNumber = new int[numberOfInteger];
+        int[] minRight = new int[numberOfInteger - 1];
+        for (int i = 0; i < numberOfInteger; i++) {
+            arrayOfNumber[i] = reader.nextInt();
+            if (i > 0) {
+                minRight[i - 1] = arrayOfNumber[i];
             }
-            if (SocksValue[i] - lowemachine > color) {
-                need++;
-                machine = 0;
-                lowemachine = SocksValue[i];
-            }
-            machine++;
         }
-
-        System.out.println(need);
+        Arrays.sort(minRight);
+        int maxLeft = arrayOfNumber[0];
+        int numberOfPivot = 0;
+        if (maxLeft < minRight[0]) {
+            numberOfPivot += 1;
+        }
+        for (int i = 1, j = 0; i < numberOfInteger; i++) {
+            if (arrayOfNumber[i] == minRight[j] && j < minRight.length-1) {
+                j++;
+            }else{
+                if(j<minRight.length-1)
+                    j++;
+            }
+            if (arrayOfNumber[i] > maxLeft && arrayOfNumber[i] < minRight[j]) {
+                numberOfPivot += 1;
+            }
+            if (arrayOfNumber[i] > maxLeft) {
+                maxLeft = arrayOfNumber[i];
+                
+            }
+        }
+        if (arrayOfNumber[numberOfInteger - 1] >= maxLeft) {
+            numberOfPivot += 1;
+        }
+        System.out.println(numberOfPivot);
     }
 
     static class InputReader {
+
         StringTokenizer tokenizer;
+
         BufferedReader reader;
+
         String token;
+
         String temp;
 
         public InputReader(InputStream stream) {
+
             tokenizer = null;
+
             reader = new BufferedReader(new InputStreamReader(stream));
+
         }
 
         public InputReader(FileInputStream stream) {
+
             tokenizer = null;
+
             reader = new BufferedReader(new InputStreamReader(stream));
+
         }
 
         public String nextLine() throws IOException {
+
             return reader.readLine();
+
         }
 
         public String next() {
+
             while (tokenizer == null || !tokenizer.hasMoreTokens()) {
+
                 try {
+
                     if (temp != null) {
+
                         tokenizer = new StringTokenizer(temp);
+
                         temp = null;
+
                     } else {
+
                         tokenizer = new StringTokenizer(reader.readLine());
+
                     }
 
                 } catch (IOException e) {
+
                 }
+
             }
+
             return tokenizer.nextToken();
+
         }
 
         public double nextDouble() {
+
             return Double.parseDouble(next());
+
         }
 
         public int nextInt() {
+
             return Integer.parseInt(next());
+
         }
 
         public long nextLong() {
+
             return Long.parseLong(next());
+
         }
+
     }
+
 }

@@ -1,47 +1,37 @@
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.SocketImpl;
-import java.util.Arrays;
-import java.util.Scanner;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
-public class ColorSock {
+class main {
 
     public static void main(String[] args) {
-        InputReader sc = new InputReader(System.in);
-        int NumSocks = sc.nextInt();
-        int Nummachine = sc.nextInt();
-        int color = sc.nextInt();
-        int[] SocksValue = new int[NumSocks];
-        for (int i = 0; i < SocksValue.length; i++) {
-            SocksValue[i] = sc.nextInt();
+        InputReader reader = new InputReader(System.in);
+        int numberOfSocks=reader.nextInt();
+        int []arrSocks= new int[numberOfSocks];
+        double maxSocks=reader.nextDouble();
+        int maxColour=reader.nextInt();
+        for(int i=0;i<numberOfSocks;i++){
+            arrSocks[i]=reader.nextInt();
         }
-        Arrays.sort(SocksValue);
-        int need = 1;
-        int machine = 1;
-        int lowemachine = SocksValue[0];
-
-        for (int i = 1; i < NumSocks; i++) {
-            if (machine == machine) {
-                need++;
-                machine = 0;
-                lowemachine = SocksValue[i];
+        Arrays.sort(arrSocks);
+        int numberOfMachine=0;
+        int tempSock=0;
+        for(int i=0;i<numberOfSocks;i++){
+            tempSock=i;
+            while(i<numberOfSocks){
+                if(arrSocks[i]-arrSocks[tempSock]<=maxColour&&i-tempSock<maxSocks){
+                    i++;
+                }else{
+                    i--;
+                    break;
+                }
             }
-            if (SocksValue[i] - lowemachine > color) {
-                need++;
-                machine = 0;
-                lowemachine = SocksValue[i];
-            }
-            machine++;
+            numberOfMachine+=1;
         }
-
-        System.out.println(need);
+        System.out.println(numberOfMachine);
     }
 
     static class InputReader {
+
         StringTokenizer tokenizer;
         BufferedReader reader;
         String token;
@@ -88,5 +78,6 @@ public class ColorSock {
         public long nextLong() {
             return Long.parseLong(next());
         }
+
     }
 }

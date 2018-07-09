@@ -1,47 +1,47 @@
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.SocketImpl;
-import java.util.Arrays;
-import java.util.Scanner;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
-public class ColorSock {
+class main {
 
     public static void main(String[] args) {
-        InputReader sc = new InputReader(System.in);
-        int NumSocks = sc.nextInt();
-        int Nummachine = sc.nextInt();
-        int color = sc.nextInt();
-        int[] SocksValue = new int[NumSocks];
-        for (int i = 0; i < SocksValue.length; i++) {
-            SocksValue[i] = sc.nextInt();
+        InputReader reader = new InputReader(System.in);
+        int numberOfTea = reader.nextInt();
+        int[] arrNumberOfTea = new int[numberOfTea];
+        int i = 0;
+        for (; i < numberOfTea; i++) {
+            int tea = reader.nextInt();
+            arrNumberOfTea[i] = tea;
         }
-        Arrays.sort(SocksValue);
-        int need = 1;
-        int machine = 1;
-        int lowemachine = SocksValue[0];
-
-        for (int i = 1; i < NumSocks; i++) {
-            if (machine == machine) {
-                need++;
-                machine = 0;
-                lowemachine = SocksValue[i];
-            }
-            if (SocksValue[i] - lowemachine > color) {
-                need++;
-                machine = 0;
-                lowemachine = SocksValue[i];
-            }
-            machine++;
+        int numberOfTopping = reader.nextInt();
+        int[] arrNumberOfTopping = new int[numberOfTopping];
+        for (i = 0; i < numberOfTopping; i++) {
+            int topping = reader.nextInt();
+            arrNumberOfTopping[i] = topping;
         }
-
-        System.out.println(need);
+        int smallestPrice = 0;
+        for (i = 0; i < numberOfTea; i++) {
+            int numberOfPrice = reader.nextInt();
+            for (int j = 0; j < numberOfPrice; j++) {
+                int price = reader.nextInt();
+                if (i == 0 && j == 0) {
+                    smallestPrice = arrNumberOfTopping[price-1] + arrNumberOfTea[i];
+                } else {
+                    if (arrNumberOfTopping[price-1] + arrNumberOfTea[i] < smallestPrice) {
+                        smallestPrice = arrNumberOfTopping[price-1] + arrNumberOfTea[i];
+                    }
+                }
+            }
+        }
+        int amountOfMoney = reader.nextInt();
+        if (amountOfMoney / smallestPrice - 1 < 0) {
+            System.out.println(0);
+        } else {
+            System.out.println(amountOfMoney / smallestPrice - 1);
+        }
     }
 
     static class InputReader {
+
         StringTokenizer tokenizer;
         BufferedReader reader;
         String token;
@@ -88,5 +88,6 @@ public class ColorSock {
         public long nextLong() {
             return Long.parseLong(next());
         }
+
     }
 }
