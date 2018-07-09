@@ -3,9 +3,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.SocketImpl;
 import java.util.Arrays;
-import java.util.Scanner;
 import java.util.StringTokenizer;
 
 public class ColorSock {
@@ -25,7 +23,7 @@ public class ColorSock {
         int lowemachine = SocksValue[0];
 
         for (int i = 1; i < NumSocks; i++) {
-            if (machine == machine) {
+            if (Nummachine == machine) {
                 need++;
                 machine = 0;
                 lowemachine = SocksValue[i];
