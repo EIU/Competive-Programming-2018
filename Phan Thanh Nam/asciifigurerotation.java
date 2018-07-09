@@ -3,38 +3,35 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 
-public class asciifigurerotation {
+public class Asciifigurerotation {
 	public static void main(String[] args) throws IOException {
 		InputReader sc = new InputReader(System.in);
-		int first = 0;
+		boolean first = true;
 		while (true) {
 			int n = sc.nextInt();
-			sc.nextLine();
 			if (n == 0) {
 				break;
 			}
-			if (first++ != 0) {
+			if (first == true)
 				System.out.println();
-			}
+			first = false;
 			char[][] character = new char[n][n];
-			char a;
-			int len = 0;
+			int length_max = 0;
 			for (int i = 0; i < n; i++) {
 				String s = sc.nextLine();
-				if (len < s.length()) {
-					len = s.length();
-				}
+				length_max = Math.max(length_max, s.length());
 				for (int j = s.length() - 1; j < 20; j++) {
 					s += " ";
 				}
 				character[i] = s.toCharArray();
 			}
 			String[] ch = new String[n];
-			for (int i = 0; i < len; i++) {
+			for (int i = 0; i < length_max; i++) {
 				for (int j = n - 1; j >= 0; j--) {
-					a = character[j][i];
+					char a = character[j][i];
 					if (a == '|') {
 						ch[j] = "-";
 					} else if (a == '-') {
@@ -45,13 +42,7 @@ public class asciifigurerotation {
 						ch[j] = a + "";
 					}
 				}
-				for (int j = 0; j < ch.length; j++) {
-					if (ch[j] == " ") {
-						ch[j] = "";
-					} else {
-						break;
-					}
-				}
+				TrimRight(ch);
 				for (int j = n - 1; j >= 0; j--) {
 					if (ch[j].equals(" ")) {
 						System.out.print(" ");
@@ -62,7 +53,17 @@ public class asciifigurerotation {
 				System.out.println();
 			}
 		}
+	}
 
+	public static String[] TrimRight(String[] s) {
+		for (int j = 0; j < s.length; j++) {
+			if (s[j] == " ") {
+				s[j] = "";
+			} else {
+				break;
+			}
+		}
+		return s;
 	}
 
 	static class InputReader {

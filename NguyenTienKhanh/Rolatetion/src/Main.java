@@ -4,81 +4,50 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author Windows 10 Version 2
- */
 public class Main {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) throws IOException {
         InputReader input = new InputReader(System.in);
-        int i;
-
         StringBuilder sb = new StringBuilder();
-        
-        
-        while (true) {
+        int N = input.nextInt();
+        boolean first = true;
+        while (N!=0) {
             int max = Integer.MIN_VALUE;
-
-            HashMap<Integer, Integer> listLength = new HashMap<>();
-            int N = input.nextInt();
-            String[] Af = new String[N];
-            if (N == 0) {
-                break;
-            }
-
-            for (i = 0; i < N; i++) {
-                Af[i] = input.nextLine();
-                listLength.put(i, Af[i].length() - 1);
-                if (Af[i].length() > max) {
-                    max = Af[i].length();
+            String[] listChar = new String[N];
+            for (int i = 0; i < N; i++) {
+                listChar[i] = input.nextLine();
+                if (listChar[i].length() > max) {
+                    max = listChar[i].length();
                 }
             }
-            String[] Be = new String[max];
-            for (i = 0; i < Be.length; i++) {
-                Be[i] = "";
-            }
+            if(!first)
+                sb.append("\n");
+                first=false;
+            StringBuilder charRs = null;            
             for (int p = 0; p < max; p++) {
+                charRs= new StringBuilder();
                 for (int q = N - 1; q >= 0; q--) {
-                    if (listLength.get(q) < p) {
-                        Be[p] += ' ';
-                        continue;
-                    }
-                    if (Af[q].charAt(p) == '|') {
-                        Be[p] += '-';
-                    } else {
-                        if (Af[q].charAt(p) == '-') {
-                            Be[p] += '|';
-                        } else {
-                            Be[p] += Af[q].charAt(p);
-                        }
-
-                    }
-
+                    char c  = listChar[q].length() <= p ? ' ':listChar[q].charAt(p)=='|'? '-':listChar[q].charAt(p) == '-'?'|':listChar[q].charAt(p);
+                    charRs.append(c);
                 }
+                sb.append(DeleteEmp(charRs)+ "\n");
             }
-            for (i = 0; i < max; i++) {
-                sb.append(Be[i].replaceAll("\\s+$", "") + "\n");
-            }
-            sb.append("\n");
-
+            N = input.nextInt();
         }
-        sb.delete(sb.lastIndexOf("\n"), sb.lastIndexOf("\n") + 1);
         System.out.print(sb);
 
+    }
+    public static StringBuilder DeleteEmp(StringBuilder listChar){
+        for(int i= listChar.length()-1 ;i>=0;i--){
+            if(listChar.charAt(i)!= ' '){
+               break;
+            }
+            listChar.delete(i, listChar.length());
+        }
+        return listChar;
     }
 
     static class InputReader {
