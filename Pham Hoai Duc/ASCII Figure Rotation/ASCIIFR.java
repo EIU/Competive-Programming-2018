@@ -10,10 +10,8 @@ public class ProblemBW2 {
 
            public static String trimEnd(StringBuilder[] picture){
                StringBuilder result = new StringBuilder();
-               for (int i = 0; i < picture.length; i++) {
-                   String row = picture[i].toString().replaceAll("\\s+$", "");
-                   result.append(row + "\n");
-               }
+               for (int i = 0; i < picture.length; i++) 
+                   result.append(picture[i].toString().replaceAll("\\s+$", "") + "\n");
                return result.toString();
            }
 	   public static void main(String[] args) throws IOException {
@@ -30,26 +28,16 @@ public class ProblemBW2 {
                        originalPicture[i] = ip.nextLine();
                        maxOriginalRowLength = maxOriginalRowLength < originalPicture[i].length() ? originalPicture[i].length() : maxOriginalRowLength;
                    }
-                   //init 90 degrees picture 
                    StringBuilder[] picture90Degrees = new StringBuilder[maxOriginalRowLength];
                    for(int i = 0; i < maxOriginalRowLength; i++)
                        picture90Degrees[i] = new StringBuilder();
-                   //get 90 degrees picture 
                    for (int i = 0; i < maxOriginalRowLength; i++)
-                       for (int j = n - 1; j >= 0; j--) {
-                           if (i >= originalPicture[j].length()) {
-                               picture90Degrees[i].append(' ');
-                               continue;
-                           }
-                           char character = originalPicture[j].charAt(i);
-                           picture90Degrees[i].append(character == '-' ? '|' : character == '|' ? '-' : character);
-                       }
-                   //trim end
+                       for (int j = n - 1; j >= 0; j--) 
+                           picture90Degrees[i].append(i >= originalPicture[j].length()?' ':originalPicture[j].charAt(i) == '-' ? '|' : originalPicture[j].charAt(i) == '|' ? '-' : originalPicture[j].charAt(i));
                    result.append(trimEnd(picture90Degrees));
                    index++;
                    n = ip.nextInt();
                }
-               //show result
                System.out.print(result);
     }
 	static class InputReader {
