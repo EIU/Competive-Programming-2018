@@ -21,7 +21,7 @@ public class avoidLand {
 			count+=Math.abs(row[i]-1-i);
 			count+=Math.abs(colum[i]-i-1);
 		}
-System.out.println(count);
+		System.out.println(count);
 	}
 
 }
