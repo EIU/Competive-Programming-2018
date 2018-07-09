@@ -1,47 +1,26 @@
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.SocketImpl;
-import java.util.Arrays;
-import java.util.Scanner;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
-public class ColorSock {
+class main {
 
-    public static void main(String[] args) {
-        InputReader sc = new InputReader(System.in);
-        int NumSocks = sc.nextInt();
-        int Nummachine = sc.nextInt();
-        int color = sc.nextInt();
-        int[] SocksValue = new int[NumSocks];
-        for (int i = 0; i < SocksValue.length; i++) {
-            SocksValue[i] = sc.nextInt();
+    public static void main(String args[]){
+        InputReader reader = new InputReader(System.in);
+        int numberOfTest=reader.nextInt();
+        for(int i=0;i<numberOfTest;i++){
+            int a=reader.nextInt();
+            int b=reader.nextInt();
+            int count=1;
+            long c=1;
+            for(int j=a+1;j<=b;j++)
+                c*=j;
+            for(int j=1;j<=c/2;j++)
+                if(c%j==0)
+                    count++;
+            System.out.println(count);
         }
-        Arrays.sort(SocksValue);
-        int need = 1;
-        int machine = 1;
-        int lowemachine = SocksValue[0];
-
-        for (int i = 1; i < NumSocks; i++) {
-            if (machine == machine) {
-                need++;
-                machine = 0;
-                lowemachine = SocksValue[i];
-            }
-            if (SocksValue[i] - lowemachine > color) {
-                need++;
-                machine = 0;
-                lowemachine = SocksValue[i];
-            }
-            machine++;
-        }
-
-        System.out.println(need);
     }
-
     static class InputReader {
+
         StringTokenizer tokenizer;
         BufferedReader reader;
         String token;
@@ -88,5 +67,6 @@ public class ColorSock {
         public long nextLong() {
             return Long.parseLong(next());
         }
+
     }
 }

@@ -1,47 +1,40 @@
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.SocketImpl;
-import java.util.Arrays;
-import java.util.Scanner;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
-public class ColorSock {
+class main {
 
-    public static void main(String[] args) {
-        InputReader sc = new InputReader(System.in);
-        int NumSocks = sc.nextInt();
-        int Nummachine = sc.nextInt();
-        int color = sc.nextInt();
-        int[] SocksValue = new int[NumSocks];
-        for (int i = 0; i < SocksValue.length; i++) {
-            SocksValue[i] = sc.nextInt();
-        }
-        Arrays.sort(SocksValue);
-        int need = 1;
-        int machine = 1;
-        int lowemachine = SocksValue[0];
-
-        for (int i = 1; i < NumSocks; i++) {
-            if (machine == machine) {
-                need++;
-                machine = 0;
-                lowemachine = SocksValue[i];
+    public static void main(String[] args) throws IOException {
+        InputReader reader = new InputReader(System.in);
+        int n = reader.nextInt();
+        for (int i = 0; i < n; i++) {
+            int numberOfTest = reader.nextInt();
+            String[] numberArr = new String[numberOfTest];
+            for (int j = 0; j < numberOfTest; j++) {
+                
+                String tempNumber = reader.next();
+                numberArr[j] = tempNumber;
             }
-            if (SocksValue[i] - lowemachine > color) {
-                need++;
-                machine = 0;
-                lowemachine = SocksValue[i];
+            Arrays.sort(numberArr);
+            int h = 0;
+            boolean check = true;
+            if(numberArr.length>1){
+                while (h < numberArr.length - 1) {
+                if (numberArr[h+1].startsWith(numberArr[h])) {
+                    System.out.println("NO");
+                    check = false;
+                    break;
+                }
+                h++;
             }
-            machine++;
+            }
+            if (check == true) {
+                System.out.println("YES");
+            }
         }
-
-        System.out.println(need);
     }
 
     static class InputReader {
+
         StringTokenizer tokenizer;
         BufferedReader reader;
         String token;
@@ -88,5 +81,6 @@ public class ColorSock {
         public long nextLong() {
             return Long.parseLong(next());
         }
+
     }
 }

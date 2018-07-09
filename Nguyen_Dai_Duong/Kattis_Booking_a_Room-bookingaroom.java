@@ -1,47 +1,33 @@
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.SocketImpl;
-import java.util.Arrays;
-import java.util.Scanner;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
-public class ColorSock {
+class main {
 
     public static void main(String[] args) {
-        InputReader sc = new InputReader(System.in);
-        int NumSocks = sc.nextInt();
-        int Nummachine = sc.nextInt();
-        int color = sc.nextInt();
-        int[] SocksValue = new int[NumSocks];
-        for (int i = 0; i < SocksValue.length; i++) {
-            SocksValue[i] = sc.nextInt();
+        InputReader reader = new InputReader(System.in);
+        int numberOfRooms = reader.nextInt();
+        int roomsWasBooked = reader.nextInt();
+        if(numberOfRooms == roomsWasBooked){
+            System.out.println("too late");
         }
-        Arrays.sort(SocksValue);
-        int need = 1;
-        int machine = 1;
-        int lowemachine = SocksValue[0];
-
-        for (int i = 1; i < NumSocks; i++) {
-            if (machine == machine) {
-                need++;
-                machine = 0;
-                lowemachine = SocksValue[i];
+        else{
+            List<Integer> listRoom = new ArrayList<>();
+            int i=0;
+            for(;i < roomsWasBooked;i++){
+                int temp=reader.nextInt();
+                listRoom.add(temp);
             }
-            if (SocksValue[i] - lowemachine > color) {
-                need++;
-                machine = 0;
-                lowemachine = SocksValue[i];
+            i--;
+            int j=1;
+            while(listRoom.contains(j)&&i>=0){
+                j++;i--;
             }
-            machine++;
-        }
-
-        System.out.println(need);
+            System.out.println(j);
+        }  
     }
 
     static class InputReader {
+
         StringTokenizer tokenizer;
         BufferedReader reader;
         String token;
@@ -88,5 +74,6 @@ public class ColorSock {
         public long nextLong() {
             return Long.parseLong(next());
         }
+
     }
 }

@@ -1,47 +1,29 @@
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.SocketImpl;
-import java.util.Arrays;
-import java.util.Scanner;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
-public class ColorSock {
+class main {
 
     public static void main(String[] args) {
-        InputReader sc = new InputReader(System.in);
-        int NumSocks = sc.nextInt();
-        int Nummachine = sc.nextInt();
-        int color = sc.nextInt();
-        int[] SocksValue = new int[NumSocks];
-        for (int i = 0; i < SocksValue.length; i++) {
-            SocksValue[i] = sc.nextInt();
+        InputReader reader = new InputReader(System.in);
+        int numberOfSeedlings=reader.nextInt();
+        int []seedlings= new int[numberOfSeedlings];
+        int []accSeedlings= new int[numberOfSeedlings];
+        for(int i=0;i<numberOfSeedlings;i++){
+            int tempSeedling=reader.nextInt();
+            seedlings[i]=tempSeedling;
         }
-        Arrays.sort(SocksValue);
-        int need = 1;
-        int machine = 1;
-        int lowemachine = SocksValue[0];
-
-        for (int i = 1; i < NumSocks; i++) {
-            if (machine == machine) {
-                need++;
-                machine = 0;
-                lowemachine = SocksValue[i];
-            }
-            if (SocksValue[i] - lowemachine > color) {
-                need++;
-                machine = 0;
-                lowemachine = SocksValue[i];
-            }
-            machine++;
+        Arrays.sort(seedlings);
+        int j=0,h=1;
+        for(int i=numberOfSeedlings-1;i>=0;i--){
+            accSeedlings[j++]=seedlings[i]+h++;
         }
-
-        System.out.println(need);
+        Arrays.sort(accSeedlings);
+        System.out.println(accSeedlings[numberOfSeedlings-1]+1);
+        
     }
 
     static class InputReader {
+
         StringTokenizer tokenizer;
         BufferedReader reader;
         String token;
@@ -88,5 +70,6 @@ public class ColorSock {
         public long nextLong() {
             return Long.parseLong(next());
         }
+
     }
 }
