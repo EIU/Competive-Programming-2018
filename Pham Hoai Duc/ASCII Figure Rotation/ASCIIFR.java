@@ -4,63 +4,59 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.HashMap;
 import java.util.StringTokenizer;
 
 public class ProblemBW2 {
 
-	public static void main(String[] args) throws IOException {
-	           InputReader ip = new InputReader(System.in);
-                   StringBuilder builder = new StringBuilder();
-            while(true) {
-                int n = ip.nextInt();
-                if (n == 0) {
-                    break;
-                } else {
-                    String[] originalPicture = new String[n];
-                    HashMap<Integer, Integer> originalRowLengths = new HashMap<>();
-                    int maxOriginalRowLength = Integer.MIN_VALUE;
-                    for (int i = 0; i < n; i++) {
-                        originalPicture[i] = ip.nextLine();
-                        int length = originalPicture[i].length();
-                        originalRowLengths.put(i, length);
-                        if (maxOriginalRowLength < length) {
-                            maxOriginalRowLength = length;
-                        }
-                    }
-                    //init 90 degrees picture 
-                    String[] picture90Degrees = new String[maxOriginalRowLength];
-                    for (int i = 0; i < maxOriginalRowLength; i++) {
-                        picture90Degrees[i] = "";
-                    }
-                    //get 90 degrees picture 
-                    for (int i = 0; i < maxOriginalRowLength; i++) {
-                        for (int j = n - 1; j >= 0; j--) {
-                            if (i >= originalRowLengths.get(j)) {
-                                picture90Degrees[i] += ' ';
-                                continue;
-                            }
-                            char character = originalPicture[j].charAt(i);
-                            if (character == '-') {
-                                character = '|';
-                            } else if (character == '|') {
-                                character = '-';
-                            }
-                            picture90Degrees[i] += character;
-                        }
-                    }       
-                    //trim end
-                    for (int i = 0; i < maxOriginalRowLength; i++) {
-                        String temp = picture90Degrees[i].replaceAll("\\s+$", "");                   
-                             builder.append(temp+"\n");
-                    }
-                    builder.append("\n");
-                }              
-            }
-            int index = builder.lastIndexOf("\n");
-            builder.delete(index,  index + 1);
-            System.out.print(builder);
-	}
+           public static String trimEnd(StringBuilder[] picture){
+               StringBuilder result = new StringBuilder();
+               for (int i = 0; i < picture.length; i++) {
+                   String row = picture[i].toString().replaceAll("\\s+$", "");
+                   result.append(row + "\n");
+               }
+               return result.toString();
+           }
+	   public static void main(String[] args) throws IOException {
+               InputReader ip = new InputReader(System.in);
+               StringBuilder result = new StringBuilder();
+               int index = 0;
+               while (true) {
+                   int n = ip.nextInt();
+                   if (n == 0)
+                       break;
+                   if(index != 0)
+                       result.append("\n");
+                   String[] originalPicture = new String[n];
+                   int maxOriginalRowLength = Integer.MIN_VALUE;
+                   for (int i = 0; i < n; i++) {
+                       originalPicture[i] = ip.nextLine();
+                       maxOriginalRowLength = maxOriginalRowLength < originalPicture[i].length() ? originalPicture[i].length() : maxOriginalRowLength;
+                   }
+                   //init 90 degrees picture 
+                   StringBuilder[] picture90Degrees = new StringBuilder[maxOriginalRowLength];
+                   for(int i = 0; i < maxOriginalRowLength; i++)
+                       picture90Degrees[i] = new StringBuilder();
+                   //get 90 degrees picture 
+                   for (int i = 0; i < maxOriginalRowLength; i++)
+                       for (int j = n - 1; j >= 0; j--) {
+                           if (i >= originalPicture[j].length()) {
+                               picture90Degrees[i].append(' ');
+                               continue;
+                           }
+                           char character = originalPicture[j].charAt(i);
+                           if (character == '-')
+                               character = '|';
+                           else if (character == '|')
+                               character = '-';
+                           picture90Degrees[i].append(character);
+                       }
+                   //trim end
+                   result.append(trimEnd(picture90Degrees));
+                   index++;
+               }
+               //show result
+               System.out.print(result);
+    }
 	static class InputReader {
 		StringTokenizer tokenizer;
 		BufferedReader reader;
