@@ -1,36 +1,26 @@
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
-public class busnumber {
-    public static void main(String[] args) {
-        InputReader sc = new InputReader(System.in);
-        int n = sc.nextInt();
-        int[] bus_number = new int[n];
-        for (int i = 0; i < n; i++) {
-            bus_number[i] = sc.nextInt();
-        }
-        Arrays.sort(bus_number);
-        int index = 0;
-        for (; index < n; index++) {
-            int startpoint = bus_number[index];
-            while (index + 1 < n && bus_number[index] == bus_number[index + 1] - 1)index++;
-            int endpoint = bus_number[index];
-            if (startpoint == endpoint) {
-                System.out.printf("%d%s", startpoint, index == n - 1 ? "\n":" ");
-            } else if (startpoint == endpoint - 1) {
-                System.out.printf("%d %d%s", startpoint, endpoint, index == n - 1 ? "\n":" ");
-            } else
-                System.out.printf("%d-%d%s", startpoint, endpoint, index == n - 1 ? "\n":" ");
+class main {
+
+    public static void main(String args[]){
+        InputReader reader = new InputReader(System.in);
+        int numberOfTest=reader.nextInt();
+        for(int i=0;i<numberOfTest;i++){
+            int a=reader.nextInt();
+            int b=reader.nextInt();
+            int count=1;
+            long c=1;
+            for(int j=a+1;j<=b;j++)
+                c*=j;
+            for(int j=1;j<=c/2;j++)
+                if(c%j==0)
+                    count++;
+            System.out.println(count);
         }
     }
     static class InputReader {
+
         StringTokenizer tokenizer;
         BufferedReader reader;
         String token;
@@ -77,5 +67,6 @@ public class busnumber {
         public long nextLong() {
             return Long.parseLong(next());
         }
+
     }
 }

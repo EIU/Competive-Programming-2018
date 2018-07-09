@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -20,44 +21,41 @@ class Main {
      */
     public static void main(String[] args) throws IOException {
         InputReader scan = new InputReader();
-
+        StringBuilder res = new StringBuilder();
         int n = scan.nextInt();
-        ArrayList<Integer> list = new ArrayList<>();
-        while (n-->0){
-            list.add(scan.nextInt());
-        }
-        if (list.size() == 1 || list.size() == 2){
-            for (int i : list){
-                System.out.print(i +" ");
+        while (n-- > 0) {
+            Bishop a = new Bishop(scan.nextChar(), scan.nextInt());
+            Bishop b = new Bishop(scan.nextChar(), scan.nextInt());
+            
+            if (a.row == b.row && a.column == b.column){
+                res.append("0 ").append(a.toString());
+            } else {
+                
             }
-            return;
         }
         
-        list.sort((a,b)->a-b);
-        StringBuilder res = new StringBuilder();
-        int x=0,y;
-        for (y=1;y<list.size();y++){
-            if (list.get(y)-list.get(y-1) != 1){
-                if (y-x == 2){
-                    res.append(list.get(x)).append(" ").append(list.get(y-1)).append(" ");
-                } else if (y-x == 1) {
-                    res.append(list.get(x)).append(" ");
-                } else {
-                    res.append(list.get(x)).append("-").append(list.get(y-1)).append(" ");
-                }
-                x = y;
-            }
-        }
-        if (list.get(list.size()-1) - list.get(list.size()-2) == 1){
-            if (list.size() - x == 2){
-                res.append(list.get(x)).append(" ").append(list.get(list.size()-1));
-            } else {
-                res.append(list.get(x)).append("-").append(list.get(list.size()-1));
-            }
-        } else {
-            res.append(list.get(list.size()-1));
-        }
         System.out.println(res);
+    }
+
+    static Bishop solveEquation(Bishop a,Bishop b){
+        
+    }
+    
+    static class Bishop {
+
+        char column;
+        int row;
+
+        public Bishop(char column, int row) {
+            this.column = column;
+            this.row = row;
+        }
+
+        @Override
+        public String toString() {
+            return column + " " + row;
+        }
+
     }
 
     static class InputReader {

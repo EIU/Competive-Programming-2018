@@ -1,36 +1,33 @@
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
-public class busnumber {
+class main {
+
     public static void main(String[] args) {
-        InputReader sc = new InputReader(System.in);
-        int n = sc.nextInt();
-        int[] bus_number = new int[n];
-        for (int i = 0; i < n; i++) {
-            bus_number[i] = sc.nextInt();
+        InputReader reader = new InputReader(System.in);
+        int numberOfRooms = reader.nextInt();
+        int roomsWasBooked = reader.nextInt();
+        if(numberOfRooms == roomsWasBooked){
+            System.out.println("too late");
         }
-        Arrays.sort(bus_number);
-        int index = 0;
-        for (; index < n; index++) {
-            int startpoint = bus_number[index];
-            while (index + 1 < n && bus_number[index] == bus_number[index + 1] - 1)index++;
-            int endpoint = bus_number[index];
-            if (startpoint == endpoint) {
-                System.out.printf("%d%s", startpoint, index == n - 1 ? "\n":" ");
-            } else if (startpoint == endpoint - 1) {
-                System.out.printf("%d %d%s", startpoint, endpoint, index == n - 1 ? "\n":" ");
-            } else
-                System.out.printf("%d-%d%s", startpoint, endpoint, index == n - 1 ? "\n":" ");
-        }
+        else{
+            List<Integer> listRoom = new ArrayList<>();
+            int i=0;
+            for(;i < roomsWasBooked;i++){
+                int temp=reader.nextInt();
+                listRoom.add(temp);
+            }
+            i--;
+            int j=1;
+            while(listRoom.contains(j)&&i>=0){
+                j++;i--;
+            }
+            System.out.println(j);
+        }  
     }
+
     static class InputReader {
+
         StringTokenizer tokenizer;
         BufferedReader reader;
         String token;
@@ -77,5 +74,6 @@ public class busnumber {
         public long nextLong() {
             return Long.parseLong(next());
         }
+
     }
 }
