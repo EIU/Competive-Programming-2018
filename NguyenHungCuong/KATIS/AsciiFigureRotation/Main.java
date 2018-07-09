@@ -17,102 +17,87 @@ import java.util.StringTokenizer;
  */
 class Main {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) throws IOException {
-        InputReader scan = new InputReader(System.in);
+	/**
+	 * @param args the command line arguments
+	 */
+	public static void main(String[] args) throws IOException {
+		InputReader scan = new InputReader(System.in);
 
-        boolean firstLine = true;
-        int n;
-        StringBuilder res = new StringBuilder();
-        while ((n = scan.nextInt()) != 0) {
-            String a;
-            char[][] list = new char[n][];
-            int width = 0;
-            for (int i = 0; i < n; i++) {
-                a = scan.nextLine();
-                width = Math.max(width, a.length());
-                list[i] = a.toCharArray();
-            }
+		boolean firstLine = true;
+		int n;
+		StringBuilder result = new StringBuilder();
+		while ((n = scan.nextInt()) != 0) {
+			String input;
+			char[][] list = new char[n][];
+			int width = 0;
+			for (int i = 0; i < n; i++) {
+				input = scan.nextLine();
+				width = Math.max(width, input.length());
+				list[i] = input.toCharArray();
+			}
 
-            if (firstLine) {
-                firstLine = false;
-            } else {
-                res.append("\n");
-            }
+			result.append((!firstLine) ? "\n" : "");
+			firstLine = false;
 
-            for (int j = 0; j < width; j++) {
-                String out = "";
-                for (int i = n - 1; i >= 0; i--) {
-                    char c;
-                    if (j >= list[i].length) {
-                        c = ' ';
-                    } else {
-                        c = list[i][j];
-                        if (c == '-') {
-                            c = '|';
-                        } else if (c == '|') {
-                            c = '-';
-                        }
-                    }
+			for (int j = 0; j < width; j++) {
+				String line = "";
+				for (int i = n - 1; i >= 0; i--) {
+					line += (j >= list[i].length) ? ' '
+							: (list[i][j] == '-') ? '|' : ((list[i][j] == '|') ? '-' : list[i][j]);
+				}
+				result.append(line.replaceAll("\\s+$", "")).append("\n");
+			}
+		}
+		System.out.println(result.substring(0, result.lastIndexOf("\n")));
+	}
 
-                    out += c;
-                }
-                res.append(out.replaceAll("\\s+$", "")).append("\n");
-            }
+	static class InputReader {
 
-        }
-        System.out.println(res.substring(0,res.lastIndexOf("\n")));
-    }
+		StringTokenizer tokenizer;
+		BufferedReader reader;
+		String token;
+		String temp;
 
-    static class InputReader {
+		public InputReader(InputStream stream) {
+			tokenizer = null;
+			reader = new BufferedReader(new InputStreamReader(stream));
+		}
 
-        StringTokenizer tokenizer;
-        BufferedReader reader;
-        String token;
-        String temp;
+		public InputReader(FileInputStream stream) {
+			tokenizer = null;
+			reader = new BufferedReader(new InputStreamReader(stream));
+		}
 
-        public InputReader(InputStream stream) {
-            tokenizer = null;
-            reader = new BufferedReader(new InputStreamReader(stream));
-        }
+		public String nextLine() throws IOException {
+			return reader.readLine();
+		}
 
-        public InputReader(FileInputStream stream) {
-            tokenizer = null;
-            reader = new BufferedReader(new InputStreamReader(stream));
-        }
+		public String next() {
+			while (tokenizer == null || !tokenizer.hasMoreTokens()) {
+				try {
+					if (temp != null) {
+						tokenizer = new StringTokenizer(temp);
+						temp = null;
+					} else {
+						tokenizer = new StringTokenizer(reader.readLine());
+					}
 
-        public String nextLine() throws IOException {
-            return reader.readLine();
-        }
+				} catch (IOException e) {
+				}
+			}
+			return tokenizer.nextToken();
+		}
 
-        public String next() {
-            while (tokenizer == null || !tokenizer.hasMoreTokens()) {
-                try {
-                    if (temp != null) {
-                        tokenizer = new StringTokenizer(temp);
-                        temp = null;
-                    } else {
-                        tokenizer = new StringTokenizer(reader.readLine());
-                    }
+		public double nextDouble() {
+			return Double.parseDouble(next());
+		}
 
-                } catch (IOException e) {
-                }
-            }
-            return tokenizer.nextToken();
-        }
+		public int nextInt() {
+			return Integer.parseInt(next());
+		}
 
-        public double nextDouble() {
-            return Double.parseDouble(next());
-        }
-
-        public int nextInt() {
-            return Integer.parseInt(next());
-        }
-
-        public long nextLong() {
-            return Long.parseLong(next());
-        }
-    }
+		public long nextLong() {
+			return Long.parseLong(next());
+		}
+	}
 }
