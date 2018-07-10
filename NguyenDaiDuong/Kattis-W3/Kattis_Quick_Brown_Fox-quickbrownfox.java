@@ -1,24 +1,32 @@
+
 import java.io.*;
 import java.util.*;
 
-class main {
+class Fox {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         InputReader reader = new InputReader(System.in);
-        int numberOfPaws=reader.nextInt();
-        int count=0;
-        List<Integer> row=new ArrayList<>();
-        List<Integer> colum=new ArrayList<>();
-        for(int i=0;i<numberOfPaws;i++){
-            row.add(reader.nextInt());
-            colum.add(reader.nextInt());
+        StringBuilder builder= new StringBuilder();
+        int numberOfTest=reader.nextInt();
+        boolean check=true;
+        for(int i=0;i<numberOfTest;i++) {
+        	String tempLine = reader.nextLine().toLowerCase(); 
+        	String str="";
+        	for(char j='a';j<='z';j++) {
+        		if(tempLine.indexOf(j)<0) {
+        			check= false;
+        			str=(str.indexOf("missing ")>=0?str+j:"missing "+j);
+        		}
+        	}
+        	builder.append(str);
+        	if (check==true) {
+    			builder.append("pangram");
+    		}
+        	builder.append("\n");
+        	check=true;
+        	str="";
         }
-        Collections.sort(row);
-        Collections.sort(colum);
-        for(int i=0;i<numberOfPaws;i++){
-            count+=Math.abs(i+1-row.get(i))+Math.abs(i+1-colum.get(i));
-        }
-        System.out.println(count);
+        System.out.println(builder);
     }
 
     static class InputReader {
