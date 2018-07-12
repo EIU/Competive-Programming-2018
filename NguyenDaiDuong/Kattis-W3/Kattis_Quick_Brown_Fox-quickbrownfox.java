@@ -1,4 +1,3 @@
-
 import java.io.*;
 import java.util.*;
 
@@ -6,25 +5,21 @@ class Fox {
 
     public static void main(String[] args) throws IOException {
         InputReader reader = new InputReader(System.in);
-        StringBuilder builder= new StringBuilder();
-        int numberOfTest=reader.nextInt();
-        boolean check=true;
-        for(int i=0;i<numberOfTest;i++) {
-        	String tempLine = reader.nextLine().toLowerCase(); 
-        	String str="";
-        	for(char j='a';j<='z';j++) {
-        		if(tempLine.indexOf(j)<0) {
-        			check= false;
-        			str=(str.indexOf("missing ")>=0?str+j:"missing "+j);
-        		}
-        	}
-        	builder.append(str);
-        	if (check==true) {
-    			builder.append("pangram");
-    		}
-        	builder.append("\n");
-        	check=true;
-        	str="";
+        StringBuilder builder = new StringBuilder();
+        int numberOfTest = reader.nextInt();
+        boolean check = true;
+        for (int i = 0; i < numberOfTest; i++) {
+            String tempLine = reader.nextLine().toLowerCase();
+            String str = "";
+            for (char j = 'a'; j <= 'z'; j++) {
+                if (tempLine.indexOf(j) < 0) {
+                    check = false;
+                    str = (str.indexOf("missing ") >= 0 ? str + j : "missing " + j);
+                }
+            }
+            builder.append(check == true ? "pangram" + "\n" : str + "\n");
+            check = true;
+            str = "";
         }
         System.out.println(builder);
     }

@@ -5,25 +5,24 @@ class Minimum {
 
     public static void main(String[] args) {
         InputReader reader = new InputReader(System.in);
-        StringBuilder builder= new StringBuilder();
-        int numberOfTest=reader.nextInt();
-        for(int i=0;i<numberOfTest;i++) {
-            int n=reader.nextInt();
-            long sum=0;
-            long[] arr1= new long [n];
-            long[] arr2= new long [n];
-            for(int j=0;j<n;j++) {
-                arr1[j]=reader.nextLong();
+        StringBuilder builder = new StringBuilder();
+        int numberOfTest = reader.nextInt();
+        for (int i = 0; i < numberOfTest; i++) {
+            long sum = 0;
+            long[] vectorV1 = new long[reader.nextInt()];
+            long[] vertorV2 = new long[vectorV1.length];
+            for (int j = 0; j < vectorV1.length; j++) {
+                vectorV1[j] = reader.nextLong();
             }
-            for(int j=0;j<n;j++) {
-                arr2[j]=reader.nextLong();
+            for (int j = 0; j < vectorV1.length; j++) {
+                vertorV2[j] = reader.nextLong();
             }
-            Arrays.sort(arr1);
-            Arrays.sort(arr2);
-            for(int k=0,l=n-1;k<n;k++,l--) {
-                sum+=arr1[k]*arr2[l];
+            Arrays.sort(vectorV1);
+            Arrays.sort(vertorV2);
+            for (int k = 0; k < vectorV1.length; k++) {
+                sum += vectorV1[k] * vertorV2[vectorV1.length - (k + 1)];
             }
-            builder.append("Case #"+(i+1)+": "+sum+"\n");
+            builder.append("Case #" + (i + 1) + ": " + sum + "\n");
         }
         System.out.println(builder);
     }

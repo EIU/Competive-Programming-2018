@@ -1,3 +1,4 @@
+
 import java.io.*;
 import java.util.*;
 
@@ -5,40 +6,25 @@ class Passenger {
 
     public static void main(String[] args) {
         InputReader reader = new InputReader(System.in);
-        StringBuilder builder= new StringBuilder();
-        int capacity=reader.nextInt();
-        int numberOfStation=reader.nextInt();
-        int sumPass=0;
-        boolean check=true;
-        int passLeft=0;
-        int passEnter=0;
-        int passWait=0;
-        for(int i=0;i<numberOfStation;i++) {
-            passLeft=reader.nextInt();
-            passEnter=reader.nextInt();
-            passWait=reader.nextInt();
-            if(passLeft>sumPass) {
-                check=false;
-                builder.append("impossible");
-                break;
-            }
-            sumPass+=passEnter-passLeft;
-            if(sumPass==0||sumPass<capacity) {
-                while(sumPass<capacity&&passWait>0) {
-                    sumPass++;
-                    passWait--;
-                }
-            }
-            if(i==0&&passLeft>0||i==numberOfStation-1&&passWait>0|sumPass>0||sumPass>capacity||sumPass<0) {
-                check=false;
-                builder.append("impossible");
+        int capacity = reader.nextInt();
+        int numberOfStation = reader.nextInt();
+        int sumPass = 0;
+        boolean check = true;
+        for (int i = 0; i < numberOfStation; i++) {
+            int passLeft = reader.nextInt();
+            int passEnter = reader.nextInt();
+            int passWait = reader.nextInt();
+            sumPass += passEnter - passLeft;
+            sumPass = sumPass == 0 || sumPass < capacity ? sumPass + passWait : sumPass;
+            if (i == 0 && passLeft > 0 || i == numberOfStation - 1 && passWait > 0 | sumPass > 0 || sumPass > capacity
+                    || sumPass < 0) {
+                check = false;
                 break;
             }
         }
-        if(check)
-            builder.append("possible");
-        System.out.println(builder);
+        System.out.println(check == true ? "possible" : "impossible");
     }
+
     static class InputReader {
 
         StringTokenizer tokenizer;
