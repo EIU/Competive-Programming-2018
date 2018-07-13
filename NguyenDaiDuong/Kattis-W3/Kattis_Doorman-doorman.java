@@ -1,29 +1,46 @@
 import java.io.*;
 import java.util.*;
 
-class main {
+class Doorman {
 
     public static void main(String[] args) {
         InputReader reader = new InputReader(System.in);
-        int numberOfPaws=reader.nextInt();
-        int count=0;
-        List<Integer> row=new ArrayList<>();
-        List<Integer> colum=new ArrayList<>();
-        List<Integer> temp=new ArrayList<>();
-        for(int i=0;i<numberOfPaws;i++){
-            row.add(reader.nextInt());
-            colum.add(reader.nextInt());
-            temp.add(i+1);
+        int absoluteDifference= reader.nextInt();
+        int men=0,women=0,people=0;
+        char[] gender=reader.next().toCharArray();
+        int i=0;
+        boolean check=false;
+        while(i<gender.length) {
+            if(gender[i]=='M'&&Math.abs(men+1-women)<=absoluteDifference) {
+                men++;
+                people++;
+                check=false;
+            }
+            else {
+                if(gender[i]=='W'&&Math.abs(men-(women+1))<=absoluteDifference) {
+                    women++;
+                    people++;
+                    check=false;
+                }else {
+                    if(check==true)
+                        break;
+                    swap(gender, i);
+                    i--;
+                    check=true;
+                }
+            }
+            i++;
         }
-        Collections.sort(row);
-        Collections.sort(colum);
-        for(int i=0;i<numberOfPaws;i++){
-            count+=Math.abs(temp.get(i)-row.get(i));
-            count+=Math.abs(temp.get(i)-colum.get(i));
-        }
-        System.out.println(count);
+        System.out.println(people);
     }
-
+    static void swap(char[]temp,int index) {
+        char acc;
+        if(index<temp.length-1) {
+            acc=temp[index+1];
+            temp[index+1]=temp[index];
+            temp[index]=acc;
+        }
+    }
     static class InputReader {
 
         StringTokenizer tokenizer;

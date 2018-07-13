@@ -20,37 +20,38 @@ class Main {
      */
     public static void main(String[] args) throws IOException {
         InputReader scan = new InputReader();
-
+        StringBuilder result = new StringBuilder();
+        
         int n = scan.nextInt();
-        ArrayList<Integer> list = new ArrayList<>();
+        ArrayList<Integer> busNumbers = new ArrayList<>();
         while (n-- > 0) {
-            list.add(scan.nextInt());
+            busNumbers.add(scan.nextInt());
         }
-        if (list.size() == 1 || list.size() == 2) {
-            for (int i : list) {
-                System.out.print(i + " ");
+        if (busNumbers.size() == 1 || busNumbers.size() == 2) {
+            for (int number : busNumbers) {
+                System.out.print(number + " ");
             }
             return;
         }
 
-        list.sort((a, b) -> a - b);
-        StringBuilder res = new StringBuilder();
-        int x = 0, y;
-        for (y = 1; y < list.size(); y++) {
-            if (list.get(y) - list.get(y - 1) != 1) {
-                res.append(adding(y-1, x, list));
-                x = y;
-                if (y == list.size()-1){
-                    res.append(adding(y, x, list));
+        busNumbers.sort((n1, n2) -> n1 - n2);
+        
+        int startIndex = 0, endIndex;
+        for (endIndex = 1; endIndex < busNumbers.size(); endIndex++) {
+            if (busNumbers.get(endIndex) - busNumbers.get(endIndex - 1) != 1) {
+                result.append(rangeToString(endIndex-1, startIndex, busNumbers));
+                startIndex = endIndex;
+                if (endIndex == busNumbers.size()-1){
+                    result.append(rangeToString(endIndex, startIndex, busNumbers));
                 }
-            } else if (y == list.size()-1){
-                res.append(adding(y, x, list));
+            } else if (endIndex == busNumbers.size()-1){
+                result.append(rangeToString(endIndex, startIndex, busNumbers));
             }
         }
-        System.out.println(res);
+        System.out.println(result);
     }
 
-    static String adding(int a, int b, ArrayList<Integer> list) {
+    static String rangeToString(int a, int b, ArrayList<Integer> list) {
         if (a - b == 1) {
             return list.get(b) + " " + list.get(a) + " ";
         }
