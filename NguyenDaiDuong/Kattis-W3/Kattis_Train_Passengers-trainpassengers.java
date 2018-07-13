@@ -1,43 +1,28 @@
+
 import java.io.*;
 import java.util.*;
 
-class main {
+class Passenger {
 
     public static void main(String[] args) {
         InputReader reader = new InputReader(System.in);
-        int numberOfTea = reader.nextInt();
-        int[] arrNumberOfTea = new int[numberOfTea];
-        int i = 0;
-        for (; i < numberOfTea; i++) {
-            int tea = reader.nextInt();
-            arrNumberOfTea[i] = tea;
-        }
-        int numberOfTopping = reader.nextInt();
-        int[] arrNumberOfTopping = new int[numberOfTopping];
-        for (i = 0; i < numberOfTopping; i++) {
-            int topping = reader.nextInt();
-            arrNumberOfTopping[i] = topping;
-        }
-        int smallestPrice = 0;
-        for (i = 0; i < numberOfTea; i++) {
-            int numberOfPrice = reader.nextInt();
-            for (int j = 0; j < numberOfPrice; j++) {
-                int price = reader.nextInt();
-                if (i == 0 && j == 0) {
-                    smallestPrice = arrNumberOfTopping[price-1] + arrNumberOfTea[i];
-                } else {
-                    if (arrNumberOfTopping[price-1] + arrNumberOfTea[i] < smallestPrice) {
-                        smallestPrice = arrNumberOfTopping[price-1] + arrNumberOfTea[i];
-                    }
-                }
+        int capacity = reader.nextInt();
+        int numberOfStation = reader.nextInt();
+        int sumPass = 0;
+        boolean check = true;
+        for (int i = 0; i < numberOfStation; i++) {
+            int passLeft = reader.nextInt();
+            int passEnter = reader.nextInt();
+            int passWait = reader.nextInt();
+            sumPass += passEnter - passLeft;
+            sumPass = sumPass == 0 || sumPass < capacity ? sumPass + passWait : sumPass;
+            if (i == 0 && passLeft > 0 || i == numberOfStation - 1 && passWait > 0 | sumPass > 0 || sumPass > capacity
+                    || sumPass < 0) {
+                check = false;
+                break;
             }
         }
-        int amountOfMoney = reader.nextInt();
-        if (amountOfMoney / smallestPrice - 1 < 0) {
-            System.out.println(0);
-        } else {
-            System.out.println(amountOfMoney / smallestPrice - 1);
-        }
+        System.out.println(check == true ? "possible" : "impossible");
     }
 
     static class InputReader {

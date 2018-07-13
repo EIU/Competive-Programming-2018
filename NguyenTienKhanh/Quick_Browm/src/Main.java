@@ -5,39 +5,37 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.StringTokenizer;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
         InputReader input = new InputReader(System.in);
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb ;
+        StringBuilder ts;
         int N = input.nextInt();
-        boolean first = true;
-        while (N!=0) {
-            int max = Integer.MIN_VALUE;
-            String[] listChar = new String[N];
-            for (int i = 0; i < N; i++) {
-                listChar[i] = input.nextLine();
-                if (listChar[i].length() > max) {
-                    max = listChar[i].length();
+        String test= new String("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
+        for(int i=0;i<N;i++){
+            HashSet hTest = new HashSet();
+            String ip = new String(input.nextLine());
+            sb = new StringBuilder();
+            ts= new StringBuilder();
+            for(int j=0;j<ip.length();j++){
+                hTest.add(ip.charAt(j));
+            }
+            for(int t=0;t<(test.length())/2;t++){
+                if(!hTest.contains(test.charAt(t))&& !hTest.contains(test.charAt(t+26))){ 
+                    ts.append(test.charAt(t));
                 }
             }
-            if(!first)
-                sb.append("\n");
-                first=false;
-            StringBuilder charRs = null;            
-            for (int p = 0; p < max; p++) {
-                charRs= new StringBuilder();
-                for (int q = N - 1; q >= 0; q--) {
-                    char c  = listChar[q].length() <= p ? ' ':listChar[q].charAt(p)=='|'? '-':listChar[q].charAt(p) == '-'?'|':listChar[q].charAt(p);
-                    charRs.append(c);
-                }
-                sb.append(DeleteEmp(charRs)+ "\n");
-            }
-            N = input.nextInt();
-        }
+            if(ts.length()==0)
+            sb.append("pangram"+"\n");
+        else
+            sb.append("missing "+ts+"\n");
         System.out.print(sb);
+        }
+        
 
     }
     public static StringBuilder DeleteEmp(StringBuilder listChar){
@@ -50,7 +48,7 @@ public class Main {
         return listChar;
     }
 
-    static class InputReader {
+   static class InputReader {
 
         StringTokenizer tokenizer;
 
