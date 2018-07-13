@@ -1,45 +1,32 @@
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.StringTokenizer;
 
-public class ColorSock {
+import java.io.*;
+import java.util.*;
+
+class Passenger {
 
     public static void main(String[] args) {
-        InputReader sc = new InputReader(System.in);
-        int NumSocks = sc.nextInt();
-        int Nummachine = sc.nextInt();
-        int color = sc.nextInt();
-        int[] SocksValue = new int[NumSocks];
-        for (int i = 0; i < SocksValue.length; i++) {
-            SocksValue[i] = sc.nextInt();
-        }
-        Arrays.sort(SocksValue);
-        int need = 1;
-        int machine = 1;
-        int lowemachine = SocksValue[0];
-
-        for (int i = 1; i < NumSocks; i++) {
-            if (Nummachine == machine) {
-                need++;
-                machine = 0;
-                lowemachine = SocksValue[i];
+        InputReader reader = new InputReader(System.in);
+        int capacity = reader.nextInt();
+        int numberOfStation = reader.nextInt();
+        int sumPass = 0;
+        boolean check = true;
+        for (int i = 0; i < numberOfStation; i++) {
+            int passLeft = reader.nextInt();
+            int passEnter = reader.nextInt();
+            int passWait = reader.nextInt();
+            sumPass += passEnter - passLeft;
+            sumPass = sumPass == 0 || sumPass < capacity ? sumPass + passWait : sumPass;
+            if (i == 0 && passLeft > 0 || i == numberOfStation - 1 && passWait > 0 | sumPass > 0 || sumPass > capacity
+                    || sumPass < 0) {
+                check = false;
+                break;
             }
-            if (SocksValue[i] - lowemachine > color) {
-                need++;
-                machine = 0;
-                lowemachine = SocksValue[i];
-            }
-            machine++;
         }
-
-        System.out.println(need);
+        System.out.println(check == true ? "possible" : "impossible");
     }
 
     static class InputReader {
+
         StringTokenizer tokenizer;
         BufferedReader reader;
         String token;
@@ -86,5 +73,6 @@ public class ColorSock {
         public long nextLong() {
             return Long.parseLong(next());
         }
+
     }
 }

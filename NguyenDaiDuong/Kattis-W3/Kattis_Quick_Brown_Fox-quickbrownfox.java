@@ -1,45 +1,31 @@
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
-public class ColorSock {
+class Fox {
 
-    public static void main(String[] args) {
-        InputReader sc = new InputReader(System.in);
-        int NumSocks = sc.nextInt();
-        int Nummachine = sc.nextInt();
-        int color = sc.nextInt();
-        int[] SocksValue = new int[NumSocks];
-        for (int i = 0; i < SocksValue.length; i++) {
-            SocksValue[i] = sc.nextInt();
-        }
-        Arrays.sort(SocksValue);
-        int need = 1;
-        int machine = 1;
-        int lowemachine = SocksValue[0];
-
-        for (int i = 1; i < NumSocks; i++) {
-            if (Nummachine == machine) {
-                need++;
-                machine = 0;
-                lowemachine = SocksValue[i];
+    public static void main(String[] args) throws IOException {
+        InputReader reader = new InputReader(System.in);
+        StringBuilder builder = new StringBuilder();
+        int numberOfTest = reader.nextInt();
+        boolean check = true;
+        for (int i = 0; i < numberOfTest; i++) {
+            String tempLine = reader.nextLine().toLowerCase();
+            String str = "";
+            for (char j = 'a'; j <= 'z'; j++) {
+                if (tempLine.indexOf(j) < 0) {
+                    check = false;
+                    str = (str.indexOf("missing ") >= 0 ? str + j : "missing " + j);
+                }
             }
-            if (SocksValue[i] - lowemachine > color) {
-                need++;
-                machine = 0;
-                lowemachine = SocksValue[i];
-            }
-            machine++;
+            builder.append(check == true ? "pangram" + "\n" : str + "\n");
+            check = true;
+            str = "";
         }
-
-        System.out.println(need);
+        System.out.println(builder);
     }
 
     static class InputReader {
+
         StringTokenizer tokenizer;
         BufferedReader reader;
         String token;
@@ -86,5 +72,6 @@ public class ColorSock {
         public long nextLong() {
             return Long.parseLong(next());
         }
+
     }
 }

@@ -1,58 +1,72 @@
-
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author LENOVO
- */
-class Main {
-
-	/**
-	 * @param args the command line arguments
-	 */
+public class Asciifigurerotation {
 	public static void main(String[] args) throws IOException {
-		InputReader scan = new InputReader(System.in);
-
-		boolean firstLine = true;
-		int n;
-		StringBuilder result = new StringBuilder();
-		while ((n = scan.nextInt()) != 0) {
-			String input;
-			char[][] list = new char[n][];
-			int width = 0;
-			for (int i = 0; i < n; i++) {
-				input = scan.nextLine();
-				width = Math.max(width, input.length());
-				list[i] = input.toCharArray();
+		InputReader sc = new InputReader(System.in);
+		boolean first = true;
+		while (true) {
+			int n = sc.nextInt();
+			if (n == 0) {
+				break;
 			}
-
-			result.append((!firstLine) ? "\n" : "");
-			firstLine = false;
-
-			for (int j = 0; j < width; j++) {
-				String line = "";
-				for (int i = n - 1; i >= 0; i--) {
-					line += (j >= list[i].length) ? ' '
-							: (list[i][j] == '-') ? '|' : ((list[i][j] == '|') ? '-' : list[i][j]);
+			if (first == true)
+				System.out.println();
+			first = false;
+			char[][] character = new char[n][n];
+			int length_max = 0;
+			for (int i = 0; i < n; i++) {
+				String s = sc.nextLine();
+				length_max = Math.max(length_max, s.length());
+				for (int j = s.length() - 1; j < 20; j++) {
+					s += " ";
 				}
-				result.append(line.replaceAll("\\s+$", "")).append("\n");
+				character[i] = s.toCharArray();
+			}
+			String[] ch = new String[n];
+			for (int i = 0; i < length_max; i++) {
+				for (int j = n - 1; j >= 0; j--) {
+					char a = character[j][i];
+					if (a == '|') {
+						ch[j] = "-";
+					} else if (a == '-') {
+						ch[j] = "|";
+					} else if (a == ' ') {
+						ch[j] = " ";
+					} else {
+						ch[j] = a + "";
+					}
+				}
+				TrimRight(ch);
+				for (int j = n - 1; j >= 0; j--) {
+					if (ch[j].equals(" ")) {
+						System.out.print(" ");
+					} else {
+						System.out.print(ch[j]);
+					}
+				}
+				System.out.println();
 			}
 		}
-		System.out.println(result.substring(0, result.lastIndexOf("\n")));
+	}
+
+	public static String[] TrimRight(String[] s) {
+		for (int j = 0; j < s.length; j++) {
+			if (s[j] == " ") {
+				s[j] = "";
+			} else {
+				break;
+			}
+		}
+		return s;
 	}
 
 	static class InputReader {
-
 		StringTokenizer tokenizer;
 		BufferedReader reader;
 		String token;
@@ -100,4 +114,5 @@ class Main {
 			return Long.parseLong(next());
 		}
 	}
+
 }

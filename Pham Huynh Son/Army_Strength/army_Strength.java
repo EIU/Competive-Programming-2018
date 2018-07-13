@@ -1,56 +1,36 @@
-
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import java.util.*;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author LENOVO
- */
-class Main {
+public class army_Strength {
+	public static void main(String[] args) {
+		InputReader input = new InputReader(System.in);
+		StringBuilder strBuilder = new StringBuilder();
+		int t = input.nextInt();
 
-	/**
-	 * @param args the command line arguments
-	 */
-	public static void main(String[] args) throws IOException {
-		InputReader scan = new InputReader(System.in);
-
-		boolean firstLine = true;
-		int n;
-		StringBuilder result = new StringBuilder();
-		while ((n = scan.nextInt()) != 0) {
-			String input;
-			char[][] list = new char[n][];
-			int width = 0;
-			for (int i = 0; i < n; i++) {
-				input = scan.nextLine();
-				width = Math.max(width, input.length());
-				list[i] = input.toCharArray();
+		while (t > 0) {
+			t--;
+			List<Long> godz = new ArrayList<Long>();
+			List<Long> mega = new ArrayList<Long>();
+			int g = input.nextInt();
+			int m = input.nextInt();
+			boolean f = true;
+			for (int i = 0; i < g; i++) {
+				godz.add(input.nextLong());
 			}
-
-			result.append((!firstLine) ? "\n" : "");
-			firstLine = false;
-
-			for (int j = 0; j < width; j++) {
-				String line = "";
-				for (int i = n - 1; i >= 0; i--) {
-					line += (j >= list[i].length) ? ' '
-							: (list[i][j] == '-') ? '|' : ((list[i][j] == '|') ? '-' : list[i][j]);
-				}
-				result.append(line.replaceAll("\\s+$", "")).append("\n");
+			for (int i = 0; i < m; i++) {
+				mega.add(input.nextLong());
 			}
+			
+			long maxG = Collections.max(godz);
+			long maxM = Collections.max(mega);
+			strBuilder.append((maxG>=maxM)?"Godzilla":"MechaGodzilla").append("\n");
 		}
-		System.out.println(result.substring(0, result.lastIndexOf("\n")));
+		System.out.println(strBuilder);
 	}
-
 	static class InputReader {
 
 		StringTokenizer tokenizer;

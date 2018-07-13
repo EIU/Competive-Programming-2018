@@ -1,66 +1,52 @@
+import java.util.*;
+import java.io.*;
+import java.math.BigInteger;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author LENOVO
- */
-class Main {
-
-    /**
-     * @param args the command line arguments
-     */
+public class Main {
+    static boolean readFile = false;
     public static void main(String[] args) throws IOException {
-        InputReader scan = new InputReader();
-        StringBuilder result = new StringBuilder();
-        
-        int n = scan.nextInt();
-        ArrayList<Integer> busNumbers = new ArrayList<>();
-        while (n-- > 0) {
-            busNumbers.add(scan.nextInt());
-        }
-        if (busNumbers.size() == 1 || busNumbers.size() == 2) {
-            for (int number : busNumbers) {
-                System.out.print(number + " ");
-            }
-            return;
-        }
-
-        busNumbers.sort((n1, n2) -> n1 - n2);
-        
-        int startIndex = 0, endIndex;
-        for (endIndex = 1; endIndex < busNumbers.size(); endIndex++) {
-            if (busNumbers.get(endIndex) - busNumbers.get(endIndex - 1) != 1) {
-                result.append(rangeToString(endIndex-1, startIndex, busNumbers));
-                startIndex = endIndex;
-                if (endIndex == busNumbers.size()-1){
-                    result.append(rangeToString(endIndex, startIndex, busNumbers));
-                }
-            } else if (endIndex == busNumbers.size()-1){
-                result.append(rangeToString(endIndex, startIndex, busNumbers));
-            }
-        }
-        System.out.println(result);
+		InputReader ip = new InputReader();
+		StringBuilder builder = new StringBuilder();
+		int c = ip.nextInt();
+		int n = ip.nextInt();
+		int[][]people = new int[n][3];
+		int train = 0;
+		for(int i = 0 ; i < n; i++)
+			for(int j = 0; j < 3; j++)
+				people[i][j] = ip.nextInt();
+		for(int i = 0; i < n; i++)
+		{
+				train -= people[i][0];
+				if(train < 0)
+				{
+					builder.append("impossible");
+					System.out.println(builder);
+					return;
+				}
+				train += people[i][1];
+				if(train > c)
+				{
+					builder.append("impossible");
+					System.out.println(builder);
+					return;
+				}
+				if(train < c && people[i][2] > 0)
+				{
+					builder.append("impossible");
+					System.out.println(builder);
+					return;
+				}
+				if(i == n - 1 && train != 0)
+				{
+					builder.append("impossible");
+					System.out.println(builder);
+					return;
+				}
+		}
+		builder.append("possible");
+		System.out.println(builder);      
     }
-
-    static String rangeToString(int a, int b, ArrayList<Integer> list) {
-        if (a - b == 1) {
-            return list.get(b) + " " + list.get(a) + " ";
-        }
-        if (a - b == 0) {
-            return list.get(a) + " ";
-        }
-        return list.get(b) + "-" + list.get(a) + " ";
-    }
-
     static class InputReader {
 
         InputStream is = System.in;
@@ -131,17 +117,15 @@ class Main {
 
         public char[][] nm(int n, int m) {
             char[][] map = new char[n][];
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < n; i++)
                 map[i] = ns(m);
-            }
             return map;
         }
 
         public int[] na(int n) {
             int[] a = new int[n];
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < n; i++)
                 a[i] = nextInt();
-            }
             return a;
         }
 

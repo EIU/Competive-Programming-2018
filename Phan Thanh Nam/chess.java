@@ -1,47 +1,42 @@
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
-class main {
-
+public class chess {
     public static void main(String[] args) {
-        InputReader reader = new InputReader(System.in);
-        int numberOfTea = reader.nextInt();
-        int[] arrNumberOfTea = new int[numberOfTea];
-        int i = 0;
-        for (; i < numberOfTea; i++) {
-            int tea = reader.nextInt();
-            arrNumberOfTea[i] = tea;
-        }
-        int numberOfTopping = reader.nextInt();
-        int[] arrNumberOfTopping = new int[numberOfTopping];
-        for (i = 0; i < numberOfTopping; i++) {
-            int topping = reader.nextInt();
-            arrNumberOfTopping[i] = topping;
-        }
-        int smallestPrice = 0;
-        for (i = 0; i < numberOfTea; i++) {
-            int numberOfPrice = reader.nextInt();
-            for (int j = 0; j < numberOfPrice; j++) {
-                int price = reader.nextInt();
-                if (i == 0 && j == 0) {
-                    smallestPrice = arrNumberOfTopping[price-1] + arrNumberOfTea[i];
-                } else {
-                    if (arrNumberOfTopping[price-1] + arrNumberOfTea[i] < smallestPrice) {
-                        smallestPrice = arrNumberOfTopping[price-1] + arrNumberOfTea[i];
-                    }
+        InputReader sc = new InputReader(System.in);
+        int n = sc.nextInt();
+        for (int i = 0; i < n; i++) {
+            char a = sc.next().charAt(0);
+            int row1 = sc.nextInt();
+            char b = sc.next().charAt(0);
+            int row2 = sc.nextInt();
+            int col1 = a - 'A' + 1;
+            int col2 = b - 'A' + 1;
+
+            if ((row1 + col1) % 2 != (row2 + col2) % 2) {
+                System.out.println("Impossible");
+            } else {
+                int row = (row1 + col1 - col2 + row2) / 2;
+                int col = (row1 + col1 + col2 - row2) / 2;
+                if(col>8||col<1||row>8||row<1){
+                    row = (row2 + col2 - col1 + row1) / 2;
+                    col = (row2 + col2 + col1 - row1) / 2;
                 }
-            }
-        }
-        int amountOfMoney = reader.nextInt();
-        if (amountOfMoney / smallestPrice - 1 < 0) {
-            System.out.println(0);
-        } else {
-            System.out.println(amountOfMoney / smallestPrice - 1);
+                if (col1 == col2 && row1 == row2) {
+                    System.out.println(0 + " " + (char)(col+'A'-1) + " " + row1);
+                } else if (col1 + row1 == col2 + row2 || col1 + row2 == col2 + row1) {
+                    System.out.println(1 + " " + a + " " + row1 + " " + b + " " + row2);
+                } else {
+                    System.out.println(2 + " " + a + " " + row1 + " " + (char)(col+'A'-1) + " " + row + " " + b + " " + row2);
+                }
+           }
         }
     }
-
     static class InputReader {
-
         StringTokenizer tokenizer;
         BufferedReader reader;
         String token;
@@ -88,6 +83,5 @@ class main {
         public long nextLong() {
             return Long.parseLong(next());
         }
-
     }
 }

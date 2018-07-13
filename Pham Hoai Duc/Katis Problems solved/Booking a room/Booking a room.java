@@ -1,76 +1,30 @@
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
+import java.io.*;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author LENOVO
- */
-class Main {
 
-	/**
-	 * @param args the command line arguments
-	 */
+public class Main {
+	static boolean readFile = false;
+
 	public static void main(String[] args) throws IOException {
-		InputReader scan = new InputReader();
-		StringBuilder result = new StringBuilder();
-		int n = scan.nextInt();
-		while (n-- > 0) {
-			Bishop a = new Bishop(scan.nextChar(), scan.nextInt());
-			Bishop b = new Bishop(scan.nextChar(), scan.nextInt());
-
-			if (a.row == b.row && a.column == b.column) {
-				result.append("0 ").append(a.toString()).append("\n");
-			} else {
-				boolean found = false;
-				for (int column = 'A'; column <= 'H'; column++) {
-					for (int row = 1; row <= 8; row++) {
-						if (Math.abs(column - a.column) == Math.abs(row - a.row)
-								&& Math.abs(column - b.column) == Math.abs(row - b.row)) {
-							found = true;
-							Bishop c = new Bishop((char) column, row);
-							result.append((column == a.column && row == a.row || column == b.column && row == b.row)
-									? "1 " + a.toString() + " " + b.toString()
-									: "2 " + a.toString() + " " + c.toString() + " " + b.toString()).append("\n");
-							break;
-						}
-					}
-					if (found) {
-						break;
-					}
-				}
-				if (!found) {
-					result.append("Impossible\n");
-				}
-			}
-		}
-
-		System.out.println(result);
-	}
-
-	static class Bishop {
-
-		char column;
-		int row;
-
-		public Bishop(char column, int row) {
-			this.column = column;
-			this.row = row;
-		}
-
-		@Override
-		public String toString() {
-			return column + " " + row;
-		}
-
+		InputReader ip = new InputReader();
+                int r = ip.nextInt();
+                int n = ip.nextInt();
+                HashSet<Integer> check = new HashSet<>();
+                for(int i = 0; i < n; i++)
+                {
+                    check.add(ip.nextInt());
+                }
+                for(int i = 1; i <= r; i++)
+                {
+                    if(!check.contains(i))
+                    {
+                        System.out.println(i);
+                        return;
+                    }
+                }
+                System.out.println("too late");
+    
 	}
 
 	static class InputReader {
@@ -143,17 +97,15 @@ class Main {
 
 		public char[][] nm(int n, int m) {
 			char[][] map = new char[n][];
-			for (int i = 0; i < n; i++) {
+			for (int i = 0; i < n; i++)
 				map[i] = ns(m);
-			}
 			return map;
 		}
 
 		public int[] na(int n) {
 			int[] a = new int[n];
-			for (int i = 0; i < n; i++) {
+			for (int i = 0; i < n; i++)
 				a[i] = nextInt();
-			}
 			return a;
 		}
 
@@ -200,3 +152,5 @@ class Main {
 
 	}
 }
+
+

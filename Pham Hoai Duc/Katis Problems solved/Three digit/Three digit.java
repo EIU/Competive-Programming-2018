@@ -1,44 +1,72 @@
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
-public class ColorSock {
 
+public class Main {
     public static void main(String[] args) {
-        InputReader sc = new InputReader(System.in);
-        int NumSocks = sc.nextInt();
-        int Nummachine = sc.nextInt();
-        int color = sc.nextInt();
-        int[] SocksValue = new int[NumSocks];
-        for (int i = 0; i < SocksValue.length; i++) {
-            SocksValue[i] = sc.nextInt();
+        InputReader ip = new InputReader(System.in);
+        int n = ip.nextInt();
+        int v_5 = 0;
+        long powerOf5 = 5;
+        while(true)
+        {
+            long count = n / powerOf5;
+            if(count == 0)
+                break;
+            v_5 += count;
+            powerOf5 *= 5;
         }
-        Arrays.sort(SocksValue);
-        int need = 1;
-        int machine = 1;
-        int lowemachine = SocksValue[0];
-
-        for (int i = 1; i < NumSocks; i++) {
-            if (Nummachine == machine) {
-                need++;
-                machine = 0;
-                lowemachine = SocksValue[i];
+        int v_2 = v_5;
+        long sum = 1;
+        long sum2 = 0;
+        for(int i = 1; i <= n; i++)
+        {
+            int temp = i;
+            if(v_2 != 0)
+            {
+                while(temp % 2 == 0)
+                {
+                    temp /= 2;
+                    v_2--;
+                    if(v_2 == 0)
+                        break;
+                }
             }
-            if (SocksValue[i] - lowemachine > color) {
-                need++;
-                machine = 0;
-                lowemachine = SocksValue[i];
+            if(v_5 != 0)
+            {
+                while(temp % 5 == 0)
+                {
+                    temp /= 5;
+                    v_5--;
+                    if(v_5 == 0)
+                        break;
+                }
             }
-            machine++;
+            sum *= temp;
+            sum2 = sum;
+            if(sum > 1000)
+            {
+                sum %= 1000;
+            }
         }
-
-        System.out.println(need);
+        StringBuilder builder = new StringBuilder();
+        if(sum2 > 1000 && sum < 100)
+        {
+            builder.append("0"+sum);
+        }
+        else
+        {
+            builder.append(sum+"\n");
+        }
+        System.out.print(builder);
+        
+        
     }
-
     static class InputReader {
         StringTokenizer tokenizer;
         BufferedReader reader;

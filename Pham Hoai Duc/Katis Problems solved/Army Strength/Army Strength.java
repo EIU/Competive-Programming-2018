@@ -1,66 +1,41 @@
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author LENOVO
- */
-class Main {
-
-    /**
-     * @param args the command line arguments
-     */
+import java.util.*;
+import java.io.*;
+public class Main {
+    static boolean readFile = false;
     public static void main(String[] args) throws IOException {
-        InputReader scan = new InputReader();
-        StringBuilder result = new StringBuilder();
-        
-        int n = scan.nextInt();
-        ArrayList<Integer> busNumbers = new ArrayList<>();
-        while (n-- > 0) {
-            busNumbers.add(scan.nextInt());
-        }
-        if (busNumbers.size() == 1 || busNumbers.size() == 2) {
-            for (int number : busNumbers) {
-                System.out.print(number + " ");
+        InputReader ip = new InputReader();
+        int T = ip.nextInt();
+        int nG;
+        int nM;
+        StringBuilder builder = new StringBuilder();
+        for(int t = 0; t < T; t++)
+        {
+            nG = ip.nextInt();
+            nM = ip.nextInt();
+            if(nG == 0 && nM == 0)
+            {
+                builder.append("uncertain"+"\n");
+                continue;
             }
-            return;
-        }
-
-        busNumbers.sort((n1, n2) -> n1 - n2);
-        
-        int startIndex = 0, endIndex;
-        for (endIndex = 1; endIndex < busNumbers.size(); endIndex++) {
-            if (busNumbers.get(endIndex) - busNumbers.get(endIndex - 1) != 1) {
-                result.append(rangeToString(endIndex-1, startIndex, busNumbers));
-                startIndex = endIndex;
-                if (endIndex == busNumbers.size()-1){
-                    result.append(rangeToString(endIndex, startIndex, busNumbers));
-                }
-            } else if (endIndex == busNumbers.size()-1){
-                result.append(rangeToString(endIndex, startIndex, busNumbers));
+            long gMax = -1;
+            long mMax = -1;
+            for(int i = 0; i < nG; i++)
+            {
+                long G = ip.nextLong();
+                gMax = G > gMax ? G : gMax;
+            }           
+            for(int i = 0; i <nM; i++)
+            {
+                long M = ip.nextLong();
+                mMax = M > mMax ? M : mMax;
             }
+            if(gMax >= mMax)
+                builder.append("Godzilla"+"\n");
+            else
+                builder.append("MechaGodzilla"+"\n");           
         }
-        System.out.println(result);
+        System.out.print(builder);
     }
-
-    static String rangeToString(int a, int b, ArrayList<Integer> list) {
-        if (a - b == 1) {
-            return list.get(b) + " " + list.get(a) + " ";
-        }
-        if (a - b == 0) {
-            return list.get(a) + " ";
-        }
-        return list.get(b) + "-" + list.get(a) + " ";
-    }
-
     static class InputReader {
 
         InputStream is = System.in;
@@ -131,17 +106,15 @@ class Main {
 
         public char[][] nm(int n, int m) {
             char[][] map = new char[n][];
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < n; i++)
                 map[i] = ns(m);
-            }
             return map;
         }
 
         public int[] na(int n) {
             int[] a = new int[n];
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < n; i++)
                 a[i] = nextInt();
-            }
             return a;
         }
 

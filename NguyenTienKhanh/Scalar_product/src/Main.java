@@ -1,67 +1,44 @@
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author LENOVO
- */
-class Main {
+public class Main {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) throws IOException {
-        InputReader scan = new InputReader();
-        StringBuilder result = new StringBuilder();
+        InputReader input = new InputReader();
+        int N= input.nextInt();
+        StringBuilder sb = new StringBuilder();
+        long[] listNegative ;
+        long[] listPositive;
+        long count;
+         int n=0;
+         while(n<N){
+            count=0;
+             int test=input.nextInt();
+             listNegative = new long[test];
+             listPositive = new long[test];
+        for(int i=0;i<test;i++){
+            listNegative[i]=input.nextLong();
+        }
+        for(int i =0;i<test;i++){
+            listPositive[i]=input.nextLong();
+        }
+        Arrays.sort(listPositive );
+        Arrays.sort(listNegative);
         
-        int n = scan.nextInt();
-        ArrayList<Integer> busNumbers = new ArrayList<>();
-        while (n-- > 0) {
-            busNumbers.add(scan.nextInt());
+       for(int i =0;i<test;i++){
+            count+=listNegative[i]*listPositive[test-i-1];
         }
-        if (busNumbers.size() == 1 || busNumbers.size() == 2) {
-            for (int number : busNumbers) {
-                System.out.print(number + " ");
-            }
-            return;
+       sb.append("Case #"+ (n+1) +": "+count+"\n");
+       n++;
+         }
+         System.out.println(sb);
         }
 
-        busNumbers.sort((n1, n2) -> n1 - n2);
-        
-        int startIndex = 0, endIndex;
-        for (endIndex = 1; endIndex < busNumbers.size(); endIndex++) {
-            if (busNumbers.get(endIndex) - busNumbers.get(endIndex - 1) != 1) {
-                result.append(rangeToString(endIndex-1, startIndex, busNumbers));
-                startIndex = endIndex;
-                if (endIndex == busNumbers.size()-1){
-                    result.append(rangeToString(endIndex, startIndex, busNumbers));
-                }
-            } else if (endIndex == busNumbers.size()-1){
-                result.append(rangeToString(endIndex, startIndex, busNumbers));
-            }
-        }
-        System.out.println(result);
-    }
-
-    static String rangeToString(int a, int b, ArrayList<Integer> list) {
-        if (a - b == 1) {
-            return list.get(b) + " " + list.get(a) + " ";
-        }
-        if (a - b == 0) {
-            return list.get(a) + " ";
-        }
-        return list.get(b) + "-" + list.get(a) + " ";
-    }
-
-    static class InputReader {
+    
+   
+          static class InputReader {
 
         InputStream is = System.in;
         byte[] inbuf = new byte[1 << 23];
@@ -131,17 +108,15 @@ class Main {
 
         public char[][] nm(int n, int m) {
             char[][] map = new char[n][];
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < n; i++)
                 map[i] = ns(m);
-            }
             return map;
         }
 
         public int[] na(int n) {
             int[] a = new int[n];
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < n; i++)
                 a[i] = nextInt();
-            }
             return a;
         }
 
@@ -187,4 +162,6 @@ class Main {
         }
 
     }
+
 }
+

@@ -1,45 +1,38 @@
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
-public class ColorSock {
+class Strength {
 
-    public static void main(String[] args) {
-        InputReader sc = new InputReader(System.in);
-        int NumSocks = sc.nextInt();
-        int Nummachine = sc.nextInt();
-        int color = sc.nextInt();
-        int[] SocksValue = new int[NumSocks];
-        for (int i = 0; i < SocksValue.length; i++) {
-            SocksValue[i] = sc.nextInt();
-        }
-        Arrays.sort(SocksValue);
-        int need = 1;
-        int machine = 1;
-        int lowemachine = SocksValue[0];
-
-        for (int i = 1; i < NumSocks; i++) {
-            if (Nummachine == machine) {
-                need++;
-                machine = 0;
-                lowemachine = SocksValue[i];
+    public static void main(String[] args) throws IOException {
+        InputReader reader = new InputReader(System.in);
+        StringBuilder builder = new StringBuilder();
+        int numberOfTest = reader.nextInt();
+        for (int i = 0; i < numberOfTest; i++) {
+            int[] godzillaArmy = new int[reader.nextInt()];
+            int[] mechagodzillaArmy = new int[reader.nextInt()];
+            for (int j = 0; j < godzillaArmy.length; j++) {
+                godzillaArmy[j] = reader.nextInt();
             }
-            if (SocksValue[i] - lowemachine > color) {
-                need++;
-                machine = 0;
-                lowemachine = SocksValue[i];
+            for (int j = 0; j < mechagodzillaArmy.length; j++) {
+                mechagodzillaArmy[j] = reader.nextInt();
             }
-            machine++;
+            Arrays.sort(godzillaArmy);
+            Arrays.sort(mechagodzillaArmy);
+            int h = 0, k = 0;
+            while (h < godzillaArmy.length && k < mechagodzillaArmy.length) {
+                if(godzillaArmy[h]>=mechagodzillaArmy[k])
+                    k++;
+                else
+                    h++;
+            }
+            builder.append(k == mechagodzillaArmy.length ? "Godzilla" + "\n"
+                    : h == godzillaArmy.length ? "MechaGodzilla" + "\n" : "uncertain" + "\n");
         }
-
-        System.out.println(need);
+        System.out.print(builder);
     }
 
     static class InputReader {
+
         StringTokenizer tokenizer;
         BufferedReader reader;
         String token;
@@ -86,5 +79,6 @@ public class ColorSock {
         public long nextLong() {
             return Long.parseLong(next());
         }
+
     }
 }

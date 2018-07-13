@@ -1,45 +1,34 @@
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
-public class ColorSock {
+class Minimum {
 
     public static void main(String[] args) {
-        InputReader sc = new InputReader(System.in);
-        int NumSocks = sc.nextInt();
-        int Nummachine = sc.nextInt();
-        int color = sc.nextInt();
-        int[] SocksValue = new int[NumSocks];
-        for (int i = 0; i < SocksValue.length; i++) {
-            SocksValue[i] = sc.nextInt();
-        }
-        Arrays.sort(SocksValue);
-        int need = 1;
-        int machine = 1;
-        int lowemachine = SocksValue[0];
-
-        for (int i = 1; i < NumSocks; i++) {
-            if (Nummachine == machine) {
-                need++;
-                machine = 0;
-                lowemachine = SocksValue[i];
+        InputReader reader = new InputReader(System.in);
+        StringBuilder builder = new StringBuilder();
+        int numberOfTest = reader.nextInt();
+        for (int i = 0; i < numberOfTest; i++) {
+            long sum = 0;
+            long[] vectorV1 = new long[reader.nextInt()];
+            long[] vertorV2 = new long[vectorV1.length];
+            for (int j = 0; j < vectorV1.length; j++) {
+                vectorV1[j] = reader.nextLong();
             }
-            if (SocksValue[i] - lowemachine > color) {
-                need++;
-                machine = 0;
-                lowemachine = SocksValue[i];
+            for (int j = 0; j < vectorV1.length; j++) {
+                vertorV2[j] = reader.nextLong();
             }
-            machine++;
+            Arrays.sort(vectorV1);
+            Arrays.sort(vertorV2);
+            for (int k = 0; k < vectorV1.length; k++) {
+                sum += vectorV1[k] * vertorV2[vectorV1.length - (k + 1)];
+            }
+            builder.append("Case #" + (i + 1) + ": " + sum + "\n");
         }
-
-        System.out.println(need);
+        System.out.println(builder);
     }
 
     static class InputReader {
+
         StringTokenizer tokenizer;
         BufferedReader reader;
         String token;
@@ -86,5 +75,6 @@ public class ColorSock {
         public long nextLong() {
             return Long.parseLong(next());
         }
+
     }
 }

@@ -1,45 +1,44 @@
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.StringTokenizer;
 
-public class ColorSock {
+import java.io.*;
+import java.util.*;
+
+class chess {
 
     public static void main(String[] args) {
-        InputReader sc = new InputReader(System.in);
-        int NumSocks = sc.nextInt();
-        int Nummachine = sc.nextInt();
-        int color = sc.nextInt();
-        int[] SocksValue = new int[NumSocks];
-        for (int i = 0; i < SocksValue.length; i++) {
-            SocksValue[i] = sc.nextInt();
-        }
-        Arrays.sort(SocksValue);
-        int need = 1;
-        int machine = 1;
-        int lowemachine = SocksValue[0];
-
-        for (int i = 1; i < NumSocks; i++) {
-            if (Nummachine == machine) {
-                need++;
-                machine = 0;
-                lowemachine = SocksValue[i];
+        InputReader reader = new InputReader(System.in);
+        int numberOfTest = reader.nextInt();
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < numberOfTest; i++) {
+            char row1 = reader.next().toCharArray()[0];
+            int colum1 = reader.nextInt();
+            char row2 = reader.next().toCharArray()[0];
+            int colum2 = reader.nextInt();
+            boolean check = false;
+            if (colum1 == colum2 && row1==row2) {
+            	check=true;
+                builder.append("0"+" "+row1+" "+colum1+"\n");
+            } else {
+                for (char j = 'A'; j <= 'Z'; j++) {
+                    for (int h = 1; h <= 8; h++) {
+                    	if (Math.abs(j-row1)==Math.abs(h-colum1)&&Math.abs(j-row2)==Math.abs(h-colum2)) {
+                            check = true;
+                            builder.append(j==row2&&h==colum2||j==row1&&h==colum1?"1"+" "+row1+" "+colum1+" "+row2+" "+colum2+"\n" : "2"+" "+row1+" "+colum1+" "+j+" "+h+" "+row2+" "+colum2+"\n");
+                            break;
+                        }
+                    }
+                    if(check)
+                    	break;
+                }
             }
-            if (SocksValue[i] - lowemachine > color) {
-                need++;
-                machine = 0;
-                lowemachine = SocksValue[i];
+            if (check == false) {
+                builder.append("Impossible").append("\n");
             }
-            machine++;
         }
-
-        System.out.println(need);
+        System.out.println(builder);
     }
 
     static class InputReader {
+
         StringTokenizer tokenizer;
         BufferedReader reader;
         String token;
@@ -86,5 +85,6 @@ public class ColorSock {
         public long nextLong() {
             return Long.parseLong(next());
         }
+
     }
 }
