@@ -1,34 +1,24 @@
 import java.io.*;
 import java.util.*;
 
-class Tea {
+class Birds {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		InputReader reader = new InputReader(System.in);
-		int numberOfTea = reader.nextInt();
-		int[] arrNumberOfTea = new int[numberOfTea];
-		int i = 0;
-		for (; i < numberOfTea; i++) {
-			arrNumberOfTea[i] = reader.nextInt();
+		int wireLength = reader.nextInt();
+		int distance = reader.nextInt();
+		int numberOfBirds = reader.nextInt() + 2;
+		int sumOfBirds = 0;
+		int[] location = new int[numberOfBirds];
+		for (int i = 0; i < numberOfBirds; i++) {
+			location[i] = i == 0 ? 6 : i == numberOfBirds - 1 ? wireLength - 6 : reader.nextInt();
 		}
-		int numberOfTopping = reader.nextInt();
-		int[] arrNumberOfTopping = new int[numberOfTopping];
-		for (i = 0; i < numberOfTopping; i++) {
-			arrNumberOfTopping[i] = reader.nextInt();
-		}
-		int smallestPrice = 0;
-		for (i = 0; i < numberOfTea; i++) {
-			int suitableTopping = reader.nextInt();
-			for (int j = 0; j < suitableTopping; j++) {
-				int price = reader.nextInt();
-				smallestPrice = i == 0 && j == 0 ? arrNumberOfTopping[price - 1] + arrNumberOfTea[i]
-						: arrNumberOfTopping[price - 1] + arrNumberOfTea[i] < smallestPrice
-								? arrNumberOfTopping[price - 1] + arrNumberOfTea[i]
-								:smallestPrice;
-			}
-		}
-		int amountOfMoney = reader.nextInt();
-		System.out.println(amountOfMoney / smallestPrice - 1 < 0 ? 0 : amountOfMoney / smallestPrice - 1);
+		Arrays.sort(location);
+		for (int i = 0; i < numberOfBirds; i++)
+			sumOfBirds = numberOfBirds == 2 ? ((wireLength - 12) / distance) + 1
+					: i == 1 || i == numberOfBirds - 1 ? sumOfBirds + ((location[i] - location[i - 1]) / distance)
+							: i > 0 ? sumOfBirds + ((location[i] - location[i - 1]) / distance) - 1 : sumOfBirds;
+		System.out.print(sumOfBirds);
 	}
 
 	static class InputReader {

@@ -5,22 +5,9 @@ class main {
 
     public static void main(String[] args) {
         InputReader reader = new InputReader(System.in);
-        int numberOfPaws=reader.nextInt();
-        int count=0;
-        List<Integer> row=new ArrayList<>();
-        List<Integer> colum=new ArrayList<>();
-        for(int i=0;i<numberOfPaws;i++){
-            row.add(reader.nextInt());
-            colum.add(reader.nextInt());
-        }
-        Collections.sort(row);
-        Collections.sort(colum);
-        for(int i=0;i<numberOfPaws;i++){
-            count+=Math.abs(i+1-row.get(i))+Math.abs(i+1-colum.get(i));
-        }
-        System.out.println(count);
+        int numberofInteger = reader.nextInt();
+        System.out.println(numberofInteger*3+2);
     }
-
     static class InputReader {
 
         StringTokenizer tokenizer;

@@ -1,67 +1,44 @@
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.StringTokenizer;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author LENOVO
- */
-class Main {
+public class Main {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) throws IOException {
-        InputReader scan = new InputReader();
-        StringBuilder result = new StringBuilder();
-        
-        int n = scan.nextInt();
-        ArrayList<Integer> busNumbers = new ArrayList<>();
-        while (n-- > 0) {
-            busNumbers.add(scan.nextInt());
-        }
-        if (busNumbers.size() == 1 || busNumbers.size() == 2) {
-            for (int number : busNumbers) {
-                System.out.print(number + " ");
-            }
-            return;
-        }
-
-        busNumbers.sort((n1, n2) -> n1 - n2);
-        
-        int startIndex = 0, endIndex;
-        for (endIndex = 1; endIndex < busNumbers.size(); endIndex++) {
-            if (busNumbers.get(endIndex) - busNumbers.get(endIndex - 1) != 1) {
-                result.append(rangeToString(endIndex-1, startIndex, busNumbers));
-                startIndex = endIndex;
-                if (endIndex == busNumbers.size()-1){
-                    result.append(rangeToString(endIndex, startIndex, busNumbers));
+        InputReader input = new InputReader();
+        int N = input.nextInt();
+        int distance=0;
+        for(int i =0;i<N;i++){
+            ArrayList<Integer> listAnts= new ArrayList<>();
+             ArrayList<Integer> listAnts1= new ArrayList<>();
+            int l = input.nextInt();
+            int n= input.nextInt();
+            for (int j = 0; j < n; j++) {
+                distance=input.nextInt();
+                if(distance<=(l/2)){
+                     listAnts.add(distance);
+                     listAnts1.add(l-distance);
+                }else{
+                    listAnts.add(l-distance);
+                    listAnts1.add(distance);
                 }
-            } else if (endIndex == busNumbers.size()-1){
-                result.append(rangeToString(endIndex, startIndex, busNumbers));
+                }
+            System.out.println(Collections.max(listAnts)+" "+ Collections.max(listAnts1));
             }
+         
         }
-        System.out.println(result);
-    }
 
-    static String rangeToString(int a, int b, ArrayList<Integer> list) {
-        if (a - b == 1) {
-            return list.get(b) + " " + list.get(a) + " ";
-        }
-        if (a - b == 0) {
-            return list.get(a) + " ";
-        }
-        return list.get(b) + "-" + list.get(a) + " ";
-    }
-
-    static class InputReader {
+    
+   
+    
+          static class InputReader {
 
         InputStream is = System.in;
         byte[] inbuf = new byte[1 << 23];
@@ -131,17 +108,15 @@ class Main {
 
         public char[][] nm(int n, int m) {
             char[][] map = new char[n][];
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < n; i++)
                 map[i] = ns(m);
-            }
             return map;
         }
 
         public int[] na(int n) {
             int[] a = new int[n];
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < n; i++)
                 a[i] = nextInt();
-            }
             return a;
         }
 
@@ -187,4 +162,5 @@ class Main {
         }
 
     }
+
 }

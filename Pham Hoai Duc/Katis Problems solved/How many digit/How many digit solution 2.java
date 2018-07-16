@@ -1,64 +1,29 @@
+import java.util.*;
+import java.io.*;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author LENOVO
- */
-class Main {
+public class Main {
+    static boolean readFile = false;
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) throws IOException {
-        InputReader scan = new InputReader();
-        StringBuilder result = new StringBuilder();
-        
-        int n = scan.nextInt();
-        ArrayList<Integer> busNumbers = new ArrayList<>();
-        while (n-- > 0) {
-            busNumbers.add(scan.nextInt());
-        }
-        if (busNumbers.size() == 1 || busNumbers.size() == 2) {
-            for (int number : busNumbers) {
-                System.out.print(number + " ");
-            }
-            return;
-        }
-
-        busNumbers.sort((n1, n2) -> n1 - n2);
-        
-        int startIndex = 0, endIndex;
-        for (endIndex = 1; endIndex < busNumbers.size(); endIndex++) {
-            if (busNumbers.get(endIndex) - busNumbers.get(endIndex - 1) != 1) {
-                result.append(rangeToString(endIndex-1, startIndex, busNumbers));
-                startIndex = endIndex;
-                if (endIndex == busNumbers.size()-1){
-                    result.append(rangeToString(endIndex, startIndex, busNumbers));
+        InputReader ip = new InputReader();
+        StringBuilder builder = new StringBuilder();
+                while(ip.hasNext())
+                {
+                    int n = ip.nextInt();
+                    if(n == 0 || n == 1 || n == 3)
+                    {
+                        builder.append(1+"\n");
+                    }
+                    else
+                    {
+                         double x =  n * Math.log10(n / Math.E) + Math.log10(2 * Math.PI * n) / 2;
+                         int result = (int)Math.floor(x + 1);
+                         builder.append(result+"\n");
+                    }
                 }
-            } else if (endIndex == busNumbers.size()-1){
-                result.append(rangeToString(endIndex, startIndex, busNumbers));
-            }
-        }
-        System.out.println(result);
-    }
-
-    static String rangeToString(int a, int b, ArrayList<Integer> list) {
-        if (a - b == 1) {
-            return list.get(b) + " " + list.get(a) + " ";
-        }
-        if (a - b == 0) {
-            return list.get(a) + " ";
-        }
-        return list.get(b) + "-" + list.get(a) + " ";
+                System.out.print(builder);
+    
     }
 
     static class InputReader {
@@ -131,17 +96,15 @@ class Main {
 
         public char[][] nm(int n, int m) {
             char[][] map = new char[n][];
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < n; i++)
                 map[i] = ns(m);
-            }
             return map;
         }
 
         public int[] na(int n) {
             int[] a = new int[n];
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < n; i++)
                 a[i] = nextInt();
-            }
             return a;
         }
 

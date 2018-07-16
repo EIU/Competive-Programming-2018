@@ -1,38 +1,46 @@
 import java.io.*;
 import java.util.*;
 
-class Tea {
+public class W2_Ants {
 
 	public static void main(String[] args) {
+
 		InputReader reader = new InputReader(System.in);
-		int numberOfTea = reader.nextInt();
-		int[] arrNumberOfTea = new int[numberOfTea];
-		int i = 0;
-		for (; i < numberOfTea; i++) {
-			arrNumberOfTea[i] = reader.nextInt();
-		}
-		int numberOfTopping = reader.nextInt();
-		int[] arrNumberOfTopping = new int[numberOfTopping];
-		for (i = 0; i < numberOfTopping; i++) {
-			arrNumberOfTopping[i] = reader.nextInt();
-		}
-		int smallestPrice = 0;
-		for (i = 0; i < numberOfTea; i++) {
-			int suitableTopping = reader.nextInt();
-			for (int j = 0; j < suitableTopping; j++) {
-				int price = reader.nextInt();
-				smallestPrice = i == 0 && j == 0 ? arrNumberOfTopping[price - 1] + arrNumberOfTea[i]
-						: arrNumberOfTopping[price - 1] + arrNumberOfTea[i] < smallestPrice
-								? arrNumberOfTopping[price - 1] + arrNumberOfTea[i]
-								:smallestPrice;
+		int nCase = reader.nextInt();
+		for (int i = 0; i < nCase; i++) {
+			int Earliest = 0;
+			int Latest = 0;
+			StringBuilder builder = new StringBuilder();
+			int poleLenght = reader.nextInt();
+			int nAnts = reader.nextInt();
+			int[] arrEarliest = new int[nAnts];
+			int[] arrLastest = new int[nAnts];
+			for (int j = 0; j < nAnts; j++) {
+				int antPosition = reader.nextInt();
+				if (antPosition < poleLenght / 2) {
+					arrEarliest[j] = antPosition;
+					arrLastest[j] = poleLenght - antPosition;
+				} else {
+					arrEarliest[j] = poleLenght - antPosition;
+					arrLastest[j] = antPosition;
+				}
 			}
+			int max1 = 0;
+			int max2 = 0;
+			for (int j = 0; j < arrEarliest.length; j++) {
+				Earliest = Math.max(max1, arrEarliest[j]);
+				max1 = Earliest;
+			}
+			for (int j = 0; j < arrLastest.length; j++) {
+				Latest = Math.max(max2, arrLastest[j]);
+				max2 = Latest;
+			}
+			builder.append(Earliest + " " + Latest);
+			System.out.println(builder);
 		}
-		int amountOfMoney = reader.nextInt();
-		System.out.println(amountOfMoney / smallestPrice - 1 < 0 ? 0 : amountOfMoney / smallestPrice - 1);
 	}
 
 	static class InputReader {
-
 		StringTokenizer tokenizer;
 		BufferedReader reader;
 		String token;
@@ -79,6 +87,5 @@ class Tea {
 		public long nextLong() {
 			return Long.parseLong(next());
 		}
-
 	}
 }

@@ -1,36 +1,36 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.*;
 
-class Tea {
-
+public class army_Strength {
 	public static void main(String[] args) {
-		InputReader reader = new InputReader(System.in);
-		int numberOfTea = reader.nextInt();
-		int[] arrNumberOfTea = new int[numberOfTea];
-		int i = 0;
-		for (; i < numberOfTea; i++) {
-			arrNumberOfTea[i] = reader.nextInt();
-		}
-		int numberOfTopping = reader.nextInt();
-		int[] arrNumberOfTopping = new int[numberOfTopping];
-		for (i = 0; i < numberOfTopping; i++) {
-			arrNumberOfTopping[i] = reader.nextInt();
-		}
-		int smallestPrice = 0;
-		for (i = 0; i < numberOfTea; i++) {
-			int suitableTopping = reader.nextInt();
-			for (int j = 0; j < suitableTopping; j++) {
-				int price = reader.nextInt();
-				smallestPrice = i == 0 && j == 0 ? arrNumberOfTopping[price - 1] + arrNumberOfTea[i]
-						: arrNumberOfTopping[price - 1] + arrNumberOfTea[i] < smallestPrice
-								? arrNumberOfTopping[price - 1] + arrNumberOfTea[i]
-								:smallestPrice;
-			}
-		}
-		int amountOfMoney = reader.nextInt();
-		System.out.println(amountOfMoney / smallestPrice - 1 < 0 ? 0 : amountOfMoney / smallestPrice - 1);
-	}
+		InputReader input = new InputReader(System.in);
+		StringBuilder strBuilder = new StringBuilder();
+		int t = input.nextInt();
 
+		while (t > 0) {
+			t--;
+			List<Long> godz = new ArrayList<Long>();
+			List<Long> mega = new ArrayList<Long>();
+			int g = input.nextInt();
+			int m = input.nextInt();
+			boolean f = true;
+			for (int i = 0; i < g; i++) {
+				godz.add(input.nextLong());
+			}
+			for (int i = 0; i < m; i++) {
+				mega.add(input.nextLong());
+			}
+			
+			long maxG = Collections.max(godz);
+			long maxM = Collections.max(mega);
+			strBuilder.append((maxG>=maxM)?"Godzilla":"MechaGodzilla").append("\n");
+		}
+		System.out.println(strBuilder);
+	}
 	static class InputReader {
 
 		StringTokenizer tokenizer;
@@ -79,6 +79,5 @@ class Tea {
 		public long nextLong() {
 			return Long.parseLong(next());
 		}
-
 	}
 }

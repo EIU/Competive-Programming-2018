@@ -1,24 +1,30 @@
 import java.io.*;
 import java.util.*;
 
-class main {
+class Minimum {
 
     public static void main(String[] args) {
         InputReader reader = new InputReader(System.in);
-        int numberOfPaws=reader.nextInt();
-        int count=0;
-        List<Integer> row=new ArrayList<>();
-        List<Integer> colum=new ArrayList<>();
-        for(int i=0;i<numberOfPaws;i++){
-            row.add(reader.nextInt());
-            colum.add(reader.nextInt());
+        StringBuilder builder = new StringBuilder();
+        int numberOfTest = reader.nextInt();
+        for (int i = 0; i < numberOfTest; i++) {
+            long sum = 0;
+            long[] vectorV1 = new long[reader.nextInt()];
+            long[] vertorV2 = new long[vectorV1.length];
+            for (int j = 0; j < vectorV1.length; j++) {
+                vectorV1[j] = reader.nextLong();
+            }
+            for (int j = 0; j < vectorV1.length; j++) {
+                vertorV2[j] = reader.nextLong();
+            }
+            Arrays.sort(vectorV1);
+            Arrays.sort(vertorV2);
+            for (int k = 0; k < vectorV1.length; k++) {
+                sum += vectorV1[k] * vertorV2[vectorV1.length - (k + 1)];
+            }
+            builder.append("Case #" + (i + 1) + ": " + sum + "\n");
         }
-        Collections.sort(row);
-        Collections.sort(colum);
-        for(int i=0;i<numberOfPaws;i++){
-            count+=Math.abs(i+1-row.get(i))+Math.abs(i+1-colum.get(i));
-        }
-        System.out.println(count);
+        System.out.println(builder);
     }
 
     static class InputReader {

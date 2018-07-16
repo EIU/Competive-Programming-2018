@@ -1,64 +1,54 @@
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author LENOVO
- */
-class Main {
 
-    /**
-     * @param args the command line arguments
-     */
+public class Main {
     public static void main(String[] args) throws IOException {
-        InputReader scan = new InputReader();
-        StringBuilder result = new StringBuilder();
-        
-        int n = scan.nextInt();
-        ArrayList<Integer> busNumbers = new ArrayList<>();
-        while (n-- > 0) {
-            busNumbers.add(scan.nextInt());
-        }
-        if (busNumbers.size() == 1 || busNumbers.size() == 2) {
-            for (int number : busNumbers) {
-                System.out.print(number + " ");
+        InputReader input = new InputReader();
+        int N = input.nextInt();
+        StringBuilder wait = new StringBuilder(input.next());
+        StringBuilder sb = new StringBuilder();
+        int M = 0, W = 0;
+        for (int i = 0; i < wait.length(); i++) {
+            if(Math.abs(M-W)<N){
+            if (wait.charAt(i) == 'M') {
+                M++;
+            } else {
+                W++;
             }
-            return;
-        }
-
-        busNumbers.sort((n1, n2) -> n1 - n2);
-        
-        int startIndex = 0, endIndex;
-        for (endIndex = 1; endIndex < busNumbers.size(); endIndex++) {
-            if (busNumbers.get(endIndex) - busNumbers.get(endIndex - 1) != 1) {
-                result.append(rangeToString(endIndex-1, startIndex, busNumbers));
-                startIndex = endIndex;
-                if (endIndex == busNumbers.size()-1){
-                    result.append(rangeToString(endIndex, startIndex, busNumbers));
-                }
-            } else if (endIndex == busNumbers.size()-1){
-                result.append(rangeToString(endIndex, startIndex, busNumbers));
+            continue;
             }
-        }
-        System.out.println(result);
-    }
+            if (Math.abs(M - W) >= N) {
+                if (M > W) {
+                   if(wait.charAt(i)!='W'){
+                       if(i+1<wait.length()-1 && wait.charAt(i+1)=='W'){
+                           W++;
+                           wait.deleteCharAt(i+1);
+                           i--;
+                     }else
+                           break;
+                   } else
+                       W++;
+                }else {
+                   if(wait.charAt(i)!='M'){
+                       if(i+1<wait.length()-1 && wait.charAt(i+1)=='M'){
+                           M++;
+                           wait.deleteCharAt(i+1);
+                           i--;
+                     }else
+                           break;
+                   } else
+                       M++;
+                }  
+                
+            }
 
-    static String rangeToString(int a, int b, ArrayList<Integer> list) {
-        if (a - b == 1) {
-            return list.get(b) + " " + list.get(a) + " ";
         }
-        if (a - b == 0) {
-            return list.get(a) + " ";
-        }
-        return list.get(b) + "-" + list.get(a) + " ";
+        sb.append(M + W);
+        System.out.println(sb);
+
     }
 
     static class InputReader {
@@ -185,6 +175,5 @@ class Main {
                 b = readByte();
             }
         }
-
     }
 }

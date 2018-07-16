@@ -21,73 +21,31 @@ class Main {
      */
     public static void main(String[] args) throws IOException {
         InputReader scan = new InputReader();
-        StringBuilder res = new StringBuilder();
+        StringBuilder result = new StringBuilder();
         while (scan.hasNext()) {
             int n = scan.nextInt();
-            int[] primes = prime(n);
-            long sumPrimes = calculateSum(primes)-n;
+            long sumPrimes = sum(n);
+            result.append(n).append(" ");
             if (sumPrimes == n){
-                res.append(n).append(" ").append("perfect\n");
+                result.append("perfect\n");
             } else if (Math.abs(n - sumPrimes) <= 2){
-                res.append(n).append(" ").append("almost perfect\n");
-                //System.out.println(Math.abs(n - sumPrimes));
+                result.append("almost perfect\n");
             } else {
-                res.append(n).append(" ").append("not perfect\n");
+                result.append("not perfect\n");
             }
         }
-        System.out.println(res);
+        System.out.println(result);
     }
-
-    static long calculateSum(int[] primes) {
-        long res = 1;
-        int anchor = primes[0];
-        int count = 1;
-        for (int i = 1; i < primes.length; i++) {
-            if (primes[i] == anchor) {
-                count++;
-            } else {
-                res *= sumPrime(anchor, count);
-                anchor = primes[i];
-                count = 1;
-            }
-        }
-        if (primes[primes.length-1] == anchor){
-            res *= sumPrime(anchor, count);
-        } else {
-            res *= sumPrime(anchor, 1);
-        }
-        return res;
-    }
-
-    static int sumPrime(int a, int x) {
-        int res = 1;
-        int temp = 1;
-        for (int i=1;i<=x;i++){
-            temp *= a;
-            res += temp;
-        }
-        return res;
-    }
-
-    static String pringIntArray(int[] a) {
-        String res = "";
-        for (int i = 0; i < a.length; i++) {
-            res += a[i] + " ";
-        }
-        return res;
-    }
-
-    static int[] prime(int n) {
-        int[] res = new int[33];
-        int index = 0;
-        for (int i = 2; i <= n; i++) {
-            while (n % i == 0) {
-                res[index++] = i;
-                n /= i;
-            }
-        }
-        //res[index++] = n;
-        return Arrays.copyOf(res, index);
+    
+    static long sum(int n) {
+    	long result = 0;
+    	for (int i=1;i*i<=n;i++) {
+    		if (n % i == 0) {
+    			result += i;
+    			result += (n/i != i)?n/i:0;
+    		}
+    	}
+    	return result-n;
     }
 
     static class InputReader {

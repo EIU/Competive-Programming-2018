@@ -1,34 +1,23 @@
 import java.io.*;
 import java.util.*;
 
-class Tea {
+class Ants {
 
 	public static void main(String[] args) {
 		InputReader reader = new InputReader(System.in);
-		int numberOfTea = reader.nextInt();
-		int[] arrNumberOfTea = new int[numberOfTea];
-		int i = 0;
-		for (; i < numberOfTea; i++) {
-			arrNumberOfTea[i] = reader.nextInt();
-		}
-		int numberOfTopping = reader.nextInt();
-		int[] arrNumberOfTopping = new int[numberOfTopping];
-		for (i = 0; i < numberOfTopping; i++) {
-			arrNumberOfTopping[i] = reader.nextInt();
-		}
-		int smallestPrice = 0;
-		for (i = 0; i < numberOfTea; i++) {
-			int suitableTopping = reader.nextInt();
-			for (int j = 0; j < suitableTopping; j++) {
-				int price = reader.nextInt();
-				smallestPrice = i == 0 && j == 0 ? arrNumberOfTopping[price - 1] + arrNumberOfTea[i]
-						: arrNumberOfTopping[price - 1] + arrNumberOfTea[i] < smallestPrice
-								? arrNumberOfTopping[price - 1] + arrNumberOfTea[i]
-								:smallestPrice;
+		int numberOfTest = reader.nextInt();
+		for (int i = 0; i < numberOfTest; i++) {
+			int lengthOfPole = reader.nextInt();
+			int numberOfAnts = reader.nextInt();
+			int latestTime = 0, earliestTime = 0;
+			for (int j = 0; j < numberOfAnts; j++) {
+				int left = reader.nextInt();
+				int right = lengthOfPole - left;
+				earliestTime=Math.max(Math.min(left, right), earliestTime);
+				latestTime=Math.max(Math.max(left, right), latestTime);
 			}
+			System.out.println(earliestTime + " " + latestTime);
 		}
-		int amountOfMoney = reader.nextInt();
-		System.out.println(amountOfMoney / smallestPrice - 1 < 0 ? 0 : amountOfMoney / smallestPrice - 1);
 	}
 
 	static class InputReader {

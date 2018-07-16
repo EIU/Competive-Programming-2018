@@ -1,66 +1,67 @@
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
+import java.io.*;
+import java.math.BigInteger;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author LENOVO
- */
-class Main {
 
-    /**
-     * @param args the command line arguments
-     */
+public class Main {
+    static boolean readFile = false;
     public static void main(String[] args) throws IOException {
-        InputReader scan = new InputReader();
-        StringBuilder result = new StringBuilder();
-        
-        int n = scan.nextInt();
-        ArrayList<Integer> busNumbers = new ArrayList<>();
-        while (n-- > 0) {
-            busNumbers.add(scan.nextInt());
-        }
-        if (busNumbers.size() == 1 || busNumbers.size() == 2) {
-            for (int number : busNumbers) {
-                System.out.print(number + " ");
-            }
-            return;
-        }
-
-        busNumbers.sort((n1, n2) -> n1 - n2);
-        
-        int startIndex = 0, endIndex;
-        for (endIndex = 1; endIndex < busNumbers.size(); endIndex++) {
-            if (busNumbers.get(endIndex) - busNumbers.get(endIndex - 1) != 1) {
-                result.append(rangeToString(endIndex-1, startIndex, busNumbers));
-                startIndex = endIndex;
-                if (endIndex == busNumbers.size()-1){
-                    result.append(rangeToString(endIndex, startIndex, busNumbers));
-                }
-            } else if (endIndex == busNumbers.size()-1){
-                result.append(rangeToString(endIndex, startIndex, busNumbers));
-            }
-        }
-        System.out.println(result);
+		InputReader ip = new InputReader();
+		int x = ip.nextInt();
+		StringBuilder show = new StringBuilder();
+		StringBuilder queue = new StringBuilder(ip.next());
+		int numberOfMen = 0;
+		int numberOfWomen = 0;
+		for(int i = 0; i < queue.length(); i++)
+		{
+			char person = queue.charAt(i);
+			if(Math.abs(numberOfMen - numberOfWomen) < x)
+			{
+				if(person == 'W')
+					numberOfWomen++;
+				else
+					numberOfMen++;
+			}
+			else
+			{
+				if(numberOfMen > numberOfWomen)
+				{
+					if(person == 'W')
+						numberOfWomen++;
+					else
+						if(i + 1 < queue.length() && queue.charAt(i + 1) == 'W')
+						{
+							numberOfWomen++;
+							queue.deleteCharAt(i + 1);
+							i--;
+						}
+						else
+							break;
+				}
+				else
+				{
+					if(person == 'M')
+						numberOfMen++;
+					else
+						if(i + 1 < queue.length() && queue.charAt(i + 1) == 'M')
+						{
+							numberOfMen++;
+							queue.deleteCharAt(i + 1);
+							i--;
+						}
+						else
+							break;
+				}
+			}
+			
+		}
+		show.append(numberOfMen + numberOfWomen);
+		System.out.println(show);
+		
+		
+             
     }
-
-    static String rangeToString(int a, int b, ArrayList<Integer> list) {
-        if (a - b == 1) {
-            return list.get(b) + " " + list.get(a) + " ";
-        }
-        if (a - b == 0) {
-            return list.get(a) + " ";
-        }
-        return list.get(b) + "-" + list.get(a) + " ";
-    }
-
     static class InputReader {
 
         InputStream is = System.in;
@@ -131,17 +132,15 @@ class Main {
 
         public char[][] nm(int n, int m) {
             char[][] map = new char[n][];
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < n; i++)
                 map[i] = ns(m);
-            }
             return map;
         }
 
         public int[] na(int n) {
             int[] a = new int[n];
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < n; i++)
                 a[i] = nextInt();
-            }
             return a;
         }
 

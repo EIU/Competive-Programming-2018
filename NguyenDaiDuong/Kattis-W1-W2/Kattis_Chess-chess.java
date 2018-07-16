@@ -1,24 +1,40 @@
+
 import java.io.*;
 import java.util.*;
 
-class main {
+class chess {
 
     public static void main(String[] args) {
         InputReader reader = new InputReader(System.in);
-        int numberOfPaws=reader.nextInt();
-        int count=0;
-        List<Integer> row=new ArrayList<>();
-        List<Integer> colum=new ArrayList<>();
-        for(int i=0;i<numberOfPaws;i++){
-            row.add(reader.nextInt());
-            colum.add(reader.nextInt());
+        int numberOfTest = reader.nextInt();
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < numberOfTest; i++) {
+            char row1 = reader.next().toCharArray()[0];
+            int colum1 = reader.nextInt();
+            char row2 = reader.next().toCharArray()[0];
+            int colum2 = reader.nextInt();
+            boolean check = false;
+            if (colum1 == colum2 && row1==row2) {
+            	check=true;
+                builder.append("0"+" "+row1+" "+colum1+"\n");
+            } else {
+                for (char j = 'A'; j <= 'Z'; j++) {
+                    for (int h = 1; h <= 8; h++) {
+                    	if (Math.abs(j-row1)==Math.abs(h-colum1)&&Math.abs(j-row2)==Math.abs(h-colum2)) {
+                            check = true;
+                            builder.append(j==row2&&h==colum2||j==row1&&h==colum1?"1"+" "+row1+" "+colum1+" "+row2+" "+colum2+"\n" : "2"+" "+row1+" "+colum1+" "+j+" "+h+" "+row2+" "+colum2+"\n");
+                            break;
+                        }
+                    }
+                    if(check)
+                    	break;
+                }
+            }
+            if (check == false) {
+                builder.append("Impossible").append("\n");
+            }
         }
-        Collections.sort(row);
-        Collections.sort(colum);
-        for(int i=0;i<numberOfPaws;i++){
-            count+=Math.abs(i+1-row.get(i))+Math.abs(i+1-colum.get(i));
-        }
-        System.out.println(count);
+        System.out.println(builder);
     }
 
     static class InputReader {

@@ -1,24 +1,28 @@
+
 import java.io.*;
 import java.util.*;
 
-class main {
+class Passenger {
 
     public static void main(String[] args) {
         InputReader reader = new InputReader(System.in);
-        int numberOfPaws=reader.nextInt();
-        int count=0;
-        List<Integer> row=new ArrayList<>();
-        List<Integer> colum=new ArrayList<>();
-        for(int i=0;i<numberOfPaws;i++){
-            row.add(reader.nextInt());
-            colum.add(reader.nextInt());
+        int capacity = reader.nextInt();
+        int numberOfStation = reader.nextInt();
+        int sumPass = 0;
+        boolean check = true;
+        for (int i = 0; i < numberOfStation; i++) {
+            int passLeft = reader.nextInt();
+            int passEnter = reader.nextInt();
+            int passWait = reader.nextInt();
+            sumPass += passEnter - passLeft;
+            sumPass = sumPass == 0 || sumPass < capacity ? sumPass + passWait : sumPass;
+            if (i == 0 && passLeft > 0 || i == numberOfStation - 1 && passWait > 0 | sumPass > 0 || sumPass > capacity
+                    || sumPass < 0) {
+                check = false;
+                break;
+            }
         }
-        Collections.sort(row);
-        Collections.sort(colum);
-        for(int i=0;i<numberOfPaws;i++){
-            count+=Math.abs(i+1-row.get(i))+Math.abs(i+1-colum.get(i));
-        }
-        System.out.println(count);
+        System.out.println(check == true ? "possible" : "impossible");
     }
 
     static class InputReader {

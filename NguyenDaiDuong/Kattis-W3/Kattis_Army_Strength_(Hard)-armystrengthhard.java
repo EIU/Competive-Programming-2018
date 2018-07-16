@@ -1,24 +1,34 @@
 import java.io.*;
 import java.util.*;
 
-class main {
+class Strength {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         InputReader reader = new InputReader(System.in);
-        int numberOfPaws=reader.nextInt();
-        int count=0;
-        List<Integer> row=new ArrayList<>();
-        List<Integer> colum=new ArrayList<>();
-        for(int i=0;i<numberOfPaws;i++){
-            row.add(reader.nextInt());
-            colum.add(reader.nextInt());
+        StringBuilder builder = new StringBuilder();
+        int numberOfTest = reader.nextInt();
+        for (int i = 0; i < numberOfTest; i++) {
+            int[] godzillaArmy = new int[reader.nextInt()];
+            int[] mechagodzillaArmy = new int[reader.nextInt()];
+            for (int j = 0; j < godzillaArmy.length; j++) {
+                godzillaArmy[j] = reader.nextInt();
+            }
+            for (int j = 0; j < mechagodzillaArmy.length; j++) {
+                mechagodzillaArmy[j] = reader.nextInt();
+            }
+            Arrays.sort(godzillaArmy);
+            Arrays.sort(mechagodzillaArmy);
+            int h = 0, k = 0;
+            while (h < godzillaArmy.length && k < mechagodzillaArmy.length) {
+                if(godzillaArmy[h]>=mechagodzillaArmy[k])
+                    k++;
+                else
+                    h++;
+            }
+            builder.append(k == mechagodzillaArmy.length ? "Godzilla" + "\n"
+                    : h == godzillaArmy.length ? "MechaGodzilla" + "\n" : "uncertain" + "\n");
         }
-        Collections.sort(row);
-        Collections.sort(colum);
-        for(int i=0;i<numberOfPaws;i++){
-            count+=Math.abs(i+1-row.get(i))+Math.abs(i+1-colum.get(i));
-        }
-        System.out.println(count);
+        System.out.print(builder);
     }
 
     static class InputReader {
