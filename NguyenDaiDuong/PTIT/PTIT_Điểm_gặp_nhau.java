@@ -3,21 +3,10 @@ import java.util.*;
 
 class main {
 
-    public static void main(String args[]){
+    public static void main(String[] args) {
         InputReader reader = new InputReader(System.in);
-        int numberOfTest=reader.nextInt();
-        for(int i=0;i<numberOfTest;i++){
-            int a=reader.nextInt();
-            int b=reader.nextInt();
-            int count=1;
-            long c=1;
-            for(int j=a+1;j<=b;j++)
-                c*=j;
-            for(int j=1;j<=c/2;j++)
-                if(c%j==0)
-                    count++;
-            System.out.println(count);
-        }
+        int numberofInteger = reader.nextInt();
+        System.out.println(numberofInteger*3+2);
     }
     static class InputReader {
 
