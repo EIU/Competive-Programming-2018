@@ -1,43 +1,34 @@
+package Week2_3;
+
 import java.io.*;
 import java.util.*;
 
-public class W2_Ants {
+class Minimum_Scalar_Product {
 
 	public static void main(String[] args) {
 
 		InputReader reader = new InputReader(System.in);
 		int nCase = reader.nextInt();
-		for (int i = 0; i < nCase; i++) {
-			int Earliest = 0;
-			int Latest = 0;
-			StringBuilder builder = new StringBuilder();
-			int poleLenght = reader.nextInt();
-			int nAnts = reader.nextInt();
-			int[] arrEarliest = new int[nAnts];
-			int[] arrLastest = new int[nAnts];
-			for (int j = 0; j < nAnts; j++) {
-				int antPosition = reader.nextInt();
-				if (antPosition < poleLenght / 2) {
-					arrEarliest[j] = antPosition;
-					arrLastest[j] = poleLenght - antPosition;
-				} else {
-					arrEarliest[j] = poleLenght - antPosition;
-					arrLastest[j] = antPosition;
-				}
+		StringBuilder builder = new StringBuilder();
+		for (int i = 0; i < nCase; ++i) {
+			long result = 0;
+			int n = reader.nextInt();
+			List<Long> arr = new ArrayList<>();
+			List<Long> arr2 = new ArrayList<>();
+			for (int j = 0; j < n; ++j) {
+				arr.add(reader.nextLong());
 			}
-			int max1 = 0;
-			int max2 = 0;
-			for (int j = 0; j < arrEarliest.length; j++) {
-				Earliest = Math.max(max1, arrEarliest[j]);
-				max1 = Earliest;
+			for (int j = 0; j < n; ++j) {
+				arr2.add(reader.nextLong());
 			}
-			for (int j = 0; j < arrLastest.length; j++) {
-				Latest = Math.max(max2, arrLastest[j]);
-				max2 = Latest;
+			Collections.sort(arr);
+			Collections.sort(arr2, Collections.reverseOrder());
+			for (int j = 0; j < n; ++j) {
+				result += (arr.get(j) * arr2.get(j));
 			}
-			builder.append(Earliest + " " + Latest);
-			System.out.println(builder);
+			builder.append("Case " + "#" + (i + 1) + ": " + result + "\n");
 		}
+		System.out.println(builder);
 	}
 
 	static class InputReader {
