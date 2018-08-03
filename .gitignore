@@ -4,3 +4,6 @@
 *.mf
 *.netbeans_update_resources
 *.netbeans_automatic_build
+*.project
+*.classpath
+\bin
