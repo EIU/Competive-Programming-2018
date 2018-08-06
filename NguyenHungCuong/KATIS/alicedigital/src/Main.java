@@ -1,14 +1,49 @@
+
 import java.io.*;
 import java.util.*;
 
-class main {
+class Main {
+	public static void main(String[] args) throws IOException {
+		InputReader scan = new InputReader(System.in);
+		
+		StringBuilder result = new StringBuilder();
+		
+		int test = scan.nextInt();
+		while (test-->0) {
+			int n = scan.nextInt();
+			int m = scan.nextInt();
+			int[] arr = new int[n];
+			ArrayList<Integer> index = new ArrayList<>();
+			for (int i=0;i<n;i++) {
+				arr[i] = scan.nextInt();
+				if (arr[i] == m) {
+					index.add(i);
+				}
+			}
+			int max = 0;
+			for (Integer i : index) {
+				int sum = m;
+				for (int left = i-1;left>=0;left--) {
+					if (arr[left] <= m) {
+						break;
+					}
+					sum += arr[left];
+				}
+				for (int right = i+1;right<n;right++) {
+					if (arr[right] <= m) {
+						break;
+					}
+					sum += arr[right];
+				}
+				max = Math.max(max, sum);
+			}
+			result.append(max).append("\n");
+		}
+		
+		System.out.println(result);
+	}
 
-    public static void main(String[] args) {
-        InputReader reader = new InputReader(System.in);
-        int numberofInteger = reader.nextInt();
-        System.out.println(numberofInteger*3+2);
-    }
-    static class InputReader {
+	static class InputReader {
 
         StringTokenizer tokenizer;
         BufferedReader reader;
@@ -56,6 +91,5 @@ class main {
         public long nextLong() {
             return Long.parseLong(next());
         }
-
     }
 }
