@@ -1,15 +1,41 @@
-import java.io.*;
-import java.util.*;
 
-class main {
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.StringTokenizer;
 
-    public static void main(String[] args) {
-        InputReader reader = new InputReader(System.in);
-        int numberofInteger = reader.nextInt();
-        System.out.println(numberofInteger*3+2);
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        InputReader ip = new InputReader(System.in);
+        int n = ip.nextInt();
+        StringBuilder[] builder = new StringBuilder[n];
+        for(int i = 0; i < n; i++)
+        {
+        	builder[i] = new StringBuilder(ip.nextLine());
+        	HashSet<Character> characters = new HashSet<>();
+        	StringBuilder missing = new StringBuilder();
+        	for(int j = 0 ; j < builder[i].length(); j++)
+        		characters.add(builder[i].charAt(j));
+        	char upper, lower;
+            for(lower = 'a', upper = 'A'; lower <= 'z'; upper++, lower++)
+            	if(characters.contains(lower) == false && characters.contains(upper) == false)
+            		missing.append(lower);
+            if(missing.length() > 0)
+            	System.out.println("missing "+missing);
+            else
+            	System.out.println("pangram");
+        }
+        
+        
     }
     static class InputReader {
-
         StringTokenizer tokenizer;
         BufferedReader reader;
         String token;
@@ -56,6 +82,5 @@ class main {
         public long nextLong() {
             return Long.parseLong(next());
         }
-
     }
 }
