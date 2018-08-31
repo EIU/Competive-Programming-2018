@@ -1,0 +1,140 @@
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.StringTokenizer;
+import java.util.HashMap;
+import java.util.List;
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+        InputReader reader = new InputReader(System.in);
+        StringBuilder str = new StringBuilder ();
+        while(true){
+        int n = reader.nextInt();
+        if ( n == 0){
+            break;
+        }
+        String[] arrString1 = new String[n];
+        
+        
+        int max = -1;
+        for (int i = 0; i < n; i++) {
+            String temp = reader.nextLine();
+            arrString1[i] = temp;
+            if (max < arrString1[i].length()) {
+                max = arrString1[i].length();
+            }
+        }
+
+        String[] arrString3 = new String[max];
+        String[] arrString2 = new String[max];
+        for (int i = 0; i < n; i++) {
+            StringBuilder temp = new StringBuilder();
+            if (arrString1[i].length() < max) {
+                temp.append(arrString1[i]);
+                for (int j = 0; j < max - arrString1[i].length(); j++) {
+                    temp.append(" ");
+                }
+                arrString3[i] = temp.toString();
+            } else {
+                arrString3[i] = arrString1[i];
+            }
+        }
+       
+
+        for (int i = max - 1; i >= 0 ; i--) {
+            StringBuilder temp = new StringBuilder();
+            for (int j = n - 1; j >= 0; j--) {
+                if (arrString3[j].charAt(i) == '-'){
+                    temp.append('|');
+                }
+                else if (arrString3[j].charAt(i) == '|'){
+                    temp.append('-');
+                }
+                else{
+                temp.append(arrString3[j].charAt(i));
+                }
+            }
+            
+            arrString2[i] = temp.toString();
+            
+            
+            
+        }
+        
+            
+        for ( int i = 0 ; i < max ; i++){
+            
+            String temp = arrString2[i].replaceAll("\\s+$", "");
+            str.append(temp + "\n");
+            
+        }     
+        
+        str.append("\n");
+            
+        }
+        int index = str.lastIndexOf("\n");
+        str.delete(index , index + 1);
+        
+        System.out.print(str);
+    }
+
+    static class InputReader {
+
+        StringTokenizer tokenizer;
+        BufferedReader reader;
+        String token;
+        String temp;
+
+        public InputReader(InputStream stream) {
+            tokenizer = null;
+            reader = new BufferedReader(new InputStreamReader(stream));
+        }
+
+        public InputReader(FileInputStream stream) {
+            tokenizer = null;
+            reader = new BufferedReader(new InputStreamReader(stream));
+        }
+
+        public String nextLine() throws IOException {
+            return reader.readLine();
+        }
+
+        public String next() {
+            while (tokenizer == null || !tokenizer.hasMoreTokens()) {
+                try {
+                    if (temp != null) {
+                        tokenizer = new StringTokenizer(temp);
+                        temp = null;
+                    } else {
+                        tokenizer = new StringTokenizer(reader.readLine());
+                    }
+
+                } catch (IOException e) {
+                }
+            }
+            return tokenizer.nextToken();
+        }
+
+        public double nextDouble() {
+            return Double.parseDouble(next());
+        }
+
+        public int nextInt() {
+            return Integer.parseInt(next());
+        }
+
+        public long nextLong() {
+            return Long.parseLong(next());
+        }
+    }
+}
