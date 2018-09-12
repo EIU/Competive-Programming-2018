@@ -1,0 +1,166 @@
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.text.DecimalFormat;
+import static java.time.Clock.system;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.StringTokenizer;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.Scanner;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+
+public class Main {
+
+    public static void main(String[] args) throws IOException, ScriptException {
+//        InputReader reader = new InputReader(System.in);
+
+        Scanner sc = new Scanner(System.in);
+//        ScriptEngineManager manager = new ScriptEngineManager();
+//        ScriptEngine engine = manager.getEngineByName("js");
+//        Object result = engine.eval(stringOfNumber);
+        ArrayList<String> arrList = new ArrayList();
+         int maxrow2 = 500;
+            int maxcolumn2 = 500;
+            int minrow2 = 500;
+            int mincolumn2 = 500;
+            char[][] position2 = new char[1001][1001];
+            position2[500][500] = 'S';
+            
+        while (sc.hasNext()) {
+            String str = sc.next();
+            arrList.add(str);
+            int row = 500;
+            int column = 500;
+
+            int maxrow = 500;
+            int maxcolumn = 500;
+            int minrow = 500;
+            int mincolumn = 500;
+            char[][] position = new char[1001][1001];
+            position[500][500] = 'S';
+            for (int i = 0; i < arrList.size(); i++) {
+                if (arrList.get(i).equals("up")) {
+                    row--;
+                } else if (arrList.get(i).equals("down")) {
+                    row++;
+                } else if (arrList.get(i).equals("left")) {
+                    column--;
+                } else if (arrList.get(i).equals("right")) {
+                    column++;
+                }
+
+                if (maxrow < row) {
+                    maxrow = row;
+                }
+                if (maxcolumn < column) {
+                    maxcolumn = column;
+                }
+                if (minrow > row) {
+                    minrow = row;
+                }
+                if (mincolumn > column) {
+                    mincolumn = column;
+                }
+
+                if (position[row][column] != 'S') {
+                    position[row][column] = '*';
+                }
+            }
+
+            position[row][column] = 'E';
+
+            for (int i = minrow; i <= maxrow; i++) {
+                for (int j = mincolumn; j <= maxcolumn; j++) {
+                    if (position[i][j] == (char) 0) {
+                        position[i][j] = ' ';
+                    }
+                }
+            }
+
+            for (int i = minrow - 1; i <= maxrow + 1; i++) {
+                for (int j = mincolumn - 1; j <= maxcolumn + 1; j++) {
+                    if (position[i][j] == (char) 0) {
+                        position[i][j] = '#';
+                    }
+                }
+            }
+            
+            minrow2 = minrow;
+            maxrow2 = maxrow;
+            mincolumn2 = mincolumn;
+            maxcolumn2 = maxcolumn;
+            position2 = position;
+        }
+        
+         for (int i = minrow2 - 1; i <= maxrow2 + 1; i++) {
+                for (int j = mincolumn2 - 1; j <= maxcolumn2 + 1; j++) {
+                    System.out.print(position2[i][j]);
+                }
+
+                System.out.println();
+
+            }
+
+    }
+
+    static class InputReader {
+
+        StringTokenizer tokenizer;
+        BufferedReader reader;
+        String token;
+        String temp;
+
+        public InputReader(InputStream stream) {
+            tokenizer = null;
+            reader = new BufferedReader(new InputStreamReader(stream));
+        }
+
+        public InputReader(FileInputStream stream) {
+            tokenizer = null;
+            reader = new BufferedReader(new InputStreamReader(stream));
+        }
+
+        public String nextLine() throws IOException {
+            return reader.readLine();
+        }
+
+        public String next() {
+            while (tokenizer == null || !tokenizer.hasMoreTokens()) {
+                try {
+                    if (temp != null) {
+                        tokenizer = new StringTokenizer(temp);
+                        temp = null;
+                    } else {
+                        tokenizer = new StringTokenizer(reader.readLine());
+                    }
+
+                } catch (IOException e) {
+                }
+            }
+            return tokenizer.nextToken();
+        }
+
+        public double nextDouble() {
+            return Double.parseDouble(next());
+        }
+
+        public int nextInt() {
+            return Integer.parseInt(next());
+        }
+
+        public long nextLong() {
+            return Long.parseLong(next());
+        }
+    }
+}
