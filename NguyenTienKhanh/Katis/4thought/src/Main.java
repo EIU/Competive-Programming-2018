@@ -1,9 +1,10 @@
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashMap;
-public class Main {
 
+public class Main {
 
     public static void main(String[] args) throws IOException {
         InputReader input = new InputReader();
@@ -21,11 +22,12 @@ public class Main {
         int test = input.nextInt();
         for (int i = 0; i < test; i++) {
             int num = input.nextInt();
-            sb.append(map.containsKey(num)? map.get(num) + " = " + num+"\n" :"no solution"+"\n");
+            sb.append(map.containsKey(num) ? map.get(num) + " = " + num + "\n" : "no solution" + "\n");
         }
         System.out.println(sb);
     }
-        public static int Check(String N) {
+
+    public static int Check(String N) {
 
         while (N.contains(" * ") || N.contains(" / ")) {
             int mul = N.indexOf("*");
@@ -39,7 +41,7 @@ public class Main {
             while (sub != 0 && !N.substring(sub, sub + 1).equals(" ")) {
                 sub--;
             }
-            sub=sub != 0? sub+1:sub;
+            sub = sub != 0 ? sub + 1 : sub;
             while (sub2 != N.length() && !N.substring(sub2, sub2 + 1).equals(" ")) {
                 sub2++;
             }
@@ -57,7 +59,7 @@ public class Main {
             while (sub1 != 0 && !N.substring(sub1, sub1 + 1).equals(" ")) {
                 sub1--;
             }
-            sub1=sub1 != 0? sub1+1:sub1;
+            sub1 = sub1 != 0 ? sub1 + 1 : sub1;
 
             while (sub2 != N.length() && !N.substring(sub2, sub2 + 1).equals(" ")) {
                 sub2++;
@@ -66,11 +68,13 @@ public class Main {
         }
         return Integer.parseInt(N);
     }
+
     public static String operations(int in) {
 
         String T = in == 0 ? " + " : in == 1 ? " - " : in == 2 ? " * " : " / ";
         return T;
     }
+
     public static int count(String Count) {
         int num1 = Integer.parseInt(Count.substring(0, Count.indexOf(" ")));
         int num2 = Integer.parseInt(Count.substring(Count.lastIndexOf(" ") + 1));

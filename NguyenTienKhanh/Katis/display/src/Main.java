@@ -1,140 +1,154 @@
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Scanner;
+
 public class Main {
-    
-public static String getNum(int num , int line) {
-String[] Ze = {"+---+",
-                "|   |",
-                "|   |",
-                "+   +",
-                "|   |",
-                "|   |",
-                "+---+",};
 
-String[] one =                 {"    +",
-                "    |",
-                "    |",
-                "    +",
-                "    |",
-                "    |",
-                "    +",};
+    public static String getNum(int num, int line) {
+        String[] Ze = {"+---+",
+            "|   |",
+            "|   |",
+            "+   +",
+            "|   |",
+            "|   |",
+            "+---+",};
 
-String[] two =                 {"+---+",
-                "    |",
-                "    |",
-                "+---+",
-                "|    ",
-                "|    ",
-                "+---+",};
+        String[] one = {"    +",
+            "    |",
+            "    |",
+            "    +",
+            "    |",
+            "    |",
+            "    +",};
 
-String[] three =                 {"+---+",
-                "    |",
-                "    |",
-                "+---+",
-                "    |",
-                "    |",
-                "+---+",};
+        String[] two = {"+---+",
+            "    |",
+            "    |",
+            "+---+",
+            "|    ",
+            "|    ",
+            "+---+",};
 
-String[] four =                 {"+   +",
-                "|   |",
-                "|   |",
-                "+---+",
-                "    |",
-                "    |",
-                "    +",};
+        String[] three = {"+---+",
+            "    |",
+            "    |",
+            "+---+",
+            "    |",
+            "    |",
+            "+---+",};
 
-String[] five =                 {"+---+",
-                "|    ",
-                "|    ",
-                "+---+",
-                "    |",
-                "    |",
-                "+---+",};
+        String[] four = {"+   +",
+            "|   |",
+            "|   |",
+            "+---+",
+            "    |",
+            "    |",
+            "    +",};
 
-String[] six = {"+---+",
-                "|    ",
-                "|    ",
-                "+---+",
-                "|   |",
-                "|   |",
-                "+---+",};
+        String[] five = {"+---+",
+            "|    ",
+            "|    ",
+            "+---+",
+            "    |",
+            "    |",
+            "+---+",};
 
-String[] seven = {"+---+",
-                "    |",
-                "    |",
-                "    +",
-                "    |",
-                "    |",
-                "    +",};
+        String[] six = {"+---+",
+            "|    ",
+            "|    ",
+            "+---+",
+            "|   |",
+            "|   |",
+            "+---+",};
 
-String[] eight = {"+---+",
-                "|   |",
-                "|   |",
-                "+---+",
-                "|   |",
-                "|   |",
-                "+---+",};
+        String[] seven = {"+---+",
+            "    |",
+            "    |",
+            "    +",
+            "    |",
+            "    |",
+            "    +",};
 
-String[] nine = {"+---+",
-                "|   |",
-                "|   |",
-                "+---+",
-                "    |",
-                "    |",
-                "+---+",};
+        String[] eight = {"+---+",
+            "|   |",
+            "|   |",
+            "+---+",
+            "|   |",
+            "|   |",
+            "+---+",};
 
-if (num == 0)
-    return Ze[line];
-if (num == 1)
-    return one[line];
-if (num == 2)
-    return two[line];
-if (num == 3)
-    return three[line];
-if (num == 4)
-    return four[line];
-if (num == 5)
-    return five[line];
-if (num == 6)
-    return six[line];
-if (num == 7)
-    return seven[line];
-if (num == 8)
-    return eight[line];
+        String[] nine = {"+---+",
+            "|   |",
+            "|   |",
+            "+---+",
+            "    |",
+            "    |",
+            "+---+",};
 
-return nine[line];
+        if (num == 0) {
+            return Ze[line];
+        }
+        if (num == 1) {
+            return one[line];
+        }
+        if (num == 2) {
+            return two[line];
+        }
+        if (num == 3) {
+            return three[line];
+        }
+        if (num == 4) {
+            return four[line];
+        }
+        if (num == 5) {
+            return five[line];
+        }
+        if (num == 6) {
+            return six[line];
+        }
+        if (num == 7) {
+            return seven[line];
+        }
+        if (num == 8) {
+            return eight[line];
+        }
 
-}
-public static void main(String[] args) throws IOException {
-InputReader scan = new InputReader();
-StringBuilder sb = new StringBuilder();
-while (true)
-    {
-    String time = scan.next();
-    
-    if (time.equals("end"))
-        break;
-    
-    int num1 = Integer.parseInt(time.substring(0 , 1));
-    int num2 = Integer.parseInt(time.substring(1 , 2));
-    int num3 = Integer.parseInt(time.substring(3 , 4));
-    int num4 = Integer.parseInt(time.substring(4 , 5));
-    
-    sb.append(getNum(num1 , 0) + "  " + getNum(num2 , 0) + "     " + getNum(num3 , 0) + "  " + getNum(num4 , 0)+"\n");
-    sb.append(getNum(num1 , 1) + "  " + getNum(num2 , 1) + "     " + getNum(num3 , 1) + "  " + getNum(num4 , 1) +"\n");
-    sb.append(getNum(num1 , 2) + "  " + getNum(num2 , 2) + "  o  " + getNum(num3 , 2) + "  " + getNum(num4 , 2)+"\n");
-    sb.append(getNum(num1 , 3) + "  " + getNum(num2 , 3) + "     " + getNum(num3 , 3) + "  " + getNum(num4 , 3)+"\n");
-    sb.append(getNum(num1 , 4) + "  " + getNum(num2 , 4) + "  o  " + getNum(num3 , 4) + "  " + getNum(num4 , 4)+"\n");
-    sb.append(getNum(num1 , 5) + "  " + getNum(num2 , 5) + "     " + getNum(num3,  5) + "  " + getNum(num4 , 5)+"\n");
-        sb.append(getNum(num1 , 6) + "  " + getNum(num2 , 6) + "     " + getNum(num3,  6) + "  " + getNum(num4 , 6)+"\n");
-        sb.append("\n");sb.append("\n");
+        return nine[line];
+
     }
-sb.append("end");
-    System.out.println(sb);
-}
-static class InputReader {
+
+    public static void main(String[] args) throws IOException {
+        InputReader scan = new InputReader();
+        StringBuilder sb = new StringBuilder();
+        while (true) {
+            String time = scan.next();
+
+            if (time.equals("end")) {
+                break;
+            }
+
+            int num1 = Integer.parseInt(time.substring(0, 1));
+            int num2 = Integer.parseInt(time.substring(1, 2));
+            int num3 = Integer.parseInt(time.substring(3, 4));
+            int num4 = Integer.parseInt(time.substring(4, 5));
+
+            sb.append(getNum(num1, 0) + "  " + getNum(num2, 0) + "     " + getNum(num3, 0) + "  " + getNum(num4, 0) + "\n");
+            sb.append(getNum(num1, 1) + "  " + getNum(num2, 1) + "     " + getNum(num3, 1) + "  " + getNum(num4, 1) + "\n");
+            sb.append(getNum(num1, 2) + "  " + getNum(num2, 2) + "  o  " + getNum(num3, 2) + "  " + getNum(num4, 2) + "\n");
+            sb.append(getNum(num1, 3) + "  " + getNum(num2, 3) + "     " + getNum(num3, 3) + "  " + getNum(num4, 3) + "\n");
+            sb.append(getNum(num1, 4) + "  " + getNum(num2, 4) + "  o  " + getNum(num3, 4) + "  " + getNum(num4, 4) + "\n");
+            sb.append(getNum(num1, 5) + "  " + getNum(num2, 5) + "     " + getNum(num3, 5) + "  " + getNum(num4, 5) + "\n");
+            sb.append(getNum(num1, 6) + "  " + getNum(num2, 6) + "     " + getNum(num3, 6) + "  " + getNum(num4, 6) + "\n");
+            sb.append("\n");
+            sb.append("\n");
+        }
+        sb.append("end");
+        System.out.println(sb);
+    }
+
+    static class InputReader {
 
         InputStream is = System.in;
         byte[] inbuf = new byte[1 << 23];

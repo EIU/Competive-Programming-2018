@@ -2,6 +2,7 @@
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import jdk.nashorn.internal.ir.BreakNode;
 
 public class Main {
 
@@ -38,6 +39,10 @@ public class Main {
                 res=false;
                 break;
             }
+        }
+        int i =n-1;
+        if(count < 0 &&  i> n){
+            res= false;
         }
         if(res)
             System.out.println("possible");

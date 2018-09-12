@@ -1,44 +1,43 @@
-
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.StringTokenizer;
 
-public class Main {
+class Main {
+
 
     public static void main(String[] args) throws IOException {
+        StringBuilder sb = new StringBuilder();
         InputReader input = new InputReader();
         int N = input.nextInt();
-        int distance=0;
-        for(int i =0;i<N;i++){
-            ArrayList<Integer> listAnts= new ArrayList<>();
-             ArrayList<Integer> listAnts1= new ArrayList<>();
-            int l = input.nextInt();
-            int n= input.nextInt();
-            for (int j = 0; j < n; j++) {
-                distance=input.nextInt();
-                if(distance<=(l/2)){
-                     listAnts.add(distance);
-                     listAnts1.add(l-distance);
-                }else{
-                    listAnts.add(l-distance);
-                    listAnts1.add(distance);
-                }
-                }
-            System.out.println(Collections.max(listAnts)+" "+ Collections.max(listAnts1));
-            }
-         
+        int[]st ;
+        int[] right ;
+        for (int i = 0; i < N; i++) {
+           int M= input.nextInt();
+           st= new int[M];
+           right=new int[M];
+           for(int j=0;j<M;j++){
+               int T = input.nextInt();
+               st[j]=(T);
+               right[j]=T;
+           }
+           Arrays.sort(right);
+           int y=0,count=0;
+           while(y+count<st.length){
+               if(st[y+count]==right[y]){
+                   y++;
+               }else{
+               count++;}}
+           sb.append(count+"\n");
         }
+        System.out.println(sb);
 
-    
-   
-    
-          static class InputReader {
+    }
+
+    static class InputReader {
 
         InputStream is = System.in;
         byte[] inbuf = new byte[1 << 23];
@@ -108,15 +107,17 @@ public class Main {
 
         public char[][] nm(int n, int m) {
             char[][] map = new char[n][];
-            for (int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++) {
                 map[i] = ns(m);
+            }
             return map;
         }
 
         public int[] na(int n) {
             int[] a = new int[n];
-            for (int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++) {
                 a[i] = nextInt();
+            }
             return a;
         }
 
@@ -162,5 +163,4 @@ public class Main {
         }
 
     }
-
 }
