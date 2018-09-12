@@ -1,42 +1,37 @@
-import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.StringTokenizer;
+import java.util.*;
+public class Main {
+    
+public static boolean isPalindrome(String str) {
 
-class Main {
+    for (int i = 0; i < str.length(); i++)
+        if (str.charAt(i) != str.charAt(str.length() - 1 - i))
+            return false;
+    
+    return true;
+}
 
+public static void main(String[] args) throws IOException {
+InputReader scan = new InputReader();
 
-    public static void main(String[] args) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        InputReader input = new InputReader();
-        int N = input.nextInt();
-        int[]st ;
-        int[] right ;
-        for (int i = 0; i < N; i++) {
-           int M= input.nextInt();
-           st= new int[M];
-           right=new int[M];
-           for(int j=0;j<M;j++){
-               int T = input.nextInt();
-               st[j]=(T);
-               right[j]=T;
-           }
-           Arrays.sort(right);
-           int y=0,count=0;
-           while(y+count<st.length){
-               if(st[y+count]==right[y]){
-                   y++;
-               }else{
-               count++;}}
-           sb.append(count+"\n");
-        }
-        System.out.println(sb);
-
+while (scan.hasNext())
+    {
+    String str = scan.next();
+    
+    TreeSet<String> words = new TreeSet<>();
+    
+    for (int i = 0; i < str.length() - 1; i++)
+        for (int len = 2; i + len <= str.length(); len++)
+            if (isPalindrome(str.substring(i , i + len)))
+                words.add(str.substring(i , i + len));
+    
+    for (String word : words)
+            System.out.println(word);
+    
+        System.out.println("");
     }
-
+    }
     static class InputReader {
 
         InputStream is = System.in;
@@ -163,4 +158,5 @@ class Main {
         }
 
     }
+
 }

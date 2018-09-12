@@ -1,46 +1,49 @@
-import java.io.BufferedReader;
-import java.io.FileInputStream;
+
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.StringTokenizer;
 
-class Main {
-
-
+public class Main {
     public static void main(String[] args) throws IOException {
-        StringBuilder sb = new StringBuilder();
         InputReader input = new InputReader();
+        StringBuilder sb = new StringBuilder();
+        long [] listWays=new long[31];
+        listWays[2]=3;
+        for(int i=2 ;i<=30;i+=2){
+            int j=i;
+            j-=2;
+            if(j>0){
+                listWays[i]+=(listWays[j]*listWays[2]);
+                while(j>=4){
+                    j-=2;
+                    if(i>=8 && listWays[j]==2){
+                        listWays[i]+=12;
+                    }else
+                        listWays[i]+=listWays[j]*2;
+                   
+                }
+                listWays[i]+=2;
+            }
+        }
         int N = input.nextInt();
-        int[]st ;
-        int[] right ;
-        for (int i = 0; i < N; i++) {
-           int M= input.nextInt();
-           st= new int[M];
-           right=new int[M];
-           for(int j=0;j<M;j++){
-               int T = input.nextInt();
-               st[j]=(T);
-               right[j]=T;
-           }
-           Arrays.sort(right);
-           int y=0,count=0;
-           while(y+count<st.length){
-               if(st[y+count]==right[y]){
-                   y++;
-               }else{
-               count++;}}
-           sb.append(count+"\n");
+        while (N!=-1) {
+            if(N%2!=0)
+                sb.append(0+"\n");
+            else if(N==0){
+                sb.append(1+"\n");
+            }
+            else{
+                sb.append(listWays[N]+"\n");
+            }
+          N=input.nextInt();
         }
         System.out.println(sb);
-
     }
 
     static class InputReader {
 
         InputStream is = System.in;
-        byte[] inbuf = new byte[1 << 23];
+        byte[] inbuf = new byte[1 << 24];
         int lenbuf = 0, ptrbuf = 0;
 
         public InputReader() throws IOException {
@@ -161,6 +164,5 @@ class Main {
                 b = readByte();
             }
         }
-
     }
 }

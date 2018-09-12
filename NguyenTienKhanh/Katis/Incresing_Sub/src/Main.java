@@ -1,42 +1,74 @@
-import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.StringTokenizer;
+import java.util.*;
+public class Main {
 
-class Main {
+public static void main(String[] args) throws IOException {
+InputReader scan = new InputReader();
 
+while (true)
+    {
+    int num = scan.nextInt();
+    
+    if (num == 0)
+        break;
+    
+    int[] nums = new int[num];
+    
+    for (int i = 0; i < nums.length; i++)
+        nums[i] = scan.nextInt();
+    
+    ArrayList<Integer> maxes = new ArrayList<>();
+    ArrayList<ArrayList<Integer>> subs  = new ArrayList<>();
 
-    public static void main(String[] args) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        InputReader input = new InputReader();
-        int N = input.nextInt();
-        int[]st ;
-        int[] right ;
-        for (int i = 0; i < N; i++) {
-           int M= input.nextInt();
-           st= new int[M];
-           right=new int[M];
-           for(int j=0;j<M;j++){
-               int T = input.nextInt();
-               st[j]=(T);
-               right[j]=T;
-           }
-           Arrays.sort(right);
-           int y=0,count=0;
-           while(y+count<st.length){
-               if(st[y+count]==right[y]){
-                   y++;
-               }else{
-               count++;}}
-           sb.append(count+"\n");
+    for (int a : nums)
+        {
+        if (subs.isEmpty())
+            {
+            ArrayList<Integer> seq = new ArrayList<Integer>();
+            seq.add(a);
+            subs.add(seq);
+            maxes.add(a);
+            }
+        else
+            {
+            int index = Collections.binarySearch(maxes , a);
+            
+            if (index >= 0)
+                continue;
+            
+            index = -index - 2;
+            
+            if (index == -1)
+                {
+                ArrayList<Integer> seq = new ArrayList<>();
+                seq.add(a);
+                subs.set(0 , seq);
+                maxes.set(0 , a);
+                }
+            else
+                {
+                ArrayList<Integer> seq = new ArrayList<>(subs.get(index));
+                seq.add(a);
+                
+                if (index != maxes.size() - 1)
+                    {
+                    subs.set(index + 1 , seq);
+                    maxes.set(index + 1, a);
+                    }
+                else
+                    {
+                    subs.add(seq);
+                    maxes.add(a);
+                    }
+                }
+            }
         }
-        System.out.println(sb);
-
+    
+    ArrayList<Integer> ans = subs.get(subs.size() - 1);
+    System.out.println(ans.size() + " " + ans.toString().substring(1 , ans.toString().length() - 1).replace("," , ""));
     }
-
+    }
     static class InputReader {
 
         InputStream is = System.in;
@@ -163,4 +195,5 @@ class Main {
         }
 
     }
+
 }

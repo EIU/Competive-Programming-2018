@@ -1,41 +1,121 @@
-import java.io.BufferedReader;
-import java.io.FileInputStream;
+
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.StringTokenizer;
+import java.util.HashMap;
+import java.util.List;
 
 class Main {
 
+    public static InputReader input;
+    public static HashMap<Integer, String> mapGender;
+    public static boolean res;
 
     public static void main(String[] args) throws IOException {
         StringBuilder sb = new StringBuilder();
-        InputReader input = new InputReader();
-        int N = input.nextInt();
-        int[]st ;
-        int[] right ;
-        for (int i = 0; i < N; i++) {
-           int M= input.nextInt();
-           st= new int[M];
-           right=new int[M];
-           for(int j=0;j<M;j++){
-               int T = input.nextInt();
-               st[j]=(T);
-               right[j]=T;
-           }
-           Arrays.sort(right);
-           int y=0,count=0;
-           while(y+count<st.length){
-               if(st[y+count]==right[y]){
-                   y++;
-               }else{
-               count++;}}
-           sb.append(count+"\n");
+
+        input = new InputReader();
+        int test=input.nextInt();
+        for(int i=0;i<test;i++){
+            res=true;
+            int N = input.nextInt();
+        int M = input.nextInt();
+         Vertex[] listRoad = readGraph(N, M);
+          for (int j = 1; j < listRoad.length; j++) {
+            if (!listRoad[j].visited) {
+                dfs(listRoad[j]);        
+            }
+        }
+          if(res)
+              sb.append("Yes"+"\n");
+          else
+              sb.append("No"+"\n");
         }
         System.out.println(sb);
 
     }
+
+    public static Vertex[] readGraph(int nVertices, int nEdges) {
+        Vertex[] vertices = new Vertex[nVertices ];
+        for (int i = 0; i < nVertices; ++i) {
+            vertices[i] = new Vertex(i);
+        }
+        for (int i = 0; i < nEdges; ++i) {
+            int u = input.nextInt();
+            int v = input.nextInt();
+            vertices[u].addNeighbor(vertices[v]);
+            vertices[v].addNeighbor(vertices[u]);
+        }
+        return vertices;
+    }
+
+    static class Vertex {
+
+        public int id;
+        public boolean visited=false;
+        public int part=0;
+        public List<Vertex> neighbors = new ArrayList<Vertex>();
+
+        public Vertex(int id) {
+            this.id = id;
+        }
+
+        public void sortNeighbor(Vertex u) {
+            u.neighbors.sort((a, b) -> {
+                return a.id - b.id;
+            });
+        }
+
+        public void addNeighbor(Vertex child) {
+            neighbors.add(child);
+        }
+    }
+
+    public static void dfs(Vertex u) {
+        u.visited = true;
+       if(u.part==0)
+           u.part=1;
+        for (Vertex v : u.neighbors) {
+            if (!v.visited) {
+                if(u.part==1)
+                    v.part=2;
+                else
+                    v.part=1;
+                dfs(v);
+            }else
+                if(v.part==u.part){
+                    res=false;
+                    return;
+                }
+                    
+
+        }
+    }
+
+//    public static void bfs(Vertex u) {
+//        u.visited = true;
+//        Queue<Vertex> queue = new LinkedList<>();
+//        queue.add(u);
+//        while (!queue.isEmpty()) {
+//            Vertex currentVertex = queue.poll();
+//            for (Vertex neighbor : currentVertex.neighbors) {
+//                if (!neighbor.visited) {
+//                    neighbor.visited = true;
+//                    String s = String.valueOf(currentVertex.id);
+//                    String t = String.valueOf(neighbor.id);
+//                    if (count.get(s + t) != null) {
+//                        level[neighbor.id] = level[currentVertex.id] + count.get(s + t);
+//                    } else {
+//                        level[neighbor.id] = level[currentVertex.id] + count.get(t + s);
+//                    }
+//
+//                    queue.add(neighbor);
+//                }
+//
+//            }
+//        }
+//    }
 
     static class InputReader {
 

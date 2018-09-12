@@ -1,46 +1,82 @@
-import java.io.BufferedReader;
-import java.io.FileInputStream;
+
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.StringTokenizer;
 
-class Main {
+public class Main {
 
-
-    public static void main(String[] args) throws IOException {
-        StringBuilder sb = new StringBuilder();
+//    public static long money;
+//    public static ArrayList<Robot> listRobots;
+    public static void main(String args[]) throws IOException {
         InputReader input = new InputReader();
         int N = input.nextInt();
-        int[]st ;
-        int[] right ;
-        for (int i = 0; i < N; i++) {
-           int M= input.nextInt();
-           st= new int[M];
-           right=new int[M];
-           for(int j=0;j<M;j++){
-               int T = input.nextInt();
-               st[j]=(T);
-               right[j]=T;
-           }
-           Arrays.sort(right);
-           int y=0,count=0;
-           while(y+count<st.length){
-               if(st[y+count]==right[y]){
-                   y++;
-               }else{
-               count++;}}
-           sb.append(count+"\n");
+        StringBuilder sb = new StringBuilder();
+        int i, j;
+        long first, last, mid, count;
+        long[] products;
+        long[] money;
+        for (i = 0; i < N; i++) {
+            //listRobots = new ArrayList<>();
+            int numOfRobots = input.nextInt();
+            products = new long[numOfRobots];
+            money = new long[numOfRobots];
+            long budget = input.nextLong();
+            for (j = 0; j < numOfRobots; j++) {
+                products[j] = input.nextLong();
+                money[j] = input.nextLong();
+//                Robot rb = new Robot(i, input.nextLong());
+//                listRobots.add(rb);
+            }
+            first = 1;
+            last = 1000000000000l;
+            while (first < last) {
+                mid = (first + last) >> 1;
+                count = budget;
+                for (j = 0; j < numOfRobots && count >= 0; j++) {
+                    if (products[j] < mid) {
+                        count -= money[j] * (mid - products[j]);
+                    }
+                }
+//              for (int j = 0; j < numOfRobots && count >= 0; j++) {
+//            count += ((mid - products[j]) * money[j]);
+//        }
+                if (count < 0) {
+                    last = mid;
+                } else {
+                    first = mid+1;
+                }
+            }
+
+            sb.append(first + "\n");
         }
         System.out.println(sb);
-
     }
 
+//    public static class Robot {
+//
+//        public long products;
+//        public long money;
+//
+//        public Robot(long products, long money) {
+//            this.products = products;
+//            this.money = money;
+//        }
+//
+//    }
+//    public static void compareTo(ArrayList<Robot> t) {
+//        t.sort((a, b) -> {
+//            if (Long.compare(a.products, b.products) != 0) {
+//                return Long.compare(a.products, b.products);
+//            } else {
+//                return Long.compare(a.money, b.money);
+//            }
+//        });
+//    }
+//    
     static class InputReader {
 
         InputStream is = System.in;
-        byte[] inbuf = new byte[1 << 23];
+        byte[] inbuf = new byte[1 << 24];
         int lenbuf = 0, ptrbuf = 0;
 
         public InputReader() throws IOException {

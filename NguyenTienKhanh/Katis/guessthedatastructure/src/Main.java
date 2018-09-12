@@ -1,43 +1,104 @@
-import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.util.Scanner;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.StringTokenizer;
+import java.util.Collections;
+public class Main {
 
-class Main {
 
 
-    public static void main(String[] args) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        InputReader input = new InputReader();
-        int N = input.nextInt();
-        int[]st ;
-        int[] right ;
-        for (int i = 0; i < N; i++) {
-           int M= input.nextInt();
-           st= new int[M];
-           right=new int[M];
-           for(int j=0;j<M;j++){
-               int T = input.nextInt();
-               st[j]=(T);
-               right[j]=T;
-           }
-           Arrays.sort(right);
-           int y=0,count=0;
-           while(y+count<st.length){
-               if(st[y+count]==right[y]){
-                   y++;
-               }else{
-               count++;}}
-           sb.append(count+"\n");
-        }
-        System.out.println(sb);
+public static void main(String[] args) throws IOException {
+InputReader input = new InputReader();
+StringBuilder sb= new StringBuilder();
+while (input.hasNext()){
+    String M = "impossible";
+    int N = input.nextInt();
 
-    }
+	int[] num1 = new int[N];
+	int[] x = new int[N];
+	
+	for (int i = 0; i < N; i++)
+		{
+		num1[i] = input.nextInt();
+		x[i] = input.nextInt();
+		}
+	
+	int count = 0;
+	
+	
+	
+	if (stack(num1 , x))
+		{
+		M = "stack";
+		count++;
+		}
 
-    static class InputReader {
+	if (queue(num1 , x))
+		{
+		M = "queue";
+		count++;
+		}
+
+	if (prority_Queue(num1 , x))
+		{
+		M = "priority queue";
+		count++;
+		}
+	
+	sb.append(count > 1 ? "not sure"+"\n": M+"\n");
+	}
+    System.out.println(sb);
+}
+public static boolean stack(int[] num , int[] x) {
+	ArrayList<Integer> stack = new ArrayList<>();
+	
+	for (int i = 0; i < num.length; i++)
+		{
+		if (num[i] == 1)
+			stack.add(x[i]);
+		
+		else if (stack.isEmpty() || stack.remove(stack.size() - 1) != x[i])
+			return false;
+		}
+	
+	return true;
+}
+
+public static boolean queue(int[] num , int[] x) {
+	ArrayList<Integer> queue = new ArrayList<>();
+	
+	for (int i = 0; i < num.length; i++)
+		{
+		if (num[i] == 1)
+			queue.add(x[i]);
+		
+		else if (queue.isEmpty() || queue.remove(0) != x[i])
+			return false;
+		}
+	
+	return true;
+}
+public static boolean prority_Queue(int[] num , int[] x) {
+	ArrayList<Integer> queue = new ArrayList<>();
+	
+	for (int i = 0; i < num.length; i++)
+		{
+		if (num[i] == 1)
+			queue.add(x[i]);
+		
+		else
+			{
+			Collections.sort(queue);
+			
+			if (queue.isEmpty() || queue.remove(queue.size() - 1) != x[i])
+				return false;
+			}
+		}
+	
+	return true;
+}
+static class InputReader {
 
         InputStream is = System.in;
         byte[] inbuf = new byte[1 << 23];

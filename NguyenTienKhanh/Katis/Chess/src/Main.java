@@ -1,40 +1,40 @@
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.StringTokenizer;
+
+import java.io.*;
+import java.util.*;
 
 class Main {
 
-
     public static void main(String[] args) throws IOException {
-        StringBuilder sb = new StringBuilder();
         InputReader input = new InputReader();
-        int N = input.nextInt();
-        int[]st ;
-        int[] right ;
-        for (int i = 0; i < N; i++) {
-           int M= input.nextInt();
-           st= new int[M];
-           right=new int[M];
-           for(int j=0;j<M;j++){
-               int T = input.nextInt();
-               st[j]=(T);
-               right[j]=T;
-           }
-           Arrays.sort(right);
-           int y=0,count=0;
-           while(y+count<st.length){
-               if(st[y+count]==right[y]){
-                   y++;
-               }else{
-               count++;}}
-           sb.append(count+"\n");
+        int numberOfTest = input.nextInt();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < numberOfTest; i++) {
+            char row1 = input.next().toCharArray()[0];
+            int colum1 = input.nextInt();
+            char row2 = input.next().toCharArray()[0];
+            int colum2 = input.nextInt();
+            boolean check = false;
+            if (colum1 == colum2 && row1==row2) {
+            	check=true;
+                sb.append("0"+" "+row1+" "+colum1+"\n");
+            } else {
+                for (char j = 'A'; j <= 'Z'; j++) {
+                    for (int h = 1; h <= 8; h++) {
+                    	if (Math.abs(j-row1)==Math.abs(h-colum1)&&Math.abs(j-row2)==Math.abs(h-colum2)) {
+                            check = true;
+                            sb.append(j==row2&&h==colum2||j==row1&&h==colum1?"1"+" "+row1+" "+colum1+" "+row2+" "+colum2+"\n" : "2"+" "+row1+" "+colum1+" "+j+" "+h+" "+row2+" "+colum2+"\n");
+                            break;
+                        }
+                    }
+                    if(check)
+                    	break;
+                }
+            }
+            if (check == false) {
+                sb.append("Impossible").append("\n");
+            }
         }
         System.out.println(sb);
-
     }
 
     static class InputReader {

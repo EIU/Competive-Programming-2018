@@ -1,42 +1,67 @@
-import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.StringTokenizer;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 class Main {
-
-
+    public static InputReader ip;    
     public static void main(String[] args) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        InputReader input = new InputReader();
-        int N = input.nextInt();
-        int[]st ;
-        int[] right ;
-        for (int i = 0; i < N; i++) {
-           int M= input.nextInt();
-           st= new int[M];
-           right=new int[M];
-           for(int j=0;j<M;j++){
-               int T = input.nextInt();
-               st[j]=(T);
-               right[j]=T;
-           }
-           Arrays.sort(right);
-           int y=0,count=0;
-           while(y+count<st.length){
-               if(st[y+count]==right[y]){
-                   y++;
-               }else{
-               count++;}}
-           sb.append(count+"\n");
+        StringBuilder builder = new StringBuilder();
+        ip = new InputReader();
+        int T = ip.nextInt();
+		for (int t = 0; t < T; ++t) {
+			int n = ip.nextInt();
+			int k = ip.nextInt();
+			long[] salary = new long[n];
+			for (int i = 0; i < n; ++i) {
+				salary[i] = ip.nextLong();
+			}
+			
+			//solve here
+			long[] dpNewSum = new long[n];
+			for(int i = 0; i < n; ++i) {
+				dpNewSum[i] = salary[i];
+				if(i - 1 >= 0) {
+					dpNewSum[i] += dpNewSum[ i - 1];
+				}
+				if(i - k >= 0) {
+					dpNewSum[i] -= salary[i - k];
+				}
+			}
+			long[] dp = new long[n];
+			int mark = 0;
+			for (int i = 0; i < n; ++i) {
+				//calculate maximum sum for current index
+				long currentSum = salary[i];
+				if (i - k - 1 >= 0)
+					currentSum += dp[i - k - 1];
+				long sum = dpNewSum[i] > currentSum ? dpNewSum[i] : currentSum;
+				dp[i] = sum > dp[i] ? sum : dp[i];
+				//mark the index that has the maximum value in array
+				mark = dp[i] >= dp[mark] ? i : mark;
+				//calculate maximum sum for the next k elements from current index (current index -> k breaks -> next k elements)
+				int startPoint = i + k + 1;
+				int finishPoint = (i + 2 * k);
+				if (startPoint < n) {
+					long nextSum = dp[mark];
+					for (int j = startPoint; j <= finishPoint && j < n; ++j) {
+						nextSum += salary[j];
+						dp[j] = nextSum > dp[j] ? nextSum : dp[j];
+					}
+				}		
+			}
+			if (n > 0 && k > 0) {
+				builder.append(dp[mark]+"\n");
+			} else {
+				builder.append(0+"\n");
+			}
         }
-        System.out.println(sb);
-
+		System.out.print(builder);
     }
-
     static class InputReader {
 
         InputStream is = System.in;

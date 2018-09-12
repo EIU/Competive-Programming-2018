@@ -1,39 +1,32 @@
-import java.io.BufferedReader;
-import java.io.FileInputStream;
+
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.StringTokenizer;
+import java.util.*;
 
-class Main {
-
+public class Main {
 
     public static void main(String[] args) throws IOException {
-        StringBuilder sb = new StringBuilder();
+
         InputReader input = new InputReader();
+
         int N = input.nextInt();
-        int[]st ;
-        int[] right ;
-        for (int i = 0; i < N; i++) {
-           int M= input.nextInt();
-           st= new int[M];
-           right=new int[M];
-           for(int j=0;j<M;j++){
-               int T = input.nextInt();
-               st[j]=(T);
-               right[j]=T;
-           }
-           Arrays.sort(right);
-           int y=0,count=0;
-           while(y+count<st.length){
-               if(st[y+count]==right[y]){
-                   y++;
-               }else{
-               count++;}}
-           sb.append(count+"\n");
+        long numTop = (long) (Math.pow(2, N + 1) - 1);
+
+        long subtract = 0;
+
+        if (input.hasNext()) {
+            char[] path = input.next().toCharArray();
+
+            for (char x : path) {
+                if (x == 'L') {
+                    subtract = (2 * subtract) + 1;
+                } else {
+                    subtract = (2 * subtract) + 2;
+                }
+            }
         }
-        System.out.println(sb);
+
+        System.out.println(numTop - subtract);
 
     }
 
@@ -73,7 +66,7 @@ class Main {
         public int skip() {
             int b;
             while ((b = readByte()) != -1 && isSpaceChar(b))
-                ;
+                                    ;
             return b;
         }
 
@@ -125,7 +118,7 @@ class Main {
             int num = 0, b;
             boolean minus = false;
             while ((b = readByte()) != -1 && !((b >= '0' && b <= '9') || b == '-'))
-                ;
+                                    ;
             if (b == '-') {
                 minus = true;
                 b = readByte();
@@ -146,7 +139,7 @@ class Main {
             int b;
             boolean minus = false;
             while ((b = readByte()) != -1 && !((b >= '0' && b <= '9') || b == '-'))
-                ;
+                                    ;
             if (b == '-') {
                 minus = true;
                 b = readByte();

@@ -34,6 +34,7 @@ public class Main {
 
     return res % mod;
     }
+    
     public static boolean check(long n) {
     if(n == 2) {
         return true;
