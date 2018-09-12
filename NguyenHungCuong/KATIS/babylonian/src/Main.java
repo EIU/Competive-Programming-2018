@@ -1,35 +1,30 @@
-
 import java.io.*;
 import java.util.*;
 
 class Main {
+
 	public static void main(String[] args) throws IOException {
 		InputReader scan = new InputReader();
-		int[] x = new int[8];
-		int[] y = new int[8];
-		int count = 0;
-		for (int i=0;i<8;i++) {
-			String line = scan.next();
-			for (int j=0;j<line.length();j++) {
-				if (line.charAt(j) == '*') {
-					x[count] = i;
-					y[count++] = j;
+		int test = scan.nextInt();
+		StringBuilder res = new StringBuilder();
+		while (test-- > 0) {
+			String ip = scan.next();
+			int count = 0;
+			for (int i=0;i<ip.length();i++) {
+				if (ip.charAt(i) == ',') count++;
+			}
+			String[] ar = ip.split(",");
+			long sum = 0;
+			for (String num : ar) {
+				if (num.hashCode() == 0) {
+					count--;
+					continue;
 				}
+				sum += Integer.parseInt(num)*(long)Math.pow(60, count--);
 			}
+			res.append(sum+"\n");
 		}
-		boolean valid = true;
-		for (int i=0;i<8 && valid;i++) {
-			for (int j=0;j<8;j++) {
-					if (i != j && (Math.abs(x[i] - x[j]) == Math.abs(y[i] -y[j]) || x[i] == x[j] || y[i] == y[j])) {
-						valid = false;
-						break;
-					}
-			}
-		}
-		System.out.println((valid)?"valid":"invalid");
-	}
-	static boolean valid(int x, int y) {
-		return (x>=0 && x < 8 && y>=0 && y<8);
+		System.out.println(res);
 	}
 
 	static class InputReader {
@@ -59,6 +54,15 @@ class Main {
 			}
 			ptrbuf--;
 			return true;
+		}
+
+		public StringBuilder printIntArr(int[] ar, int n) {
+			StringBuilder res = new StringBuilder();
+			for (int i = 0; i < n; i++) {
+				res.append(ar[i] + " ");
+			}
+			res.append("\n");
+			return res;
 		}
 
 		public boolean isSpaceChar(int c) {
@@ -104,6 +108,26 @@ class Main {
 			char[][] map = new char[n][];
 			for (int i = 0; i < n; i++) {
 				map[i] = ns(m);
+			}
+			return map;
+		}
+
+		public int[][] nmInt(int n, int m) {
+			int[][] map = new int[n][m];
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < m; j++) {
+					map[i][j] = nextInt();
+				}
+			}
+			return map;
+		}
+
+		public long[][] nmLong(int n, int m) {
+			long[][] map = new long[n][m];
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < m; j++) {
+					map[i][j] = nextLong();
+				}
 			}
 			return map;
 		}

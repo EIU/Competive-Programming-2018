@@ -1,35 +1,34 @@
-
 import java.io.*;
 import java.util.*;
 
 class Main {
 	public static void main(String[] args) throws IOException {
 		InputReader scan = new InputReader();
-		int[] x = new int[8];
-		int[] y = new int[8];
-		int count = 0;
-		for (int i=0;i<8;i++) {
-			String line = scan.next();
-			for (int j=0;j<line.length();j++) {
-				if (line.charAt(j) == '*') {
-					x[count] = i;
-					y[count++] = j;
-				}
+		StringBuilder res = new StringBuilder();
+		int[] f = new int[1000001];
+		int[] n2 = new int[1000001];
+		f[0] = f[1] = f[2] = 1;
+		n2[2] = 1;
+		for (int i= 3;i<=1000000;i++) {
+			n2[i] = n2[i-1];
+			int j = i;
+			while (j % 2 == 0) {
+				j /= 2;
+				n2[i]++;
 			}
-		}
-		boolean valid = true;
-		for (int i=0;i<8 && valid;i++) {
-			for (int j=0;j<8;j++) {
-					if (i != j && (Math.abs(x[i] - x[j]) == Math.abs(y[i] -y[j]) || x[i] == x[j] || y[i] == y[j])) {
-						valid = false;
-						break;
-					}
+			while (j % 5 == 0) {
+				j /= 5;
+				n2[i]--;
 			}
+			f[i] = (f[i-1]*(j%10))%10;
 		}
-		System.out.println((valid)?"valid":"invalid");
-	}
-	static boolean valid(int x, int y) {
-		return (x>=0 && x < 8 && y>=0 && y<8);
+		int n;
+		while ((n = scan.nextInt()) != 0) {
+			int ans = f[n];
+			for (int i=0;i<n2[n];i++) ans = (ans*2)%10;
+			res.append(ans+"\n");
+		}
+		System.out.println(res);
 	}
 
 	static class InputReader {
@@ -59,6 +58,15 @@ class Main {
 			}
 			ptrbuf--;
 			return true;
+		}
+
+		public StringBuilder printIntArr(int[] ar, int n) {
+			StringBuilder res = new StringBuilder();
+			for (int i = 0; i < n; i++) {
+				res.append(ar[i] + " ");
+			}
+			res.append("\n");
+			return res;
 		}
 
 		public boolean isSpaceChar(int c) {
@@ -104,6 +112,26 @@ class Main {
 			char[][] map = new char[n][];
 			for (int i = 0; i < n; i++) {
 				map[i] = ns(m);
+			}
+			return map;
+		}
+
+		public int[][] nmInt(int n, int m) {
+			int[][] map = new int[n][m];
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < m; j++) {
+					map[i][j] = nextInt();
+				}
+			}
+			return map;
+		}
+
+		public long[][] nmLong(int n, int m) {
+			long[][] map = new long[n][m];
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < m; j++) {
+					map[i][j] = nextLong();
+				}
 			}
 			return map;
 		}

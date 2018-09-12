@@ -1,38 +1,29 @@
 
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
 
-class Main {
-	public static void main(String[] args) throws IOException {
-		InputReader scan = new InputReader();
-		int[] x = new int[8];
-		int[] y = new int[8];
-		int count = 0;
-		for (int i=0;i<8;i++) {
-			String line = scan.next();
-			for (int j=0;j<line.length();j++) {
-				if (line.charAt(j) == '*') {
-					x[count] = i;
-					y[count++] = j;
-				}
-			}
-		}
-		boolean valid = true;
-		for (int i=0;i<8 && valid;i++) {
-			for (int j=0;j<8;j++) {
-					if (i != j && (Math.abs(x[i] - x[j]) == Math.abs(y[i] -y[j]) || x[i] == x[j] || y[i] == y[j])) {
-						valid = false;
-						break;
-					}
-			}
-		}
-		System.out.println((valid)?"valid":"invalid");
-	}
-	static boolean valid(int x, int y) {
-		return (x>=0 && x < 8 && y>=0 && y<8);
-	}
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
-	static class InputReader {
+/**
+ *
+ * @author LENOVO
+ */
+public class Main {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) throws IOException {
+        InputReader reader = new InputReader();
+       
+    }
+    
+    static class InputReader {
 
 		InputStream is = System.in;
 		byte[] inbuf = new byte[1 << 23];
@@ -102,17 +93,15 @@ class Main {
 
 		public char[][] nm(int n, int m) {
 			char[][] map = new char[n][];
-			for (int i = 0; i < n; i++) {
+			for (int i = 0; i < n; i++)
 				map[i] = ns(m);
-			}
 			return map;
 		}
 
 		public int[] na(int n) {
 			int[] a = new int[n];
-			for (int i = 0; i < n; i++) {
+			for (int i = 0; i < n; i++)
 				a[i] = nextInt();
-			}
 			return a;
 		}
 
