@@ -1,6 +1,5 @@
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 public class Main {
@@ -10,25 +9,16 @@ public static void main(String[] args) throws IOException {
 InputReader scan = new InputReader();
 StringBuilder sb = new StringBuilder();
   int N = scan.nextInt();
-  ArrayList<Integer> Rs = new ArrayList<>();
-  Rs.add(N);
-  while(N!=1){
-      if(N%2 == 0){
-          N/=2;
-      }else if(N%3==0){
-          N/=3;
-      }else if(N%5==0){
-          N/=5;
-      }else if(N%7==0){
-          N/=7;
-      }
-      Rs.add(N);
+  int rs=1;
+  int count=0;
+  while(rs<=N){
+      sb.append(rs+" ");
+      rs*=2;
+      count++;
   }
-  sb.append(Rs.size()+"\n");
-  for(int i = Rs.size()-1;i>=0;i--){
-      sb.append(Rs.get(i)+" ");
-  }
+    System.out.println(count);
     System.out.println(sb);
+
 }
 static class InputReader {
 

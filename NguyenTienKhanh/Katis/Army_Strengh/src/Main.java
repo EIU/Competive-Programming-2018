@@ -6,9 +6,9 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public class Main {
-
+     public static InputReader input;
     public static void main(String[] args) throws IOException {
-        InputReader input = new InputReader();
+        
         int Test=input.nextInt();
         long[] Godzilla;
         long[] MechaGodzilla ; 
@@ -24,13 +24,9 @@ public class Main {
         for(int i=0;i<megod;i++){
             MechaGodzilla[i]=input.nextLong();
         }
-        while(Godzilla.length>g && MechaGodzilla.length>m){
-            if(Godzilla[g]>=MechaGodzilla[m])
-                m++;
-            else
-                g++;
-        }
-        if(Godzilla.length==g)
+        Arrays.sort(Godzilla);
+        Arrays.sort(MechaGodzilla);
+        if(Godzilla[god-1]<MechaGodzilla[megod-1])
             sb.append("MechaGodzilla"+"\n");
         else
              sb.append("Godzilla"+"\n");
