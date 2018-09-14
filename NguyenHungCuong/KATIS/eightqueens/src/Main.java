@@ -19,21 +19,11 @@ class Main {
 		}
 		boolean valid = true;
 		for (int i=0;i<8 && valid;i++) {
-			for (int j=0;j<8 && valid;j++) {
-				if (i != j) {
-					if (Math.abs(x[i] - x[j]) == Math.abs(y[i] -y[j])) {
+			for (int j=0;j<8;j++) {
+					if (i != j && (Math.abs(x[i] - x[j]) == Math.abs(y[i] -y[j]) || x[i] == x[j] || y[i] == y[j])) {
 						valid = false;
 						break;
 					}
-					if (x[i] == x[j]) {
-						valid = false;
-						break;
-					}
-					if (y[i] == y[j]) {
-						valid = false;
-						break;
-					}
-				}
 			}
 		}
 		System.out.println((valid)?"valid":"invalid");

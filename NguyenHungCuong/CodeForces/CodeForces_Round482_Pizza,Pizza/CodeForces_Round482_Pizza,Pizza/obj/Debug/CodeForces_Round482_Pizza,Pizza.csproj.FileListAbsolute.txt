@@ -1,0 +1,6 @@
+D:\Studying\C# Projects\CodeForces_Round482_Pizza,Pizza\CodeForces_Round482_Pizza,Pizza\bin\Debug\CodeForces_Round482_Pizza,Pizza.exe
+D:\Studying\C# Projects\CodeForces_Round482_Pizza,Pizza\CodeForces_Round482_Pizza,Pizza\bin\Debug\CodeForces_Round482_Pizza,Pizza.pdb
+D:\Studying\C# Projects\CodeForces_Round482_Pizza,Pizza\CodeForces_Round482_Pizza,Pizza\obj\Debug\CodeForces_Round482_Pizza,Pizza.csprojResolveAssemblyReference.cache
+D:\Studying\C# Projects\CodeForces_Round482_Pizza,Pizza\CodeForces_Round482_Pizza,Pizza\obj\Debug\CodeForces_Round482_Pizza,Pizza.csproj.CoreCompileInputs.cache
+D:\Studying\C# Projects\CodeForces_Round482_Pizza,Pizza\CodeForces_Round482_Pizza,Pizza\obj\Debug\CodeForces_Round482_Pizza,Pizza.exe
+D:\Studying\C# Projects\CodeForces_Round482_Pizza,Pizza\CodeForces_Round482_Pizza,Pizza\obj\Debug\CodeForces_Round482_Pizza,Pizza.pdb
