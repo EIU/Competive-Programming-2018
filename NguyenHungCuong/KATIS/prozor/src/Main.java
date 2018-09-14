@@ -1,35 +1,57 @@
-
 import java.io.*;
 import java.util.*;
 
 class Main {
+
 	public static void main(String[] args) throws IOException {
 		InputReader scan = new InputReader();
-		int[] x = new int[8];
-		int[] y = new int[8];
-		int count = 0;
-		for (int i=0;i<8;i++) {
-			String line = scan.next();
-			for (int j=0;j<line.length();j++) {
-				if (line.charAt(j) == '*') {
-					x[count] = i;
-					y[count++] = j;
+		int row = scan.nextInt(), col = scan.nextInt(), k = scan.nextInt();
+		char[][] map = scan.nm(row, col);
+		int max = 0, x = -1, y = -1;
+		for (int i = k - 1; i < row; i++) {
+			for (int j = k - 1; j < col; j++) {
+				int res = count(map, i, j, k);
+				if (res > max) {
+					max = res;
+					x = i;
+					y = j;
 				}
 			}
 		}
-		boolean valid = true;
-		for (int i=0;i<8 && valid;i++) {
-			for (int j=0;j<8;j++) {
-					if (i != j && (Math.abs(x[i] - x[j]) == Math.abs(y[i] -y[j]) || x[i] == x[j] || y[i] == y[j])) {
-						valid = false;
-						break;
-					}
-			}
+		StringBuilder res = new StringBuilder();
+		res.append(max+"\n");
+		for (int j = y; j >= y - k + 1; j--) {
+			map[x][j] = '-';
+			map[x-k+1][j] = '-';
 		}
-		System.out.println((valid)?"valid":"invalid");
+		for (int i = x;i>=x-k+1;i--) {
+			map[i][y-k+1] = '|';
+			map[i][y] = '|';
+		}
+		map[x-k+1][y-k+1] = '+';
+		map[x-k+1][y] = '+';
+		map[x][y-k+1] = '+';
+		map[x][y] = '+';
+		for (int i=0;i<row;i++) {
+			for (int j=0;j<col;j++) {
+				res.append(map[i][j]);
+			}
+			res.append("\n");
+		}
+		System.out.println(res);
 	}
-	static boolean valid(int x, int y) {
-		return (x>=0 && x < 8 && y>=0 && y<8);
+
+	static int count(char[][] map, int x, int y, int k) {
+		int count = 0;
+		if (x - k + 2 <= 0 || y - k + 2 <= 0)
+			return -1;
+		for (int i = x - k + 2; i < x; i++) {
+			for (int j = y - k + 2; j < y; j++) {
+				count += (map[i][j] == '*') ? 1 : 0;
+			}
+
+		}
+		return count;
 	}
 
 	static class InputReader {
@@ -59,6 +81,15 @@ class Main {
 			}
 			ptrbuf--;
 			return true;
+		}
+
+		public StringBuilder printIntArr(int[] ar, int n) {
+			StringBuilder res = new StringBuilder();
+			for (int i = 0; i < n; i++) {
+				res.append(ar[i] + " ");
+			}
+			res.append("\n");
+			return res;
 		}
 
 		public boolean isSpaceChar(int c) {
@@ -104,6 +135,26 @@ class Main {
 			char[][] map = new char[n][];
 			for (int i = 0; i < n; i++) {
 				map[i] = ns(m);
+			}
+			return map;
+		}
+
+		public int[][] nmInt(int n, int m) {
+			int[][] map = new int[n][m];
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < m; j++) {
+					map[i][j] = nextInt();
+				}
+			}
+			return map;
+		}
+
+		public long[][] nmLong(int n, int m) {
+			long[][] map = new long[n][m];
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < m; j++) {
+					map[i][j] = nextLong();
+				}
 			}
 			return map;
 		}
